@@ -1,4 +1,5 @@
 
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.TerrainTools;
@@ -6,9 +7,9 @@ using UnityEngine.TerrainTools;
 public class PixelScript : MonoBehaviour
 {
     [SerializeField] MeshRenderer renderer;
-    [SerializeField] ParticleSystem ps;
-    [SerializeField] ParticleSystem subPs;
-    [SerializeField] public MeshRenderer sphereRenderer;
+    [SerializeField] GameObject ParticleSystemKey;
+    // [SerializeField] ParticleSystem subPs;
+    [SerializeField] public GameObject sphereObj;
     public Material grayScaleMaterial;    
     public Material rgbScaleMaterial;    
 
@@ -18,18 +19,24 @@ public class PixelScript : MonoBehaviour
        Paint();
     }
 
-    private void Paint(){
+    private async void Paint(){
         if(isPainted) return;
-        ps.gameObject.SetActive(true);
+        GameObject psObject = Pool.Instance.GetFromPool(ParticleSystemKey);
+        psObject.transform.position = sphereObj.transform.position;
+        ParticleSystem ps = psObject.GetComponent<ParticleSystem>();
         isPainted =  true;
         ps.startColor = rgbScaleMaterial.color;
+        ParticleSystem subPs = psObject.transform.GetChild(0).GetComponent<ParticleSystem>();
         subPs.startColor = rgbScaleMaterial.color;
         ps.Play();
-        sphereRenderer.gameObject.SetActive(false);
+        sphereObj.SetActive(false);
         renderer.material = rgbScaleMaterial;
+        await Task.Delay((int)ps.main.duration*500);
+        Pool.Instance.Release(ParticleSystemKey,psObject);
     }
      public void InitPixel(GameObject paticlePrefabKey){
+        ParticleSystemKey = paticlePrefabKey;
         isPainted = false;
-        sphereRenderer.gameObject.SetActive(true);
+        sphereObj.SetActive(true);
     }
 }

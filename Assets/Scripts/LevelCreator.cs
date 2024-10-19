@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[ExecuteAlways]
+// [ExecuteAlways]
 public class LevelCreator : MonoBehaviour
 {
     [SerializeField] private Texture2D texture2D;
@@ -26,10 +26,11 @@ public class LevelCreator : MonoBehaviour
     private List<GameObject> pixels = new List<GameObject>();
     private List<List<Vector3>> pixelsGrid = new List<List<Vector3>>();
 
-    private Mesh BigMesh;
-
+    private int TargetCount = 0;
     private void Start(){
-        // pool.PreparePool(particlePrefab,20);
+        Pool.Instance = this.pool;
+        pool.PreparePool(particlePrefab,50);
+        isCreate = true;
     }
 
     void Update()
@@ -106,7 +107,7 @@ public class LevelCreator : MonoBehaviour
         // pix
         // pixel.GetComponent<PixelScript>().grayScaleMaterial = grayMaterial;
         pixel.GetComponent<PixelScript>().rgbScaleMaterial = targetMaterial;
-        pixel.GetComponent<PixelScript>().sphereRenderer.material = sphereMaterial;
+        // pixel.GetComponent<PixelScript>().sphereRenderer.material = sphereMaterial;
         pixel.GetComponent<PixelScript>().InitPixel(particlePrefab);
         pixels.Add(pixel);
         if (pixelsGrid.Count <= pos.z)

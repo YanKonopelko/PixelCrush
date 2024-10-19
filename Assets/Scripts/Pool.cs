@@ -9,8 +9,13 @@ public class Pool : MonoBehaviour
     private Dictionary<GameObject, List<GameObject>> freeObjects = new Dictionary<GameObject, List<GameObject>>();
     private Dictionary<GameObject, List<GameObject>> usingObjects = new Dictionary<GameObject, List<GameObject>>();
 
+    private Transform _transform;
+    public static Pool Instance;
 
-    public GameObject GetFromPool(GameObject Object)
+     void Awake()
+    {
+        _transform = transform;
+    }    public GameObject GetFromPool(GameObject Object)
     {
         return this.GetOrCreate(Object);
     }
@@ -42,8 +47,12 @@ public class Pool : MonoBehaviour
                     break;
                 }
             }
+            if(objectToReturn == null){
+                objectToReturn = Instantiate(key);
+                this.AddToUsingMap(key, objectToReturn);
+            }
             // objectToReturn = Instantiate(key, transform);
-            AddToUsingMap(key, objectToReturn);
+            // AddToUsingMap(key, objectToReturn);
         }
         else
         {
@@ -128,6 +137,7 @@ public class Pool : MonoBehaviour
             {
                 GameObject newElement = Instantiate(key, transform);
                 newElement.SetActive(false);
+                newElement.transform.SetParent(this._transform);
                 newArray.Add(newElement);
             }
             this.freeObjects[key] = newArray;
