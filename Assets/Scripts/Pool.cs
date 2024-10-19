@@ -50,14 +50,14 @@ public class Pool : MonoBehaviour
             if(objectToReturn == null){
                 objectToReturn = Instantiate(key);
                 this.AddToUsingMap(key, objectToReturn);
+                objectToReturn.transform.SetParent(_transform);
             }
-            // objectToReturn = Instantiate(key, transform);
-            // AddToUsingMap(key, objectToReturn);
         }
         else
         {
             objectToReturn = Instantiate(key);
             this.AddToUsingMap(key, objectToReturn);
+            objectToReturn.transform.SetParent(_transform);
         }
         objectToReturn.SetActive(true);
         return objectToReturn;

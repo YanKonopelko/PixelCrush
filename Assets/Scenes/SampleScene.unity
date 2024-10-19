@@ -460,9 +460,6 @@ MonoBehaviour:
   pixelParent: {fileID: 1199415949}
   pixelMaterial: {fileID: 2100000, guid: 1e81d7bd75ec75d47add298377c7a6a8, type: 2}
   sphereMaterial: {fileID: 2100000, guid: 84eea9d7ab2bf264e9a18bab62797b97, type: 2}
-  bigMeshMatereial: {fileID: 2100000, guid: 944f4db01ca841d4c9dc79b0494c5c55, type: 2}
-  filter: {fileID: 0}
-  bigMeshCollider: {fileID: 0}
   isCreate: 0
   pixelSize: {x: 0.5, y: 0.5}
   pool: {fileID: 1199415950}

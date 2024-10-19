@@ -1,6 +1,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.TerrainTools;
 
@@ -10,6 +11,9 @@ public class PixelScript : MonoBehaviour
     [SerializeField] GameObject ParticleSystemKey;
     // [SerializeField] ParticleSystem subPs;
     [SerializeField] public GameObject sphereObj;
+    public Action paintCallback;
+
+    
     public Material grayScaleMaterial;    
     public Material rgbScaleMaterial;    
 
@@ -31,10 +35,13 @@ public class PixelScript : MonoBehaviour
         ps.Play();
         sphereObj.SetActive(false);
         renderer.material = rgbScaleMaterial;
-        await Task.Delay((int)ps.main.duration*500);
+        paintCallback();
+        await UniTask.Delay((int)ps.main.duration*500);
+        if(!this.gameObject) return;
         Pool.Instance.Release(ParticleSystemKey,psObject);
     }
-     public void InitPixel(GameObject paticlePrefabKey){
+     public void InitPixel(GameObject paticlePrefabKey,Action callback){
+        paintCallback = callback;
         ParticleSystemKey = paticlePrefabKey;
         isPainted = false;
         sphereObj.SetActive(true);

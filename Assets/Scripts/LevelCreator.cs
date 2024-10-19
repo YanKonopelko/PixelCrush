@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // [ExecuteAlways]
 public class LevelCreator : MonoBehaviour
@@ -27,6 +28,7 @@ public class LevelCreator : MonoBehaviour
     private List<List<Vector3>> pixelsGrid = new List<List<Vector3>>();
 
     private int TargetCount = 0;
+    private int CurrentCount = 0;
     private void Start(){
         Pool.Instance = this.pool;
         pool.PreparePool(particlePrefab,50);
@@ -54,6 +56,7 @@ public class LevelCreator : MonoBehaviour
         // }
         pixels.Clear();
         pixelsGrid.Clear();
+        CurrentCount = 0;
     }
     private void CreateLevelWithImage(Texture2D texture)
     {
@@ -71,7 +74,7 @@ public class LevelCreator : MonoBehaviour
 
             }
         }
-
+        TargetCount = pixels.Count;
     }
 
     private void CreatPixel(Vector3 pos, Color color)
@@ -108,7 +111,7 @@ public class LevelCreator : MonoBehaviour
         // pixel.GetComponent<PixelScript>().grayScaleMaterial = grayMaterial;
         pixel.GetComponent<PixelScript>().rgbScaleMaterial = targetMaterial;
         // pixel.GetComponent<PixelScript>().sphereRenderer.material = sphereMaterial;
-        pixel.GetComponent<PixelScript>().InitPixel(particlePrefab);
+        pixel.GetComponent<PixelScript>().InitPixel(particlePrefab,OnPaint);
         pixels.Add(pixel);
         if (pixelsGrid.Count <= pos.z)
         {
@@ -116,6 +119,18 @@ public class LevelCreator : MonoBehaviour
         }
         pixelsGrid[(int)pos.z].Add(pos);
         // pixelsPositions.Add(pixel.transform.position);
+    }
+
+    private void OnPaint(){
+        CurrentCount ++;
+        if(CurrentCount == TargetCount){
+            Win();
+        }
+    }
+
+    private void Win(){
+        // SceneManager.LoadScene(0);
+        isCreate = true;
     }
 
     private void CreateBigMesh()
