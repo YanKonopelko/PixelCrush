@@ -11,7 +11,8 @@ public class LevelCreator : MonoBehaviour
     [SerializeField] private GameObject pixelPrefab;
     [SerializeField] private GameObject particlePrefab;
     [SerializeField] private Transform pixelParent;
-    [SerializeField] private Material pixelMaterial;
+    [SerializeField] private Material paintedPixelMaterial;
+    [SerializeField] private Material basePixelMaterial;
     [SerializeField] private Material sphereMaterial;
     // [SerializeField] private Material bigMeshMatereial;
     // [SerializeField] private MeshFilter filter;
@@ -29,9 +30,10 @@ public class LevelCreator : MonoBehaviour
 
     private int TargetCount = 0;
     private int CurrentCount = 0;
-    private void Start(){
+    private void Start()
+    {
         Pool.Instance = this.pool;
-        pool.PreparePool(particlePrefab,50);
+        pool.PreparePool(particlePrefab, 50);
         isCreate = true;
     }
 
@@ -48,8 +50,9 @@ public class LevelCreator : MonoBehaviour
     }
     public void ClearChildren()
     {
-        for(int i =0; i < pixels.Count;i++){
-            pool.Release(pixelPrefab,pixels[i].gameObject);
+        for (int i = 0; i < pixels.Count; i++)
+        {
+            pool.Release(pixelPrefab, pixels[i].gameObject);
         }
         // while(pixelParent.childCount>0){
         //     DestroyImmediate(pixelParent.transform.GetChild(0).gameObject);
@@ -82,54 +85,46 @@ public class LevelCreator : MonoBehaviour
         if (color.a < 0.8) return;
         // color.a = 1;
         // color.grayscale = 1;
-        
+
         Material targetMaterial;
-        Material grayMaterial;
+        // Material grayMaterial;
         float gs = color.grayscale;
 
         if (!InUseColors.ContainsKey(color))
         {
-            Material newMaterial = new Material(sphereMaterial);
+            Material newMaterial = new Material(paintedPixelMaterial);
             newMaterial.color = color;
             InUseColors.Add(color, newMaterial);
-            // Debug.Log(newMaterial.color);
-            Material newMaterialGray = new Material(sphereMaterial);
-            newMaterialGray.color = new Color(gs,gs,gs);
-            InUseColors.Add(new Color(gs,gs,gs), newMaterialGray);
         }
-        
+
         InUseColors.TryGetValue(color, out targetMaterial);
-        InUseColors.TryGetValue(new Color(gs,gs,gs), out grayMaterial);
-        
+
         GameObject pixel = pool.GetFromPool(this.pixelPrefab);
-        // GameObject pixel = Instantiate(this.pixelPrefab);
-        
+
         pixel.transform.SetParent(pixelParent);
         pixel.transform.position = pos;
-        pixel.GetComponent<MeshRenderer>().material = pixelMaterial;
-        // pix
-        // pixel.GetComponent<PixelScript>().grayScaleMaterial = grayMaterial;
+
         pixel.GetComponent<PixelScript>().rgbScaleMaterial = targetMaterial;
-        // pixel.GetComponent<PixelScript>().sphereRenderer.material = sphereMaterial;
-        pixel.GetComponent<PixelScript>().InitPixel(particlePrefab,OnPaint);
+        pixel.GetComponent<PixelScript>().InitPixel(particlePrefab, OnPaint, basePixelMaterial);
         pixels.Add(pixel);
         if (pixelsGrid.Count <= pos.z)
         {
             pixelsGrid.Add(new List<Vector3>());
         }
         pixelsGrid[(int)pos.z].Add(pos);
-        // pixelsPositions.Add(pixel.transform.position);
     }
 
-    private void OnPaint(){
-        CurrentCount ++;
-        if(CurrentCount == TargetCount){
+    private void OnPaint()
+    {
+        CurrentCount++;
+        if (CurrentCount == TargetCount)
+        {
             Win();
         }
     }
 
-    private void Win(){
-        // SceneManager.LoadScene(0);
+    private void Win()
+    {
         isCreate = true;
     }
 

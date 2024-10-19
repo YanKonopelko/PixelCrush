@@ -11,6 +11,7 @@ public class PixelScript : MonoBehaviour
     [SerializeField] GameObject ParticleSystemKey;
     // [SerializeField] ParticleSystem subPs;
     [SerializeField] public GameObject sphereObj;
+    // [SerializeField] public GameObject boxObj;
     public Action paintCallback;
 
     
@@ -30,17 +31,18 @@ public class PixelScript : MonoBehaviour
         ParticleSystem ps = psObject.GetComponent<ParticleSystem>();
         isPainted =  true;
         ps.startColor = rgbScaleMaterial.color;
-        ParticleSystem subPs = psObject.transform.GetChild(0).GetComponent<ParticleSystem>();
-        subPs.startColor = rgbScaleMaterial.color;
+        // ParticleSystem subPs = psObject.transform.GetChild(0).GetComponent<ParticleSystem>();
+        // subPs.startColor = rgbScaleMaterial.color;
         ps.Play();
         sphereObj.SetActive(false);
         renderer.material = rgbScaleMaterial;
         paintCallback();
-        await UniTask.Delay((int)ps.main.duration*500);
+        await UniTask.Delay(500);
         if(!this.gameObject) return;
         Pool.Instance.Release(ParticleSystemKey,psObject);
     }
-     public void InitPixel(GameObject paticlePrefabKey,Action callback){
+     public void InitPixel(GameObject paticlePrefabKey,Action callback,Material startMat){
+        renderer.material = startMat;
         paintCallback = callback;
         ParticleSystemKey = paticlePrefabKey;
         isPainted = false;
