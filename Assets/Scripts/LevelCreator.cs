@@ -12,9 +12,9 @@ public class LevelCreator : MonoBehaviour
     [SerializeField] private Transform pixelParent;
     [SerializeField] private Material pixelMaterial;
     [SerializeField] private Material sphereMaterial;
-    [SerializeField] private Material bigMeshMatereial;
-    [SerializeField] private MeshFilter filter;
-    [SerializeField] private MeshCollider bigMeshCollider;
+    // [SerializeField] private Material bigMeshMatereial;
+    // [SerializeField] private MeshFilter filter;
+    // [SerializeField] private MeshCollider bigMeshCollider;
 
     [SerializeField] private bool isCreate;
 
@@ -29,7 +29,7 @@ public class LevelCreator : MonoBehaviour
     private Mesh BigMesh;
 
     private void Start(){
-        pool.PreparePool(particlePrefab,20);
+        // pool.PreparePool(particlePrefab,20);
     }
 
     void Update()
@@ -107,7 +107,7 @@ public class LevelCreator : MonoBehaviour
         // pixel.GetComponent<PixelScript>().grayScaleMaterial = grayMaterial;
         pixel.GetComponent<PixelScript>().rgbScaleMaterial = targetMaterial;
         pixel.GetComponent<PixelScript>().sphereRenderer.material = sphereMaterial;
-        pixel.GetComponent<PixelScript>().ResetPixel();
+        pixel.GetComponent<PixelScript>().InitPixel(particlePrefab);
         pixels.Add(pixel);
         if (pixelsGrid.Count <= pos.z)
         {
@@ -119,94 +119,94 @@ public class LevelCreator : MonoBehaviour
 
     private void CreateBigMesh()
     {
-        Debug.Log(pixels.Count);
+        // Debug.Log(pixels.Count);
 
-        Mesh mesh = new Mesh();
-        Vector3[] Verticles = new Vector3[pixels.Count * 4];
-        Vector2[] uv = new Vector2[pixels.Count * 4];
-        int[] triangles = new int[pixels.Count * 6];
+        // Mesh mesh = new Mesh();
+        // Vector3[] Verticles = new Vector3[pixels.Count * 4];
+        // Vector2[] uv = new Vector2[pixels.Count * 4];
+        // int[] triangles = new int[pixels.Count * 6];
 
-        int Count = 0;
-        float height = pixelsGrid.Count;
-        Debug.Log(height);
+        // int Count = 0;
+        // float height = pixelsGrid.Count;
+        // Debug.Log(height);
 
-        for (int i = 0; i < pixelsGrid.Count; i++)
-        {
-            List<Vector3> line = pixelsGrid[i];
-            float width = line.Count;
-            for (int j = 0; j < width; j++)
-            {
-                Vector3 pos = line[j];
-                pos.y += 0.5f;
-                Verticles[Count * 4] = pos;
-                Verticles[Count * 4].x -= pixelSize.x;
-                Verticles[Count * 4].z += pixelSize.y;
-                // Сдвигать на относительный размер пискеля в углы
-                Vector2 point = new Vector2(j / (width - 1), i / (height - 1));
-                // - +
-                // + +
-                // - -
-                // + -
-                uv[Count * 4] = new Vector2((j-0.5f) / (width - 1), (i+0.5f) / (height - 1));
-                uv[Count * 4 + 1] = new Vector2((j+0.5f) / (width - 1), (i+0.5f) / (height - 1));;
-                uv[Count * 4 + 2] = new Vector2((j-0.5f) / (width - 1), (i-0.5f) / (height - 1));;
-                uv[Count * 4 + 3] = new Vector2((j+0.5f) / (width - 1), (i-0.5f) / (height - 1));;
-                // Debug.Log("UV's");
-                // Debug.Log(uv[Count * 4]);
-                // Debug.Log(uv[Count * 4 + 1]);
-                // Debug.Log(uv[Count * 4 + 2]);
-                // Debug.Log(uv[Count * 4 + 3]);
-                Verticles[Count * 4 + 1] = pos;
-                Verticles[Count * 4 + 1].x += pixelSize.x;
-                Verticles[Count * 4 + 1].z += pixelSize.y;
-
-
-
-
-                Verticles[Count * 4 + 2] = pos;
-                Verticles[Count * 4 + 2].x -= pixelSize.x;
-                Verticles[Count * 4 + 2].z -= pixelSize.y;
+        // for (int i = 0; i < pixelsGrid.Count; i++)
+        // {
+        //     List<Vector3> line = pixelsGrid[i];
+        //     float width = line.Count;
+        //     for (int j = 0; j < width; j++)
+        //     {
+        //         Vector3 pos = line[j];
+        //         pos.y += 0.5f;
+        //         Verticles[Count * 4] = pos;
+        //         Verticles[Count * 4].x -= pixelSize.x;
+        //         Verticles[Count * 4].z += pixelSize.y;
+        //         // Сдвигать на относительный размер пискеля в углы
+        //         Vector2 point = new Vector2(j / (width - 1), i / (height - 1));
+        //         // - +
+        //         // + +
+        //         // - -
+        //         // + -
+        //         uv[Count * 4] = new Vector2((j-0.5f) / (width - 1), (i+0.5f) / (height - 1));
+        //         uv[Count * 4 + 1] = new Vector2((j+0.5f) / (width - 1), (i+0.5f) / (height - 1));;
+        //         uv[Count * 4 + 2] = new Vector2((j-0.5f) / (width - 1), (i-0.5f) / (height - 1));;
+        //         uv[Count * 4 + 3] = new Vector2((j+0.5f) / (width - 1), (i-0.5f) / (height - 1));;
+        //         // Debug.Log("UV's");
+        //         // Debug.Log(uv[Count * 4]);
+        //         // Debug.Log(uv[Count * 4 + 1]);
+        //         // Debug.Log(uv[Count * 4 + 2]);
+        //         // Debug.Log(uv[Count * 4 + 3]);
+        //         Verticles[Count * 4 + 1] = pos;
+        //         Verticles[Count * 4 + 1].x += pixelSize.x;
+        //         Verticles[Count * 4 + 1].z += pixelSize.y;
 
 
 
-                Verticles[Count * 4 + 3] = pos;
-                Verticles[Count * 4 + 3].x += pixelSize.x;
-                Verticles[Count * 4 + 3].z -= pixelSize.y;
+
+        //         Verticles[Count * 4 + 2] = pos;
+        //         Verticles[Count * 4 + 2].x -= pixelSize.x;
+        //         Verticles[Count * 4 + 2].z -= pixelSize.y;
 
 
 
-                triangles[Count * 6] = Count * 4;
-                triangles[Count * 6 + 1] = Count * 4 + 1;
-                triangles[Count * 6 + 2] = Count * 4 + 2;
-                triangles[Count * 6 + 3] = Count * 4 + 2;
-                triangles[Count * 6 + 4] = Count * 4 + 1;
-                triangles[Count * 6 + 5] = Count * 4 + 3;
-
-                // uv[Count * 4].x = Verticles[Count * 4].x;
-                // uv[Count * 4].y = Verticles[Count * 4].z;
-                // uv[Count * 4 + 1].x = Verticles[Count * 4 + 1].x;
-                // uv[Count * 4 + 1].y = Verticles[Count * 4 + 1].z;
-                // uv[Count * 4 + 2].x = Verticles[Count * 4 + 2].x;
-                // uv[Count * 4 + 2].y = Verticles[Count * 4 + 2].z;
-                // uv[Count * 4 + 3].x = Verticles[Count * 4 + 3].x;
-                // uv[Count * 4 + 3].y = Verticles[Count * 4 + 3].z;
-
-                Count++;
-            }
+        //         Verticles[Count * 4 + 3] = pos;
+        //         Verticles[Count * 4 + 3].x += pixelSize.x;
+        //         Verticles[Count * 4 + 3].z -= pixelSize.y;
 
 
-        }
-        // uv[0] = new Vector2(0,1);
-        // uv[0] = new Vector2(0,1);
-        // uv[0] = new Vector2(0,1);
-        // uv[0] = new Vector2(0,1);
-        mesh.vertices = Verticles;
-        mesh.uv = uv;
-        mesh.triangles = triangles;
-        mesh.Optimize();
-        BigMesh = mesh;
-        bigMeshCollider.sharedMesh = null;
-        bigMeshCollider.sharedMesh = mesh;
-        filter.mesh = mesh;
+
+        //         triangles[Count * 6] = Count * 4;
+        //         triangles[Count * 6 + 1] = Count * 4 + 1;
+        //         triangles[Count * 6 + 2] = Count * 4 + 2;
+        //         triangles[Count * 6 + 3] = Count * 4 + 2;
+        //         triangles[Count * 6 + 4] = Count * 4 + 1;
+        //         triangles[Count * 6 + 5] = Count * 4 + 3;
+
+        //         // uv[Count * 4].x = Verticles[Count * 4].x;
+        //         // uv[Count * 4].y = Verticles[Count * 4].z;
+        //         // uv[Count * 4 + 1].x = Verticles[Count * 4 + 1].x;
+        //         // uv[Count * 4 + 1].y = Verticles[Count * 4 + 1].z;
+        //         // uv[Count * 4 + 2].x = Verticles[Count * 4 + 2].x;
+        //         // uv[Count * 4 + 2].y = Verticles[Count * 4 + 2].z;
+        //         // uv[Count * 4 + 3].x = Verticles[Count * 4 + 3].x;
+        //         // uv[Count * 4 + 3].y = Verticles[Count * 4 + 3].z;
+
+        //         Count++;
+        //     }
+
+
+        // }
+        // // uv[0] = new Vector2(0,1);
+        // // uv[0] = new Vector2(0,1);
+        // // uv[0] = new Vector2(0,1);
+        // // uv[0] = new Vector2(0,1);
+        // mesh.vertices = Verticles;
+        // mesh.uv = uv;
+        // mesh.triangles = triangles;
+        // mesh.Optimize();
+        // BigMesh = mesh;
+        // bigMeshCollider.sharedMesh = null;
+        // bigMeshCollider.sharedMesh = mesh;
+        // filter.mesh = mesh;
     }
 }
