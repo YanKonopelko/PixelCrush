@@ -9,10 +9,8 @@ public class PixelScript : MonoBehaviour
 {
     [SerializeField] MeshRenderer renderer;
     [SerializeField] GameObject ParticleSystemKey;
-    // [SerializeField] ParticleSystem subPs;
     [SerializeField] public GameObject sphereObj;
-    // [SerializeField] public GameObject boxObj;
-    public Action paintCallback;
+    private Action paintCallback;
 
     
     public Material grayScaleMaterial;    
@@ -31,8 +29,7 @@ public class PixelScript : MonoBehaviour
         ParticleSystem ps = psObject.GetComponent<ParticleSystem>();
         isPainted =  true;
         ps.startColor = rgbScaleMaterial.color;
-        // ParticleSystem subPs = psObject.transform.GetChild(0).GetComponent<ParticleSystem>();
-        // subPs.startColor = rgbScaleMaterial.color;
+
         ps.Play();
         sphereObj.SetActive(false);
         renderer.material = rgbScaleMaterial;
