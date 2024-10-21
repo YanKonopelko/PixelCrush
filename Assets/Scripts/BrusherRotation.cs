@@ -46,11 +46,13 @@ public class BrusherRotation : MonoBehaviour
     }
     private void SwapPoints()
     {
-        stompAnim.Play();
+       
         var pos = _rotationObject[0].position;
         _rotationObject[0].position = _rotationObject[1].position;
         _rotationObject[1].position = pos;
         trailRenderer.Clear();
+        //  stompAnim.Stop();
+        stompAnim.Play();
     }
 
     public void ReloadRot()

@@ -8,8 +8,9 @@ using UnityEngine.TerrainTools;
 
 public class PixelScript : MonoBehaviour
 {
-    [SerializeField] MeshRenderer renderer;
+    // [SerializeField] MeshRenderer renderer;
     [SerializeField] GameObject ParticleSystemKey;
+    [SerializeField] MeshRenderer[] corners;
     [SerializeField] public GameObject sphereObj;
     [SerializeField] public Animation sphereAnim;
     [SerializeField] public Collider coll;
@@ -19,15 +20,16 @@ public class PixelScript : MonoBehaviour
 
     private bool isPainted = false;
     private Sequence sequence = null;
+
     private void OnTriggerEnter(Collider other)
     {
         if(isPainted) return;
         
         if(other.CompareTag("Sizer_0")){
-            SphereResize(1.1f);
+            SphereResize(0.75f);
         }
         else if(other.CompareTag("Sizer_1")){
-            SphereResize(1.3f);
+            SphereResize(0.65f);
         }
     }
     private void OnTriggerExit(Collider other)
@@ -42,20 +44,35 @@ public class PixelScript : MonoBehaviour
          if(sequence != null){
             sequence.Kill();
         }
+        GameObject psObject = Pool.Instance.GetFromPool(ParticleSystemKey);
+        psObject.transform.position = sphereObj.transform.position;
+        ParticleSystem ps = psObject.GetComponent<ParticleSystem>();
+        // ps.startColor = rgbScaleMaterial.color;
+        ps.Play();
         sequence = DOTween.Sequence();
         var myCallback = new TweenCallback(()=>DisableSphere());
         sequence.Append(sphereObj.transform.DOScale(new Vector3(0,0,0),0.1f).SetEase(Ease.InOutCirc)).OnComplete(myCallback);
-        renderer.material = rgbScaleMaterial;
+        for(int i =0; i < corners.Length;i++){
+            corners[i].material= rgbScaleMaterial;
+        }
         paintCallback();
         this.tag = "Pixel_Disabled";
+        await UniTask.Delay(500);
+        Pool.Instance.Release(ParticleSystemKey,psObject);
     }
 
     private void DisableSphere(){
         sphereObj.SetActive(false);
     }
 
-     public void InitPixel(GameObject paticlePrefabKey,Action callback,Material startMat){
-        renderer.material = startMat;
+     public void InitPixel(GameObject paticlePrefabKey,Action callback,Material startMat,bool[] enabledCorners){
+        for(int i =0; i < corners.Length;i++){
+            corners[i].enabled = false;
+            corners[i].material= startMat;
+        }
+        for(int i =0; i < enabledCorners.Length;i++){
+            corners[i].enabled =enabledCorners[i];
+        }
         paintCallback = callback;
         ParticleSystemKey = paticlePrefabKey;
         isPainted = false;
@@ -74,7 +91,7 @@ public class PixelScript : MonoBehaviour
             sequence.Kill();
         }
         sequence = DOTween.Sequence();
-        sequence.Append(sphereObj.transform.DOScale(new Vector3(size,size,size),0.08f));
+        sequence.Append(sphereObj.transform.DOScale(new Vector3(1,1,size),0.08f));
         // sphereObj.transform.localScale = ;
     }
 

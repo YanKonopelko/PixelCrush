@@ -64,23 +64,27 @@ public class LevelCreator : MonoBehaviour
         int height = texture.height;
         int width = texture.width;
         var pixelData = texture.GetPixels();
+        List<int> inWorkRight = new List<int>();
         for (int y = 0; y < height; y++)
         {
+            bool firstInRow = true;
             for (int x = 0; x < width; x++)
             {
                 Vector2 pos = new Vector2(x, y);
                 Color color = pixelData[x + y * width];
-
-                this.CreatPixel(new Vector3(pos.x, 0, pos.y), color);
-
+                if (color.a < 0.8) continue;
+                bool firstInColumn = !inWorkRight.Contains(x);
+                this.CreatPixel(new Vector3(pos.x, 0, pos.y), color,firstInColumn,firstInRow);
+                if(firstInColumn)
+                    inWorkRight.Add(x);
+                firstInRow = false;
             }
         }
         TargetCount = pixels.Count;
     }
 
-    private void CreatPixel(Vector3 pos, Color color)
+    private void CreatPixel(Vector3 pos, Color color,bool isFront = false, bool isRight = false)
     {
-        if (color.a < 0.8) return;
         Material targetMaterial;
         float gs = color.grayscale;
 
@@ -94,12 +98,12 @@ public class LevelCreator : MonoBehaviour
         InUseColors.TryGetValue(color, out targetMaterial);
 
         GameObject pixel = pool.GetFromPool(this.pixelPrefab);
-
+        pixel.name = pos.x.ToString() + "." + pos.z.ToString();
         pixel.transform.SetParent(pixelParent);
         pixel.transform.position = pos;
 
         pixel.GetComponent<PixelScript>().rgbScaleMaterial = targetMaterial;
-        pixel.GetComponent<PixelScript>().InitPixel(particlePrefab, OnPaint, basePixelMaterial);
+        pixel.GetComponent<PixelScript>().InitPixel(particlePrefab, OnPaint, basePixelMaterial, new bool[3]{true,isFront,isRight});
         pixels.Add(pixel);
         if (pixelsGrid.Count <= pos.z)
         {
