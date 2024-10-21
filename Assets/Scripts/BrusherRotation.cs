@@ -10,6 +10,10 @@ public class BrusherRotation : MonoBehaviour
     [SerializeField] private float _rotationSpeed = 175;
     static public bool isSwitched = true;
     [SerializeField] private CameraController _camera;
+    [SerializeField] private TrailRenderer trailRenderer;
+    [SerializeField] private Collider[] additionalColliders;
+    [SerializeField] private ParticleSystem stompAnim;
+
     public Transform[] _rotationObject;
 
     private Vector3 direction = Vector3.up;
@@ -18,18 +22,18 @@ public class BrusherRotation : MonoBehaviour
     private Vector3[] startRotObjPositions;
 
 
-    private void Start()
+    private void Awake()
     {
         targerPoint = _rotationObject[0];
         isSwitched = true;
-        _camera.player = _rotationObject[0];
         startPosition = transform.position;
-        startRotObjPositions = new Vector3[2] { _rotationObject[0].transform.position, _rotationObject[1].transform.position };
+        _camera.player = _rotationObject[0];
+        startRotObjPositions = new Vector3[2]{_rotationObject[0].position,_rotationObject[1].position};
+
     }
 
     private void ChangeDirection()
     {
-        // if(AnimationNow || CapsuleManager.isRecalc) return;
         isSwitched = !isSwitched;
 
         SwapPoints();
@@ -42,9 +46,11 @@ public class BrusherRotation : MonoBehaviour
     }
     private void SwapPoints()
     {
+        stompAnim.Play();
         var pos = _rotationObject[0].position;
         _rotationObject[0].position = _rotationObject[1].position;
         _rotationObject[1].position = pos;
+        trailRenderer.Clear();
     }
 
     public void ReloadRot()
@@ -88,17 +94,30 @@ public class BrusherRotation : MonoBehaviour
     public bool CheckFloorAtThePoint(Transform point)
     {
         RaycastHit hit;
-        Debug.DrawRay(point.position, point.TransformDirection(Vector3.down), new Color(1, 1, 1));
+        Debug.DrawRay(point.position, point.TransformDirection(Vector3.down),new Color(1,1,1));
         return Physics.Raycast(point.position, point.TransformDirection(Vector3.down), out hit, 5f);
     }
 
-    private void StartAnim(){
-        float AnimationDuration = 0.5f;
-        var Seq = DOTween.Sequence(); 
-        // Seq.Append(transform.GetChild(1).DOLocalMoveX(pos.x, AnimationDuration));
-        // Seq.Join(transform.GetChild(2).DOLocalMoveX(pos.x, AnimationDuration));
-        // Seq.Join(transform.GetChild(2).DOScaleZ(1, AnimationDuration));
-        // Seq.pla
+    private void SetCollidersEnable(bool isEnable){
+        for(int i = 0; i < additionalColliders.Length; i++){
+            additionalColliders[i].tag = isEnable?additionalColliders[i].name:"Disabled_Sizer";
+        }
     }
 
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // Debug.Log(other.tag);
+        if(other.CompareTag("Pixel")){
+           SetCollidersEnable(true);
+           other.GetComponent<PixelScript>().Paint();
+        //    SetCollidersEnable(false);
+        }
+    }
+     private void OnTriggerExit(Collider other)
+    {
+        if(other.CompareTag("Pixel_Disabled")){
+           SetCollidersEnable(false);
+        }
+    }
 }

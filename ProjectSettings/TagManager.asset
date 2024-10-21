@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Brusher
+  - Sizer_0
+  - Sizer_1
+  - Pixel
+  - Pixel_Disabled
+  - Disabled_Sizer
   layers:
   - Default
   - TransparentFX
