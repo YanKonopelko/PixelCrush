@@ -26,13 +26,13 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 0}
+  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
-  m_DefaultReflectionMode: 1
+  m_DefaultReflectionMode: 0
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
@@ -779,13 +779,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1179257406}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.4135168, y: 0.15216991, z: -0.07031235, w: 0.8949326}
+  m_LocalRotation: {x: 0.08185968, y: 0.9049961, z: -0.36472383, w: 0.20311998}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 38550381}
-  m_LocalEulerAnglesHint: {x: 49.6, y: 19.3, z: 0}
+  m_LocalEulerAnglesHint: {x: 43.9, y: 154.7, z: 0}
 --- !u!108 &1179257408
 Light:
   m_ObjectHideFlags: 0
@@ -1013,7 +1013,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c6706f683b65b247b71fd3bee4d1938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  texture2D: {fileID: 2800000, guid: d803f96676573b64aa84e5b7eb7c2478, type: 3}
+  texture2D: {fileID: 2800000, guid: f292ce6127864b24684813f8a9c63727, type: 3}
   pixelPrefab: {fileID: 5342893742723837334, guid: 095dbb462138e33428b38e6a8938cf49, type: 3}
   particlePrefab: {fileID: 7762894531867462151, guid: 179986e534f697c4fa46c010a53bd788, type: 3}
   pixelParent: {fileID: 1199415949}
@@ -1487,7 +1487,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.25, y: 0.2, z: 0.02}
+  m_Size: {x: 0.25, y: 0.35, z: 0.02}
   m_Center: {x: -0.03, y: 0, z: 0.0000000037252903}
 --- !u!1 &1653276918
 GameObject:
@@ -1603,7 +1603,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.25, y: 0.1, z: 0.02}
+  m_Size: {x: 0.25, y: 0.2, z: 0.02}
   m_Center: {x: -0.03, y: 0, z: 0.0000000037252903}
 --- !u!1001 &1907907157
 PrefabInstance:

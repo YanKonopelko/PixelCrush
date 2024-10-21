@@ -52,9 +52,9 @@ public class PixelScript : MonoBehaviour
         sequence = DOTween.Sequence();
         var myCallback = new TweenCallback(()=>DisableSphere());
         sequence.Append(sphereObj.transform.DOScale(new Vector3(0,0,0),0.1f).SetEase(Ease.InOutCirc)).OnComplete(myCallback);
-        for(int i =0; i < corners.Length;i++){
-            corners[i].material= rgbScaleMaterial;
-        }
+        // for(int i =0; i < corners.Length;i++){
+        //     corners[i].material= rgbScaleMaterial;
+        // }
         paintCallback();
         this.tag = "Pixel_Disabled";
         await UniTask.Delay(500);
@@ -68,7 +68,7 @@ public class PixelScript : MonoBehaviour
      public void InitPixel(GameObject paticlePrefabKey,Action callback,Material startMat,bool[] enabledCorners){
         for(int i =0; i < corners.Length;i++){
             corners[i].enabled = false;
-            corners[i].material= startMat;
+            corners[i].material= rgbScaleMaterial;
         }
         for(int i =0; i < enabledCorners.Length;i++){
             corners[i].enabled =enabledCorners[i];
