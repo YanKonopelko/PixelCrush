@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -42,6 +43,9 @@ public class LevelCreator : MonoBehaviour
         LevelCreator.Instance = this;
         pool.PreparePool(particlePrefab, 50);
         CreateLevel(texture2D);
+        DOTween.SetTweensCapacity(200,250);
+        // Application.targetFrameRate = 50;
+        
     }
 
     private void CreateLevel(Texture2D img){
@@ -137,6 +141,7 @@ public class LevelCreator : MonoBehaviour
 
     public void StatGame(){
         isStart = true;
+        OnStart?.Invoke();
         StartCanvas.SetActive(false);
     }
 }

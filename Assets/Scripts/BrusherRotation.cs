@@ -12,24 +12,33 @@ public class BrusherRotation : MonoBehaviour
     [SerializeField] private CameraController _camera;
     [SerializeField] private TrailRenderer trailRenderer;
     [SerializeField] private Collider[] additionalColliders;
+    [SerializeField] private Collider[] baseColliders;
     [SerializeField] private ParticleSystem stompAnim;
 
     public Transform[] _rotationObject;
+    [SerializeField] private Transform stick;
+
 
     private Vector3 direction = Vector3.up;
 
     private Vector3 startPosition;
     private Vector3[] startRotObjPositions;
 
+    private bool AnimationNow = false;
+    public static BrusherRotation instance;
 
-    private void Awake()
+    private void Start()
     {
+        instance =  this;
         targerPoint = _rotationObject[0];
         isSwitched = true;
         startPosition = transform.position;
-        _camera.player = _rotationObject[0];
+        // _camera.player = _rotationObject[0];
         startRotObjPositions = new Vector3[2]{_rotationObject[0].position,_rotationObject[1].position};
-
+        for(int i = 0; i < baseColliders.Length;i++){
+            baseColliders[i].enabled = false;
+        }
+        LevelCreator.Instance.OnStart += OnStart;
     }
 
     private void ChangeDirection()
@@ -46,7 +55,7 @@ public class BrusherRotation : MonoBehaviour
     }
     private void SwapPoints()
     {
-       
+       if(AnimationNow) return;
         var pos = _rotationObject[0].position;
         _rotationObject[0].position = _rotationObject[1].position;
         _rotationObject[1].position = pos;
@@ -55,12 +64,19 @@ public class BrusherRotation : MonoBehaviour
         stompAnim.Play();
     }
 
+    public void OnStart(){
+        StartAnimation(0.3f);
+    }
+
     public void ReloadRot()
     {
         transform.localRotation = new Quaternion(0, 0, 0, 0);
         transform.position = startPosition;
         _rotationObject[0].position = startRotObjPositions[0];
         _rotationObject[1].position = startRotObjPositions[1];
+        for(int i = 0; i < baseColliders.Length;i++){
+            baseColliders[i].enabled = false;
+        }
         isSwitched = true;
     }
     void Update()
@@ -100,26 +116,51 @@ public class BrusherRotation : MonoBehaviour
         return Physics.Raycast(point.position, point.TransformDirection(Vector3.down), out hit, 5f);
     }
 
-    private void SetCollidersEnable(bool isEnable){
+    public void SetCollidersEnable(bool isEnable){
         for(int i = 0; i < additionalColliders.Length; i++){
             additionalColliders[i].tag = isEnable?additionalColliders[i].name:"Disabled_Sizer";
         }
     }
 
 
-    private void OnTriggerEnter(Collider other)
-    {
-        // Debug.Log(other.tag);
-        if(other.CompareTag("Pixel")){
-           SetCollidersEnable(true);
-           other.GetComponent<PixelScript>().Paint();
-        //    SetCollidersEnable(false);
+
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     // Debug.Log(other.tag);
+    //     if(other.CompareTag("Pixel")){
+    //        SetCollidersEnable(true);
+    //        other.GetComponent<PixelScript>().Paint();
+    //     //    SetCollidersEnable(false);
+    //     }
+    // }
+    //  private void OnTriggerExit(Collider other)
+    // {
+    //     if(other.CompareTag("Pixel_Disabled")){
+    //        SetCollidersEnable(false);
+    //     }
+    // }
+
+    public void StartAnimation(float animationDuration){
+        AnimationNow = true;
+        for(int i = 0; i < baseColliders.Length;i++){
+            baseColliders[i].enabled = true;
         }
+        var Seq = DOTween.Sequence(); 
+        Seq.Append(_rotationObject[1].DOLocalMoveX(6.4f, animationDuration));
+        Seq.Join(stick.DOLocalMoveX(3.2f, animationDuration));
+        Seq.Join(stick.DOScaleY(2, animationDuration));
+        Seq.OnComplete(()=>{AnimationNow = false;});
     }
-     private void OnTriggerExit(Collider other)
-    {
-        if(other.CompareTag("Pixel_Disabled")){
-           SetCollidersEnable(false);
-        }
-    }
+
+//  public void EndAnimation(float animationDuration){
+//         AnimationNow = true;
+//         var obj = GetComponent<BrusherRotation>()._rotationObject[0];
+//         var pos = obj.localPosition;
+//         var Seq = DOTween.Sequence(); 
+//         Seq.Append(_rotationObject[1].DOLocalMoveX(pos.x, animationDuration));
+//         Seq.Join(stick.DOLocalMoveX(pos.x, animationDuration));
+//         Seq.Join(transform.GetChild(2).DOScaleZ(1, animationDuration));
+//         Seq.OnComplete(()=>AnimationNow = false);
+//     }
+
 }

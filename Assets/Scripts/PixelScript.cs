@@ -24,7 +24,10 @@ public class PixelScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if(isPainted) return;
-        
+          if(other.CompareTag("Brusher")){
+           BrusherRotation.instance.SetCollidersEnable(true);
+           Paint();
+          }
         if(other.CompareTag("Sizer_0")){
             SphereResize(0.75f);
         }
@@ -34,8 +37,12 @@ public class PixelScript : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if(isPainted) return;
+        if(isPainted) {
+            BrusherRotation.instance.SetCollidersEnable(false);
+        }
+        else{
             SphereResize(1);
+        }
     }
 
     public async void Paint(){
