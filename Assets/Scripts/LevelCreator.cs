@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Unity.Collections;
+using Unity.Jobs;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,7 +19,13 @@ public class LevelCreator : MonoBehaviour
     [SerializeField] private Material basePixelMaterial;
     [SerializeField] private Material sphereMaterial;
     [SerializeField] private GameObject StartCanvas;
+    [SerializeField] private Transform Offset;
+    [SerializeField] private Transform brusher;
 
+    [SerializeField] private Vector2 brusherSize;
+    [SerializeField] private Vector2 pixelSize;
+
+    [SerializeField] private PixelScript[] pixelScripts;
 
     [SerializeField] private Pool pool;
 
@@ -30,6 +38,8 @@ public class LevelCreator : MonoBehaviour
     private Dictionary<Color, Material> InUseColors = new Dictionary<Color, Material>();
     private List<GameObject> pixels = new List<GameObject>();
     private List<List<Vector3>> pixelsGrid = new List<List<Vector3>>();
+    private NativeArray<Vector2> pixelPositions;
+
 
     public Action OnStart;
     public Action OnLose;
@@ -37,18 +47,23 @@ public class LevelCreator : MonoBehaviour
 
     private int TargetCount = 0;
     private int CurrentCount = 0;
+
+    private NativeArray<bool> pixelsPainted;
+    private JobHandle handle;
+
     private void Start()
     {
         Pool.Instance = this.pool;
         LevelCreator.Instance = this;
         pool.PreparePool(particlePrefab, 50);
         CreateLevel(texture2D);
-        DOTween.SetTweensCapacity(200,250);
+        DOTween.SetTweensCapacity(200, 250);
         // Application.targetFrameRate = 50;
-        
+
     }
 
-    private void CreateLevel(Texture2D img){
+    private void CreateLevel(Texture2D img)
+    {
         ClearChildren();
         CreateLevelWithImage(img);
     }
@@ -78,16 +93,25 @@ public class LevelCreator : MonoBehaviour
                 Color color = pixelData[x + y * width];
                 if (color.a < 0.8) continue;
                 bool firstInColumn = !inWorkRight.Contains(x);
-                this.CreatPixel(new Vector3(pos.x, 0, pos.y), color,firstInColumn,firstInRow);
-                if(firstInColumn)
+                this.CreatPixel(new Vector3(pos.x, 0, pos.y), color, firstInColumn, firstInRow);
+                if (firstInColumn)
                     inWorkRight.Add(x);
                 firstInRow = false;
             }
         }
         TargetCount = pixels.Count;
+        pixelPositions = new NativeArray<Vector2>(TargetCount, Allocator.TempJob);
+        pixelsPainted = new NativeArray<bool>(TargetCount, Allocator.TempJob);
+        pixelScripts = new PixelScript[TargetCount];
+        for(int i = 0; i < TargetCount;i++){
+            pixelPositions[i] = new Vector2(pixels[i].transform.position.x,pixels[i].transform.position.z);
+            pixelsPainted[i] = false;
+            pixelScripts[i] = pixels[i].GetComponent<PixelScript>();
+        }
+        
     }
 
-    private void CreatPixel(Vector3 pos, Color color,bool isFront = false, bool isRight = false)
+    private void CreatPixel(Vector3 pos, Color color, bool isFront = false, bool isRight = false)
     {
         Material targetMaterial;
         float gs = color.grayscale;
@@ -104,16 +128,71 @@ public class LevelCreator : MonoBehaviour
         GameObject pixel = pool.GetFromPool(this.pixelPrefab);
         pixel.name = pos.x.ToString() + "." + pos.z.ToString();
         pixel.transform.SetParent(pixelParent);
-        pixel.transform.position = pos;
+        pixel.transform.localPosition = pos;
 
         pixel.GetComponent<PixelScript>().rgbScaleMaterial = targetMaterial;
-        pixel.GetComponent<PixelScript>().InitPixel(particlePrefab, OnPaint, basePixelMaterial, new bool[3]{true,isFront,isRight});
+        pixel.GetComponent<PixelScript>().InitPixel(particlePrefab, OnPaint, basePixelMaterial, new bool[3] { true, isFront, isRight });
         pixels.Add(pixel);
         if (pixelsGrid.Count <= pos.z)
         {
             pixelsGrid.Add(new List<Vector3>());
         }
         pixelsGrid[(int)pos.z].Add(pos);
+    }
+    double radToAngle = Math.PI / 180;
+    public void Update()
+    {
+        if(!isStart) return;
+
+        // a     b
+        // c     d
+        float angle = brusher.rotation.eulerAngles.y * (BrusherRotation.isSwitched?-1:-1);
+
+        float x = -0.5f*brusherSize.x;
+        float y = +0.5f*brusherSize.y;
+        Vector2 leftUp = new Vector2((float)(x * Math.Cos(radToAngle *angle) - y * Math.Sin(radToAngle *angle)),(float)(x * Math.Sin(radToAngle *angle) + y * Math.Cos(radToAngle *angle)));
+        
+        x = 0.5f*brusherSize.x;
+        y = 0.5f*brusherSize.y;
+        Vector2 rightUp = new Vector2((float)(x * Math.Cos(radToAngle *angle) - y * Math.Sin(radToAngle *angle)),(float)(x * Math.Sin(radToAngle *angle) + y * Math.Cos(radToAngle *angle)));
+        
+        x = -0.5f*brusherSize.x;
+        y = -0.5f*brusherSize.y;
+        Vector2 leftDown = new Vector2((float)(x * Math.Cos(radToAngle *angle) - y * Math.Sin(radToAngle *angle)),(float)(x * Math.Sin(radToAngle *angle) + y * Math.Cos(radToAngle *angle)));
+        
+        x = +0.5f*brusherSize.x;
+        y = -0.5f*brusherSize.y;
+        Vector2 rightDown = new Vector2((float)(x * Math.Cos(radToAngle *angle) - y * Math.Sin(radToAngle *angle)),(float)(x * Math.Sin(radToAngle *angle) + y * Math.Cos(radToAngle *angle)));
+        
+        leftUp += new Vector2 (Offset.position.x,Offset.position.z);
+        rightUp += new Vector2 (Offset.position.x,Offset.position.z);
+        leftDown += new Vector2 (Offset.position.x,Offset.position.z);
+        rightDown += new Vector2 (Offset.position.x,Offset.position.z);
+        Debug.DrawLine(new Vector3(leftDown.x,2,leftDown.y),new Vector3(leftUp.x,2,leftUp.y));
+        Debug.DrawLine(new Vector3(leftUp.x,2,leftUp.y),new Vector3(rightUp.x,2,rightUp.y));
+        Debug.DrawLine(new Vector3(rightUp.x,2,rightUp.y),new Vector3(rightDown.x,2,rightDown.y));
+        Debug.DrawLine(new Vector3(rightDown.x,2,rightDown.y),new Vector3(leftDown.x,2,leftDown.y));
+
+        TriggerPixelJob job = new TriggerPixelJob(){
+            pixelsPositions = this.pixelPositions,
+            outPixelPainted = pixelsPainted,
+            brusherPosition = new Vector2(0,0),
+            brusherSize = brusherSize,
+            pixelSize = pixelSize,
+            square = new Square( leftUp,rightUp,leftDown,rightDown)
+        };
+        this.handle = job.Schedule(TargetCount, 5);
+       
+        this.handle.Complete();
+        TriggerPixels();
+    }
+
+    private void TriggerPixels(){
+        for(int i = 0; i < TargetCount;i++){
+            if(pixelsPainted[i]){
+                pixelScripts[i].Paint();
+            }
+        }
     }
 
     private void OnPaint()
@@ -130,7 +209,8 @@ public class LevelCreator : MonoBehaviour
         IsFinish = true;
         Restart();
     }
-    public void Restart(){
+    public void Restart()
+    {
         isStart = false;
         isLose = false;
         IsFinish = false;
@@ -139,7 +219,8 @@ public class LevelCreator : MonoBehaviour
 
     }
 
-    public void StatGame(){
+    public void StatGame()
+    {
         isStart = true;
         OnStart?.Invoke();
         StartCanvas.SetActive(false);

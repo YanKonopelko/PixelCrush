@@ -8,12 +8,10 @@ using UnityEngine.TerrainTools;
 
 public class PixelScript : MonoBehaviour
 {
-    // [SerializeField] MeshRenderer renderer;
     [SerializeField] GameObject ParticleSystemKey;
     [SerializeField] MeshRenderer[] corners;
     [SerializeField] public GameObject sphereObj;
     [SerializeField] public Animation sphereAnim;
-    [SerializeField] public Collider coll;
     public Action paintCallback;
 
     public Material rgbScaleMaterial;    
@@ -21,29 +19,29 @@ public class PixelScript : MonoBehaviour
     private bool isPainted = false;
     private Sequence sequence = null;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(isPainted) return;
-          if(other.CompareTag("Brusher")){
-           BrusherRotation.instance.SetCollidersEnable(true);
-           Paint();
-          }
-        if(other.CompareTag("Sizer_0")){
-            SphereResize(0.75f);
-        }
-        else if(other.CompareTag("Sizer_1")){
-            SphereResize(0.65f);
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if(isPainted) {
-            BrusherRotation.instance.SetCollidersEnable(false);
-        }
-        else{
-            SphereResize(1);
-        }
-    }
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     if(isPainted) return;
+    //       if(other.CompareTag("Brusher")){
+    //        BrusherRotation.instance.SetCollidersEnable(true);
+    //        Paint();
+    //       }
+    //     if(other.CompareTag("Sizer_0")){
+    //         SphereResize(0.75f);
+    //     }
+    //     else if(other.CompareTag("Sizer_1")){
+    //         SphereResize(0.65f);
+    //     }
+    // }
+    // private void OnTriggerExit(Collider other)
+    // {
+    //     if(isPainted) {
+    //         BrusherRotation.instance.SetCollidersEnable(false);
+    //     }
+    //     else{
+    //         SphereResize(1);
+    //     }
+    // }
 
     public async void Paint(){
         if(isPainted) return;
@@ -84,7 +82,6 @@ public class PixelScript : MonoBehaviour
         ParticleSystemKey = paticlePrefabKey;
         isPainted = false;
         sphereObj.SetActive(true);
-        coll.enabled = true;
         this.tag = "Pixel";
         if(sequence != null){
             sequence.Kill();

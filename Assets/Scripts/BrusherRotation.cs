@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class BrusherRotation : MonoBehaviour
 {
-    private Transform targerPoint;
+    public Transform targerPoint;
     [SerializeField] private float _rotationSpeed = 175;
     static public bool isSwitched = true;
     [SerializeField] private CameraController _camera;
@@ -57,8 +57,9 @@ public class BrusherRotation : MonoBehaviour
     {
        if(AnimationNow) return;
         var pos = _rotationObject[0].position;
-        _rotationObject[0].position = _rotationObject[1].position;
-        _rotationObject[1].position = pos;
+        targerPoint = isSwitched?_rotationObject[0]:_rotationObject[1];
+        // _rotationObject[0].position = _rotationObject[1].position;
+        // _rotationObject[1].position = pos;
         trailRenderer.Clear();
         //  stompAnim.Stop();
         stompAnim.Play();
