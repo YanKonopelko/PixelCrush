@@ -19,10 +19,9 @@ public class LevelCreator : MonoBehaviour
     [SerializeField] private Material basePixelMaterial;
     [SerializeField] private Material sphereMaterial;
     [SerializeField] private GameObject StartCanvas;
-    [SerializeField] private Transform Offset;
     [SerializeField] private Transform brusher;
+    [SerializeField] private BrusherRotation brusherRotation;
 
-    [SerializeField] private Vector2 brusherSize;
     [SerializeField] private Vector2 pixelSize;
 
     [SerializeField] private PixelScript[] pixelScripts;
@@ -147,39 +146,46 @@ public class LevelCreator : MonoBehaviour
         // a     b
         // c     d
         float angle = brusher.rotation.eulerAngles.y * (BrusherRotation.isSwitched?-1:-1);
-
-        float x = -0.5f*brusherSize.x;
-        float y = +0.5f*brusherSize.y;
+        var brusherStickSize = brusherRotation.StickSize;
+        float x = -0.5f*brusherStickSize.x;
+        float y = +0.5f*brusherStickSize.y;
+        Vector3 Offset = brusherRotation.StickPosition;
         Vector2 leftUp = new Vector2((float)(x * Math.Cos(radToAngle *angle) - y * Math.Sin(radToAngle *angle)),(float)(x * Math.Sin(radToAngle *angle) + y * Math.Cos(radToAngle *angle)));
         
-        x = 0.5f*brusherSize.x;
-        y = 0.5f*brusherSize.y;
+        x = 0.5f*brusherStickSize.x;
+        y = 0.5f*brusherStickSize.y;
         Vector2 rightUp = new Vector2((float)(x * Math.Cos(radToAngle *angle) - y * Math.Sin(radToAngle *angle)),(float)(x * Math.Sin(radToAngle *angle) + y * Math.Cos(radToAngle *angle)));
         
-        x = -0.5f*brusherSize.x;
-        y = -0.5f*brusherSize.y;
+        x = -0.5f*brusherStickSize.x;
+        y = -0.5f*brusherStickSize.y;
         Vector2 leftDown = new Vector2((float)(x * Math.Cos(radToAngle *angle) - y * Math.Sin(radToAngle *angle)),(float)(x * Math.Sin(radToAngle *angle) + y * Math.Cos(radToAngle *angle)));
         
-        x = +0.5f*brusherSize.x;
-        y = -0.5f*brusherSize.y;
+        x = +0.5f*brusherStickSize.x;
+        y = -0.5f*brusherStickSize.y;
         Vector2 rightDown = new Vector2((float)(x * Math.Cos(radToAngle *angle) - y * Math.Sin(radToAngle *angle)),(float)(x * Math.Sin(radToAngle *angle) + y * Math.Cos(radToAngle *angle)));
         
-        leftUp += new Vector2 (Offset.position.x,Offset.position.z);
-        rightUp += new Vector2 (Offset.position.x,Offset.position.z);
-        leftDown += new Vector2 (Offset.position.x,Offset.position.z);
-        rightDown += new Vector2 (Offset.position.x,Offset.position.z);
+        leftUp += new Vector2 (Offset.x,Offset.z);
+        rightUp += new Vector2 (Offset.x,Offset.z);
+        leftDown += new Vector2 (Offset.x,Offset.z);
+        rightDown += new Vector2 (Offset.x,Offset.z);
         Debug.DrawLine(new Vector3(leftDown.x,2,leftDown.y),new Vector3(leftUp.x,2,leftUp.y));
         Debug.DrawLine(new Vector3(leftUp.x,2,leftUp.y),new Vector3(rightUp.x,2,rightUp.y));
         Debug.DrawLine(new Vector3(rightUp.x,2,rightUp.y),new Vector3(rightDown.x,2,rightDown.y));
         Debug.DrawLine(new Vector3(rightDown.x,2,rightDown.y),new Vector3(leftDown.x,2,leftDown.y));
 
-        TriggerPixelJob job = new TriggerPixelJob(){
+        var circle1Pos = new PointInQuadrilateral.Point(brusherRotation.CirclePositions[0].x, brusherRotation.CirclePositions[0].z);
+        var circle2Pos = new PointInQuadrilateral.Point(brusherRotation.CirclePositions[1].x, brusherRotation.CirclePositions[1].z);
+
+        TriggerPixelJob job = new TriggerPixelJob() {
             pixelsPositions = this.pixelPositions,
             outPixelPainted = pixelsPainted,
-            brusherPosition = new Vector2(0,0),
-            brusherSize = brusherSize,
+            brusherPosition = new Vector2(0, 0),
+            brusherSize = brusherStickSize,
             pixelSize = pixelSize,
-            square = new Square( leftUp,rightUp,leftDown,rightDown)
+            circle1 = circle1Pos,
+            circle2 = circle2Pos,
+            radius = brusherRotation.CircleSize,
+            square = new Square(new PointInQuadrilateral.Point(leftUp.x, leftUp.y), new PointInQuadrilateral.Point(rightUp.x, rightUp.y), new PointInQuadrilateral.Point(leftDown.x, leftDown.y), new PointInQuadrilateral.Point(rightDown.x, rightDown.y))
         };
         this.handle = job.Schedule(TargetCount, 5);
        

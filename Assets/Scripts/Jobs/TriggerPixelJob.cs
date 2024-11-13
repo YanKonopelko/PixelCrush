@@ -6,13 +6,13 @@ using UnityEngine;
 using UnityEngine.Jobs;
 
 public struct Square{
-    public Vector2 LU;
-    public Vector2 RU;
-    public Vector2 LD;
-    public Vector2 RD;
+    public PointInQuadrilateral.Point LU;
+    public PointInQuadrilateral.Point RU;
+    public PointInQuadrilateral.Point LD;
+    public PointInQuadrilateral.Point RD;
     // a     b
     // c     d
-    public  Square(Vector2 lu,Vector2 ru,Vector2 ld,Vector2 rd){
+    public  Square(PointInQuadrilateral.Point lu, PointInQuadrilateral.Point ru, PointInQuadrilateral.Point ld, PointInQuadrilateral.Point rd){
         LU = lu;
         RU = ru;
         LD = ld;
@@ -30,88 +30,48 @@ public struct TriggerPixelJob : IJobParallelFor
     public Vector2 brusherSize;
     public Vector2 pixelSize;
     public Square square;
+    public PointInQuadrilateral.Point circle1;
+    public float radius;
+    public PointInQuadrilateral.Point circle2;
     // public float angle;
 
 
     public void Execute(int index)
     {
         if(outPixelPainted[index]) return;
-        Vector2 capsulePos = pixelsPositions[index];
+        PointInQuadrilateral.Point capsulePos = new PointInQuadrilateral.Point(pixelsPositions[index].x, pixelsPositions[index].y);
 
         
-        if(PointInQuadrilateral.IsPointInside(new PointInQuadrilateral.Point(square.LD.x,square.LD.y),new PointInQuadrilateral.Point(square.LU.x,square.LU.y),new PointInQuadrilateral.Point(square.RU.x,square.RU.y),new PointInQuadrilateral.Point(square.RD.x,square.RD.y), new PointInQuadrilateral.Point(capsulePos.x,capsulePos.y))){
+        if(PointInQuadrilateral.IsPointInside(square.LD,square.LU,square.RU,square.RD, capsulePos)){
             outPixelPainted[index] = true;
-            // Debug.Log("Pos" + index.ToString());
-            // Debug.Log(capsulePos);
-            // Debug.Log(square.LD);
-            // Debug.Log(square.LU);
-            // Debug.Log(square.RU);
-            // Debug.Log(square.RD);
-        } 
-        // // точка (xp, yp) слева от края (x1, y1) - (x2, y2)     
-        // float x1,x2,y1,y2,d;
-        // float xp = capsulePos.x;   
-        // float yp = capsulePos.y;   
-
-
-        // x1 = square.RU.x;
-        // y1 = square.RU.y;
-
-        // x2 = square.LU.x;
-        // y2 = square.LU.y;
-
-        // d = (x2 - x1) * (yp - y1) - (xp - x1) * (y2 - y1);
-        // // Debug.Log("0");
-        // if(d < 0) return;
-
-        // x1 = square.LU.x;
-        // y1 = square.LU.y;
-
-        // x2 = square.LD.x;
-        // y2 = square.LD.y;
-
-        // d = (x2 - x1) * (yp - y1) - (xp - x1) * (y2 - y1);
-        // // Debug.Log("1");
-
-        // if(d < 0) return;
-
-        // x1 = square.LD.x;
-        // y1 = square.LD.y;
-
-        // x2 = square.RD.x;
-        // y2 = square.RD.y;
-
-        // d = (x2 - x1) * (yp - y1) - (xp - x1) * (y2 - y1);
-        // // Debug.Log("2");
-
-        // if(d < 0) return;
-
-        // x1 = square.RD.x;
-        // y1 = square.RD.y;
-
-        // x2 = square.RU.x;
-        // y2 = square.RU.y;
-
-        // d = (x2 - x1) * (yp - y1) - (xp - x1) * (y2 - y1);
-        // // Debug.Log("3");
-        // if(d < 0) return;
-        // // Debug.Log("4");
-
-        // outPixelPainted[index] = true;
-        // if(capsulePos.x <= square.LU)
-
-        // if (Mathf.Abs(capsulePos.x - brusherPosition.x) < brusherSize.y * Math.Cos(angle) + brusherSize.x * Math.Sin(angle) &&
-        //      Mathf.Abs(capsulePos.y - brusherPosition.y) < brusherSize.y * Math.Sin(angle) + brusherSize.x * Math.Cos(angle))
-        // {
-        //         Debug.Log(brusherSize.y * Math.Cos(angle) + brusherSize.x * Math.Sin(angle)) ; 
-        //     outPixelPainted[index] = true;
-        // }
+        }
+        if (outPixelPainted[index]) return;
+        if (PointInQuadrilateral.IsPointInsideCircle(circle1, radius,capsulePos))
+        {
+            outPixelPainted[index] = true;
+        }
+        if (outPixelPainted[index]) return;
+        if (PointInQuadrilateral.IsPointInsideCircle(circle2, radius, capsulePos))
+        {
+            outPixelPainted[index] = true;
+        }
     }
 
 }
 
+
+
 public class PointInQuadrilateral
 {
+    public static bool IsPointInsideCircle(Point circleCentre, float radius, Point point)
+    {
+        // Вычисляем расстояние от центра окружности до точки
+        double distanceSquared = Math.Pow(point.X - circleCentre.X, 2) + Math.Pow(point.Y - circleCentre.Y, 2);
+        double radiusSquared = Math.Pow(radius, 2);
+
+        // Если квадрат расстояния меньше квадрата радиуса, то точка внутри окружности
+        return distanceSquared <= radiusSquared;
+    }
     // Структура для представления точки
     public struct Point
     {

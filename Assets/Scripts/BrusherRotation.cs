@@ -11,34 +11,29 @@ public class BrusherRotation : MonoBehaviour
     static public bool isSwitched = true;
     [SerializeField] private CameraController _camera;
     [SerializeField] private TrailRenderer trailRenderer;
-    [SerializeField] private Collider[] additionalColliders;
-    [SerializeField] private Collider[] baseColliders;
     [SerializeField] private ParticleSystem stompAnim;
 
-    public Transform[] _rotationObject;
     [SerializeField] private Transform stick;
+    [SerializeField] private float circleSizeScaler;
 
+    [SerializeField] private Vector2 brusherSizeScaler;
+    public Transform[] _rotationObject;
 
     private Vector3 direction = Vector3.up;
 
     private Vector3 startPosition;
-    private Vector3[] startRotObjPositions;
 
     private bool AnimationNow = false;
     public static BrusherRotation instance;
-
+    private Vector3[] startRotObjPositions;
     private void Start()
     {
         instance =  this;
         targerPoint = _rotationObject[0];
         isSwitched = true;
         startPosition = transform.position;
-        // _camera.player = _rotationObject[0];
-        startRotObjPositions = new Vector3[2]{_rotationObject[0].position,_rotationObject[1].position};
-        for(int i = 0; i < baseColliders.Length;i++){
-            baseColliders[i].enabled = false;
-        }
         LevelCreator.Instance.OnStart += OnStart;
+        startRotObjPositions = new Vector3[2] { _rotationObject[0].position, _rotationObject[1].position };
     }
 
     private void ChangeDirection()
@@ -46,7 +41,7 @@ public class BrusherRotation : MonoBehaviour
         isSwitched = !isSwitched;
 
         SwapPoints();
-        if (!this.CheckFloorAtThePoint(_rotationObject[0]))
+        if (!this.CheckFloorAtThePoint(targerPoint))
         {
             ReloadRot();
             LevelCreator.Instance.isLose = true;
@@ -57,11 +52,10 @@ public class BrusherRotation : MonoBehaviour
     {
        if(AnimationNow) return;
         var pos = _rotationObject[0].position;
-        targerPoint = isSwitched?_rotationObject[0]:_rotationObject[1];
-        // _rotationObject[0].position = _rotationObject[1].position;
-        // _rotationObject[1].position = pos;
+        //targerPoint = isSwitched?_rotationObject[0]:_rotationObject[1];
+        _rotationObject[0].position = _rotationObject[1].position;
+        _rotationObject[1].position = pos;
         trailRenderer.Clear();
-        //  stompAnim.Stop();
         stompAnim.Play();
     }
 
@@ -71,13 +65,12 @@ public class BrusherRotation : MonoBehaviour
 
     public void ReloadRot()
     {
+        //targerPoint = _rotationObject[0];
         transform.localRotation = new Quaternion(0, 0, 0, 0);
         transform.position = startPosition;
         _rotationObject[0].position = startRotObjPositions[0];
         _rotationObject[1].position = startRotObjPositions[1];
-        for(int i = 0; i < baseColliders.Length;i++){
-            baseColliders[i].enabled = false;
-        }
+        
         isSwitched = true;
     }
     void Update()
@@ -110,58 +103,50 @@ public class BrusherRotation : MonoBehaviour
         }
         transform.RotateAround(targerPoint.position, direction * (isSwitched ? 1 : -1), _rotationSpeed * Time.deltaTime);
     }
+
+    public Vector2 StickSize
+    {
+        get
+        {
+            Vector2 size = new Vector2(brusherSizeScaler.x * stick.localScale.y, brusherSizeScaler.y * stick.localScale.z);
+            return size;
+        }
+    }
+    public Vector3 StickPosition
+    {
+        get
+        {
+            return stick.position;
+        }
+    }
+
+    public float CircleSize
+    {
+        get
+        {
+            return _rotationObject[0].transform.localScale.x*circleSizeScaler;
+        }
+    }
+    public Vector3[] CirclePositions
+    {
+        get
+        {           
+            return new Vector3[2] { _rotationObject[0].transform.position, _rotationObject[1].transform.position };
+        }
+    }
+
     public bool CheckFloorAtThePoint(Transform point)
     {
         RaycastHit hit;
         Debug.DrawRay(point.position, point.TransformDirection(Vector3.down),new Color(1,1,1));
         return Physics.Raycast(point.position, point.TransformDirection(Vector3.down), out hit, 5f);
     }
-
-    public void SetCollidersEnable(bool isEnable){
-        for(int i = 0; i < additionalColliders.Length; i++){
-            additionalColliders[i].tag = isEnable?additionalColliders[i].name:"Disabled_Sizer";
-        }
-    }
-
-
-
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     // Debug.Log(other.tag);
-    //     if(other.CompareTag("Pixel")){
-    //        SetCollidersEnable(true);
-    //        other.GetComponent<PixelScript>().Paint();
-    //     //    SetCollidersEnable(false);
-    //     }
-    // }
-    //  private void OnTriggerExit(Collider other)
-    // {
-    //     if(other.CompareTag("Pixel_Disabled")){
-    //        SetCollidersEnable(false);
-    //     }
-    // }
-
     public void StartAnimation(float animationDuration){
         AnimationNow = true;
-        for(int i = 0; i < baseColliders.Length;i++){
-            baseColliders[i].enabled = true;
-        }
         var Seq = DOTween.Sequence(); 
         Seq.Append(_rotationObject[1].DOLocalMoveX(6.4f, animationDuration));
         Seq.Join(stick.DOLocalMoveX(3.2f, animationDuration));
         Seq.Join(stick.DOScaleY(2, animationDuration));
         Seq.OnComplete(()=>{AnimationNow = false;});
     }
-
-//  public void EndAnimation(float animationDuration){
-//         AnimationNow = true;
-//         var obj = GetComponent<BrusherRotation>()._rotationObject[0];
-//         var pos = obj.localPosition;
-//         var Seq = DOTween.Sequence(); 
-//         Seq.Append(_rotationObject[1].DOLocalMoveX(pos.x, animationDuration));
-//         Seq.Join(stick.DOLocalMoveX(pos.x, animationDuration));
-//         Seq.Join(transform.GetChild(2).DOScaleZ(1, animationDuration));
-//         Seq.OnComplete(()=>AnimationNow = false);
-//     }
-
 }
