@@ -85,17 +85,28 @@ public class LevelCreator : MonoBehaviour
         List<int> inWorkRight = new List<int>();
         for (int y = 0; y < height; y++)
         {
-            bool firstInRow = true;
             for (int x = 0; x < width; x++)
             {
                 Vector2 pos = new Vector2(x, y);
                 Color color = pixelData[x + y * width];
                 if (color.a < 0.8) continue;
-                bool firstInColumn = !inWorkRight.Contains(x);
+                bool firstInRow = true;
+                bool firstInColumn = true;
+
+                if(x > 0){
+                    Color previousColor = pixelData[x-1 + y * width];
+                    firstInRow = previousColor.a<0.8;
+                }
+
+                if(y>0){
+                   Color previousColor = pixelData[x + (y-1) * width];
+                    firstInColumn = previousColor.a<0.8; 
+                }
+               
                 this.CreatPixel(new Vector3(pos.x, 0, pos.y), color, firstInColumn, firstInRow);
-                if (firstInColumn)
-                    inWorkRight.Add(x);
-                firstInRow = false;
+                // if (firstInColumn)
+                //     inWorkRight.Add(x);
+                // firstInRow = false;
             }
         }
         TargetCount = pixels.Count;
