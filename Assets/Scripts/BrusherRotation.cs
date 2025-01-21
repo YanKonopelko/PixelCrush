@@ -70,7 +70,7 @@ public class BrusherRotation : MonoBehaviour
         transform.position = startPosition;
         _rotationObject[0].position = startRotObjPositions[0];
         _rotationObject[1].position = startRotObjPositions[1];
-        
+        FinishAnimation(0.2f);
         isSwitched = true;
     }
     void Update()
@@ -147,6 +147,15 @@ public class BrusherRotation : MonoBehaviour
         Seq.Append(_rotationObject[1].DOLocalMoveX(6.4f, animationDuration));
         Seq.Join(stick.DOLocalMoveX(3.2f, animationDuration));
         Seq.Join(stick.DOScaleY(2, animationDuration));
+        Seq.OnComplete(()=>{AnimationNow = false;});
+    }
+      public void FinishAnimation(float animationDuration){
+        AnimationNow = true;
+        var Seq = DOTween.Sequence(); 
+        Seq.Append(_rotationObject[1].DOLocalMoveX(0f, animationDuration));
+        Seq.Join(_rotationObject[0].DOLocalMoveX(0f, animationDuration));
+        Seq.Join(stick.DOLocalMoveX(0f, animationDuration));
+        Seq.Join(stick.DOScaleY(0, animationDuration));
         Seq.OnComplete(()=>{AnimationNow = false;});
     }
 }

@@ -82,7 +82,6 @@ public class LevelCreator : MonoBehaviour
         int height = texture.height;
         int width = texture.width;
         var pixelData = texture.GetPixels();
-        List<int> inWorkRight = new List<int>();
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
@@ -104,9 +103,6 @@ public class LevelCreator : MonoBehaviour
                 }
                
                 this.CreatPixel(new Vector3(pos.x, 0, pos.y), color, firstInColumn, firstInRow);
-                // if (firstInColumn)
-                //     inWorkRight.Add(x);
-                // firstInRow = false;
             }
         }
         TargetCount = pixels.Count;
@@ -224,6 +220,7 @@ public class LevelCreator : MonoBehaviour
     private void Win()
     {
         IsFinish = true;
+        brusherRotation.FinishAnimation(0.3f);
         Restart();
     }
     public void Restart()
