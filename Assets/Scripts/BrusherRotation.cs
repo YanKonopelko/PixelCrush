@@ -65,6 +65,7 @@ public class BrusherRotation : MonoBehaviour
 
     public void ReloadRot()
     {
+        FinishAnimation(0.3f);
         //targerPoint = _rotationObject[0];
         transform.localRotation = new Quaternion(0, 0, 0, 0);
         transform.position = startPosition;

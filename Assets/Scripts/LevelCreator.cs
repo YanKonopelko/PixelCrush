@@ -220,7 +220,7 @@ public class LevelCreator : MonoBehaviour
     private void Win()
     {
         IsFinish = true;
-        brusherRotation.FinishAnimation(0.3f);
+        brusherRotation.ReloadRot();
         Restart();
     }
     public void Restart()
