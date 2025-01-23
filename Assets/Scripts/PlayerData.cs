@@ -5,7 +5,7 @@ public class PlayerData
 {
     // const variables
     public static PlayerData Instance = new PlayerData();
-    public const int LevelsCount = 2;
+    public const int LevelsCount = 11;
     public PlayerData()
     {
         FromSave();

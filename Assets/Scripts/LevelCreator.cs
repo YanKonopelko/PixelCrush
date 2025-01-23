@@ -79,6 +79,7 @@ public class LevelCreator : MonoBehaviour
             targetLevel = PlayerData.Instance.CurrentLevel;
         }
         PlayerData.Instance.LastLevel = targetLevel;
+        Debug.Log(targetLevel);
         UniTask<Texture2D> textureTask = GlobalData.Instance.GetLevelTexture(targetLevel);
         texture2D = await textureTask;
         CreateLevel(texture2D);
@@ -175,7 +176,7 @@ public class LevelCreator : MonoBehaviour
     double radToAngle = Math.PI / 180;
     public void Update()
     {
-        debugText.text = "Level: " + ( (PlayerData.Instance.IsMaxLevelNow()? PlayerData.Instance.CurrentLevel + PlayerData.Instance.AdditionalIndex:PlayerData.Instance.CurrentLevel)+1).ToString();
+        debugText.text = "Level: " + ( (PlayerData.Instance.AdditionalIndex>-1? PlayerData.Instance.CurrentLevel + PlayerData.Instance.AdditionalIndex:PlayerData.Instance.CurrentLevel)+1).ToString();
         if (!isStart) return;
 
         // a     b
