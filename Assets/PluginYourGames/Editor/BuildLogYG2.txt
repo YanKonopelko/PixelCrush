@@ -1,0 +1,3 @@
+Build path: B:/Projects/Unity-CleanItUp/Builds
+Build number: 1
+PluginYG version: 2.0031

@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 // [ExecuteAlways]
 public class LevelCreator : MonoBehaviour
@@ -27,6 +29,9 @@ public class LevelCreator : MonoBehaviour
     [SerializeField] private PixelScript[] pixelScripts;
 
     [SerializeField] private Pool pool;
+
+    [SerializeField] private Text debugText;
+
 
 
     public bool isStart;
@@ -55,10 +60,29 @@ public class LevelCreator : MonoBehaviour
         Pool.Instance = this.pool;
         LevelCreator.Instance = this;
         pool.PreparePool(particlePrefab, 50);
-        CreateLevel(texture2D);
+        AsyncCreateLevel();
         DOTween.SetTweensCapacity(200, 250);
         // Application.targetFrameRate = 50;
+    }
 
+    private async void AsyncCreateLevel()
+    {
+        int targetLevel;
+        if(PlayerData.Instance.IsMaxLevelNow()){
+
+            System.Random rnd = new System.Random();
+            targetLevel = rnd.Next(0,PlayerData.LevelsCount);
+            if(PlayerData.Instance.LastLevel != -1)
+                targetLevel = PlayerData.Instance.LastLevel;
+        }
+        else{
+            targetLevel = PlayerData.Instance.CurrentLevel;
+        }
+        PlayerData.Instance.LastLevel = targetLevel;
+        UniTask<Texture2D> textureTask = GlobalData.Instance.GetLevelTexture(targetLevel);
+        texture2D = await textureTask;
+        CreateLevel(texture2D);
+        PlayerData.Instance.Save();
     }
 
     private void CreateLevel(Texture2D img)
@@ -92,16 +116,18 @@ public class LevelCreator : MonoBehaviour
                 bool firstInRow = true;
                 bool firstInColumn = true;
 
-                if(x > 0){
-                    Color previousColor = pixelData[x-1 + y * width];
-                    firstInRow = previousColor.a<0.8;
+                if (x > 0)
+                {
+                    Color previousColor = pixelData[x - 1 + y * width];
+                    firstInRow = previousColor.a < 0.8;
                 }
 
-                if(y>0){
-                   Color previousColor = pixelData[x + (y-1) * width];
-                    firstInColumn = previousColor.a<0.8; 
+                if (y > 0)
+                {
+                    Color previousColor = pixelData[x + (y - 1) * width];
+                    firstInColumn = previousColor.a < 0.8;
                 }
-               
+
                 this.CreatPixel(new Vector3(pos.x, 0, pos.y), color, firstInColumn, firstInRow);
             }
         }
@@ -109,12 +135,13 @@ public class LevelCreator : MonoBehaviour
         pixelPositions = new NativeArray<Vector2>(TargetCount, Allocator.TempJob);
         pixelsPainted = new NativeArray<bool>(TargetCount, Allocator.TempJob);
         pixelScripts = new PixelScript[TargetCount];
-        for(int i = 0; i < TargetCount;i++){
-            pixelPositions[i] = new Vector2(pixels[i].transform.position.x,pixels[i].transform.position.z);
+        for (int i = 0; i < TargetCount; i++)
+        {
+            pixelPositions[i] = new Vector2(pixels[i].transform.position.x, pixels[i].transform.position.z);
             pixelsPainted[i] = false;
             pixelScripts[i] = pixels[i].GetComponent<PixelScript>();
         }
-        
+
     }
 
     private void CreatPixel(Vector3 pos, Color color, bool isFront = false, bool isRight = false)
@@ -148,42 +175,44 @@ public class LevelCreator : MonoBehaviour
     double radToAngle = Math.PI / 180;
     public void Update()
     {
-        if(!isStart) return;
+        debugText.text = "Level: " + ( (PlayerData.Instance.IsMaxLevelNow()? PlayerData.Instance.CurrentLevel + PlayerData.Instance.AdditionalIndex:PlayerData.Instance.CurrentLevel)+1).ToString();
+        if (!isStart) return;
 
         // a     b
         // c     d
-        float angle = brusher.rotation.eulerAngles.y * (BrusherRotation.isSwitched?-1:-1);
+        float angle = brusher.rotation.eulerAngles.y * (BrusherRotation.isSwitched ? -1 : -1);
         var brusherStickSize = brusherRotation.StickSize;
-        float x = -0.5f*brusherStickSize.x;
-        float y = +0.5f*brusherStickSize.y;
+        float x = -0.5f * brusherStickSize.x;
+        float y = +0.5f * brusherStickSize.y;
         Vector3 Offset = brusherRotation.StickPosition;
-        Vector2 leftUp = new Vector2((float)(x * Math.Cos(radToAngle *angle) - y * Math.Sin(radToAngle *angle)),(float)(x * Math.Sin(radToAngle *angle) + y * Math.Cos(radToAngle *angle)));
-        
-        x = 0.5f*brusherStickSize.x;
-        y = 0.5f*brusherStickSize.y;
-        Vector2 rightUp = new Vector2((float)(x * Math.Cos(radToAngle *angle) - y * Math.Sin(radToAngle *angle)),(float)(x * Math.Sin(radToAngle *angle) + y * Math.Cos(radToAngle *angle)));
-        
-        x = -0.5f*brusherStickSize.x;
-        y = -0.5f*brusherStickSize.y;
-        Vector2 leftDown = new Vector2((float)(x * Math.Cos(radToAngle *angle) - y * Math.Sin(radToAngle *angle)),(float)(x * Math.Sin(radToAngle *angle) + y * Math.Cos(radToAngle *angle)));
-        
-        x = +0.5f*brusherStickSize.x;
-        y = -0.5f*brusherStickSize.y;
-        Vector2 rightDown = new Vector2((float)(x * Math.Cos(radToAngle *angle) - y * Math.Sin(radToAngle *angle)),(float)(x * Math.Sin(radToAngle *angle) + y * Math.Cos(radToAngle *angle)));
-        
-        leftUp += new Vector2 (Offset.x,Offset.z);
-        rightUp += new Vector2 (Offset.x,Offset.z);
-        leftDown += new Vector2 (Offset.x,Offset.z);
-        rightDown += new Vector2 (Offset.x,Offset.z);
-        Debug.DrawLine(new Vector3(leftDown.x,2,leftDown.y),new Vector3(leftUp.x,2,leftUp.y));
-        Debug.DrawLine(new Vector3(leftUp.x,2,leftUp.y),new Vector3(rightUp.x,2,rightUp.y));
-        Debug.DrawLine(new Vector3(rightUp.x,2,rightUp.y),new Vector3(rightDown.x,2,rightDown.y));
-        Debug.DrawLine(new Vector3(rightDown.x,2,rightDown.y),new Vector3(leftDown.x,2,leftDown.y));
+        Vector2 leftUp = new Vector2((float)(x * Math.Cos(radToAngle * angle) - y * Math.Sin(radToAngle * angle)), (float)(x * Math.Sin(radToAngle * angle) + y * Math.Cos(radToAngle * angle)));
+
+        x = 0.5f * brusherStickSize.x;
+        y = 0.5f * brusherStickSize.y;
+        Vector2 rightUp = new Vector2((float)(x * Math.Cos(radToAngle * angle) - y * Math.Sin(radToAngle * angle)), (float)(x * Math.Sin(radToAngle * angle) + y * Math.Cos(radToAngle * angle)));
+
+        x = -0.5f * brusherStickSize.x;
+        y = -0.5f * brusherStickSize.y;
+        Vector2 leftDown = new Vector2((float)(x * Math.Cos(radToAngle * angle) - y * Math.Sin(radToAngle * angle)), (float)(x * Math.Sin(radToAngle * angle) + y * Math.Cos(radToAngle * angle)));
+
+        x = +0.5f * brusherStickSize.x;
+        y = -0.5f * brusherStickSize.y;
+        Vector2 rightDown = new Vector2((float)(x * Math.Cos(radToAngle * angle) - y * Math.Sin(radToAngle * angle)), (float)(x * Math.Sin(radToAngle * angle) + y * Math.Cos(radToAngle * angle)));
+
+        leftUp += new Vector2(Offset.x, Offset.z);
+        rightUp += new Vector2(Offset.x, Offset.z);
+        leftDown += new Vector2(Offset.x, Offset.z);
+        rightDown += new Vector2(Offset.x, Offset.z);
+        Debug.DrawLine(new Vector3(leftDown.x, 2, leftDown.y), new Vector3(leftUp.x, 2, leftUp.y));
+        Debug.DrawLine(new Vector3(leftUp.x, 2, leftUp.y), new Vector3(rightUp.x, 2, rightUp.y));
+        Debug.DrawLine(new Vector3(rightUp.x, 2, rightUp.y), new Vector3(rightDown.x, 2, rightDown.y));
+        Debug.DrawLine(new Vector3(rightDown.x, 2, rightDown.y), new Vector3(leftDown.x, 2, leftDown.y));
 
         var circle1Pos = new PointInQuadrilateral.Point(brusherRotation.CirclePositions[0].x, brusherRotation.CirclePositions[0].z);
         var circle2Pos = new PointInQuadrilateral.Point(brusherRotation.CirclePositions[1].x, brusherRotation.CirclePositions[1].z);
 
-        TriggerPixelJob job = new TriggerPixelJob() {
+        TriggerPixelJob job = new TriggerPixelJob()
+        {
             pixelsPositions = this.pixelPositions,
             outPixelPainted = pixelsPainted,
             brusherPosition = new Vector2(0, 0),
@@ -195,14 +224,17 @@ public class LevelCreator : MonoBehaviour
             square = new Square(new PointInQuadrilateral.Point(leftUp.x, leftUp.y), new PointInQuadrilateral.Point(rightUp.x, rightUp.y), new PointInQuadrilateral.Point(leftDown.x, leftDown.y), new PointInQuadrilateral.Point(rightDown.x, rightDown.y))
         };
         this.handle = job.Schedule(TargetCount, 5);
-       
+
         this.handle.Complete();
         TriggerPixels();
     }
 
-    private void TriggerPixels(){
-        for(int i = 0; i < TargetCount;i++){
-            if(pixelsPainted[i]){
+    private void TriggerPixels()
+    {
+        for (int i = 0; i < TargetCount; i++)
+        {
+            if (pixelsPainted[i])
+            {
                 pixelScripts[i].Paint();
             }
         }
@@ -220,8 +252,16 @@ public class LevelCreator : MonoBehaviour
     private void Win()
     {
         IsFinish = true;
+        PlayerData.Instance.MarkLevelComplete();
         brusherRotation.ReloadRot();
-        Restart();
+         isStart = false;
+        isLose = false;
+        IsFinish = false;
+        AsyncCreateLevel();
+        StartCanvas.SetActive(true);
+        GlobalData.Instance.UnloadLevelTexture(PlayerData.Instance.LastLevel);
+        PlayerData.Instance.LastLevel = -1;
+        PlayerData.Instance.Save();
     }
     public void Restart()
     {
@@ -230,7 +270,6 @@ public class LevelCreator : MonoBehaviour
         IsFinish = false;
         CreateLevel(texture2D);
         StartCanvas.SetActive(true);
-
     }
 
     public void StatGame()
