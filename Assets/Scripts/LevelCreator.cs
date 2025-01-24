@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Unity.Collections;
@@ -31,6 +32,7 @@ public class LevelCreator : MonoBehaviour
     [SerializeField] private Pool pool;
 
     [SerializeField] private Text debugText;
+    [SerializeField] private GameObject loadScreen;
 
 
 
@@ -65,7 +67,7 @@ public class LevelCreator : MonoBehaviour
         // Application.targetFrameRate = 50;
     }
 
-    private async void AsyncCreateLevel()
+    private async Task AsyncCreateLevel()
     {
         int targetLevel;
         if(PlayerData.Instance.IsMaxLevelNow()){
@@ -176,7 +178,7 @@ public class LevelCreator : MonoBehaviour
     double radToAngle = Math.PI / 180;
     public void Update()
     {
-        debugText.text = "Level: " + ( (PlayerData.Instance.AdditionalIndex>-1? PlayerData.Instance.CurrentLevel + PlayerData.Instance.AdditionalIndex:PlayerData.Instance.CurrentLevel)+1).ToString();
+        debugText.text = "Level: " + ( (PlayerData.Instance.AdditionalIndex>-1? PlayerData.Instance.CurrentLevel + PlayerData.Instance.AdditionalIndex:PlayerData.Instance.CurrentLevel)+1).ToString() + $"\n Fps: {1/Time.deltaTime}";
         if (!isStart) return;
 
         // a     b
@@ -204,10 +206,10 @@ public class LevelCreator : MonoBehaviour
         rightUp += new Vector2(Offset.x, Offset.z);
         leftDown += new Vector2(Offset.x, Offset.z);
         rightDown += new Vector2(Offset.x, Offset.z);
-        Debug.DrawLine(new Vector3(leftDown.x, 2, leftDown.y), new Vector3(leftUp.x, 2, leftUp.y));
-        Debug.DrawLine(new Vector3(leftUp.x, 2, leftUp.y), new Vector3(rightUp.x, 2, rightUp.y));
-        Debug.DrawLine(new Vector3(rightUp.x, 2, rightUp.y), new Vector3(rightDown.x, 2, rightDown.y));
-        Debug.DrawLine(new Vector3(rightDown.x, 2, rightDown.y), new Vector3(leftDown.x, 2, leftDown.y));
+        // Debug.DrawLine(new Vector3(leftDown.x, 2, leftDown.y), new Vector3(leftUp.x, 2, leftUp.y));
+        // Debug.DrawLine(new Vector3(leftUp.x, 2, leftUp.y), new Vector3(rightUp.x, 2, rightUp.y));
+        // Debug.DrawLine(new Vector3(rightUp.x, 2, rightUp.y), new Vector3(rightDown.x, 2, rightDown.y));
+        // Debug.DrawLine(new Vector3(rightDown.x, 2, rightDown.y), new Vector3(leftDown.x, 2, leftDown.y));
 
         var circle1Pos = new PointInQuadrilateral.Point(brusherRotation.CirclePositions[0].x, brusherRotation.CirclePositions[0].z);
         var circle2Pos = new PointInQuadrilateral.Point(brusherRotation.CirclePositions[1].x, brusherRotation.CirclePositions[1].z);
@@ -250,19 +252,24 @@ public class LevelCreator : MonoBehaviour
         }
     }
 
-    private void Win()
+    private async Task Win()
     {
         IsFinish = true;
         PlayerData.Instance.MarkLevelComplete();
+        brusherRotation.FinishAnimation(0.5f);
+        await UniTask.Delay(500);
         brusherRotation.ReloadRot();
-         isStart = false;
+        isStart = false;
         isLose = false;
         IsFinish = false;
-        AsyncCreateLevel();
+        loadScreen.SetActive(true);
+        await AsyncCreateLevel();
         StartCanvas.SetActive(true);
         GlobalData.Instance.UnloadLevelTexture(PlayerData.Instance.LastLevel);
         PlayerData.Instance.LastLevel = -1;
         PlayerData.Instance.Save();
+        await Task.Delay(1500);
+        loadScreen.SetActive(false);
     }
     public void Restart()
     {

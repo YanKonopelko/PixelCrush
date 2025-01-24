@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -44,6 +46,7 @@ public class BrusherRotation : MonoBehaviour
         if (!this.CheckFloorAtThePoint(targerPoint))
         {
             ReloadRot();
+            FinishAnimation(0.1f);
             LevelCreator.Instance.isLose = true;
             LevelCreator.Instance.Restart();
         }
@@ -63,15 +66,14 @@ public class BrusherRotation : MonoBehaviour
         StartAnimation(0.3f);
     }
 
-    public void ReloadRot()
+    public async void ReloadRot()
     {
-        FinishAnimation(0.3f);
         //targerPoint = _rotationObject[0];
         transform.localRotation = new Quaternion(0, 0, 0, 0);
         transform.position = startPosition;
         _rotationObject[0].position = startRotObjPositions[0];
         _rotationObject[1].position = startRotObjPositions[1];
-        FinishAnimation(0.2f);
+        // await UniTask.Delay(500);
         isSwitched = true;
     }
     void Update()
