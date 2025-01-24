@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEditor;
 using UnityEditor.Compilation;
 using UnityEngine;
@@ -37,7 +38,7 @@ namespace YG.EditorScr
             for (int i = 0; i <= 10; i++)
             {
                 EditorUtility.DisplayProgressBar($"{InfoYG.NAME_PLUGIN} first startup", "first startup operations", 0.1f + (i / 20f));
-                await Task.Delay(100);
+                await UniTask.Delay(100);
             }
             EditorUtility.ClearProgressBar();
 

@@ -14,7 +14,6 @@ using UnityEngine.UI;
 // [ExecuteAlways]
 public class LevelCreator : MonoBehaviour
 {
-    [SerializeField] private Texture2D texture2D;
     [SerializeField] private GameObject pixelPrefab;
     [SerializeField] private GameObject particlePrefab;
     [SerializeField] private Transform pixelParent;
@@ -35,6 +34,7 @@ public class LevelCreator : MonoBehaviour
     [SerializeField] private GameObject loadScreen;
 
 
+    private Texture2D texture2D;
 
     public bool isStart;
     public bool isLose;
@@ -57,17 +57,19 @@ public class LevelCreator : MonoBehaviour
     private NativeArray<bool> pixelsPainted;
     private JobHandle handle;
 
-    private void Start()
+    private async void Start()
     {
+        loadScreen.SetActive(true);
         Pool.Instance = this.pool;
         LevelCreator.Instance = this;
         pool.PreparePool(particlePrefab, 50);
-        AsyncCreateLevel();
+        await AsyncCreateLevel();
+        loadScreen.SetActive(false);
         DOTween.SetTweensCapacity(200, 250);
         // Application.targetFrameRate = 50;
     }
 
-    private async Task AsyncCreateLevel()
+    private async UniTask AsyncCreateLevel()
     {
         int targetLevel;
         if(PlayerData.Instance.IsMaxLevelNow()){
@@ -164,7 +166,7 @@ public class LevelCreator : MonoBehaviour
         GameObject pixel = pool.GetFromPool(this.pixelPrefab);
         pixel.name = pos.x.ToString() + "." + pos.z.ToString();
         pixel.transform.SetParent(pixelParent);
-        pixel.transform.localPosition = pos;
+        pixel.transform.localPosition = new Vector3(pos.x*pixelSize.x,pos.y*pixelSize.y,pos.z*pixelSize.x);
 
         pixel.GetComponent<PixelScript>().rgbScaleMaterial = targetMaterial;
         pixel.GetComponent<PixelScript>().InitPixel(particlePrefab, OnPaint, basePixelMaterial, new bool[3] { true, isFront, isRight });
@@ -252,7 +254,7 @@ public class LevelCreator : MonoBehaviour
         }
     }
 
-    private async Task Win()
+    private async UniTask Win()
     {
         IsFinish = true;
         PlayerData.Instance.MarkLevelComplete();
@@ -268,7 +270,7 @@ public class LevelCreator : MonoBehaviour
         GlobalData.Instance.UnloadLevelTexture(PlayerData.Instance.LastLevel);
         PlayerData.Instance.LastLevel = -1;
         PlayerData.Instance.Save();
-        await Task.Delay(1500);
+        await UniTask.Delay(1500);
         loadScreen.SetActive(false);
     }
     public void Restart()

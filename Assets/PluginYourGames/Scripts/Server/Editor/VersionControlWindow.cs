@@ -8,6 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using YG.Insides;
 using UnityEditor.Compilation;
+using Cysharp.Threading.Tasks;
 
 namespace YG.EditorScr
 {
@@ -662,7 +663,7 @@ namespace YG.EditorScr
             await ImportPackageAsync(module);
         }
 
-        private async Task<bool> ImportPackageAsync(Module module)
+        private async UniTask<bool> ImportPackageAsync(Module module)
         {
             if (!EditorPrefs.HasKey("approvalDownloadPackagesYG2"))
             {

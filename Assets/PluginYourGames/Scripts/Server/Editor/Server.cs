@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
@@ -88,7 +89,7 @@ namespace YG.EditorScr
             }
             finally
             {
-                await Task.Delay(100);
+                await UniTask.Delay(100);
                 SessionState.SetBool(LOAD_COMPLETE_KEY, true);
                 ServerInfo.DoActionLoadServerInfo();
             }
