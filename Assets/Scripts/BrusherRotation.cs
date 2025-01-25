@@ -153,11 +153,17 @@ public class BrusherRotation : MonoBehaviour
         Seq.OnComplete(()=>{AnimationNow = false;});
     }
       public void FinishAnimation(float animationDuration){
+        float targetPos = 0;
+        if(!isSwitched){
+            targetPos = 6.4f;
+            Debug.Log("SWAP");
+            // SwapPoints();
+        } 
         AnimationNow = true;
         var Seq = DOTween.Sequence(); 
-        Seq.Append(_rotationObject[1].DOLocalMoveX(0f, animationDuration));
-        Seq.Join(_rotationObject[0].DOLocalMoveX(0f, animationDuration));
-        Seq.Join(stick.DOLocalMoveX(0f, animationDuration));
+        Seq.Append(_rotationObject[1].DOLocalMoveX(targetPos, animationDuration));
+        Seq.Join(_rotationObject[0].DOLocalMoveX(targetPos, animationDuration));
+        Seq.Join(stick.DOLocalMoveX(targetPos, animationDuration));
         Seq.Join(stick.DOScaleY(0, animationDuration));
         Seq.OnComplete(()=>{AnimationNow = false;});
     }
