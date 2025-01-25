@@ -6,9 +6,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class BrusherRotation : MonoBehaviour
+public class BrusherRotation : MonoBehaviour 
 {
-    public Transform targerPoint;
     [SerializeField] private float _rotationSpeed = 175;
     static public bool isSwitched = true;
     [SerializeField] private CameraController _camera;
@@ -23,7 +22,8 @@ public class BrusherRotation : MonoBehaviour
 
     private Vector3 direction = Vector3.up;
 
-    private Vector3 startPosition;
+    private Vector3 startPosition;  
+    private Transform targerPoint;
 
     private bool AnimationNow = false;
     public static BrusherRotation instance;
@@ -156,8 +156,6 @@ public class BrusherRotation : MonoBehaviour
         float targetPos = 0;
         if(!isSwitched){
             targetPos = 6.4f;
-            Debug.Log("SWAP");
-            // SwapPoints();
         } 
         AnimationNow = true;
         var Seq = DOTween.Sequence(); 

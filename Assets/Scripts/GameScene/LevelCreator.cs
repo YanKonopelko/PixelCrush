@@ -74,16 +74,15 @@ public class LevelCreator : MonoBehaviour
         int targetLevel;
         if(PlayerData.Instance.IsMaxLevelNow()){
 
-            System.Random rnd = new System.Random();
-            targetLevel = rnd.Next(0,PlayerData.LevelsCount);
             if(PlayerData.Instance.LastLevel != -1)
                 targetLevel = PlayerData.Instance.LastLevel;
+            else
+                targetLevel = PlayerData.Instance.GetLevelFromList();
         }
         else{
             targetLevel = PlayerData.Instance.CurrentLevel;
         }
         PlayerData.Instance.LastLevel = targetLevel;
-        Debug.Log(targetLevel);
         UniTask<Texture2D> textureTask = GlobalData.Instance.GetLevelTexture(targetLevel);
         texture2D = await textureTask;
         CreateLevel(texture2D);
@@ -264,11 +263,11 @@ public class LevelCreator : MonoBehaviour
         isStart = false;
         isLose = false;
         IsFinish = false;
+        PlayerData.Instance.LastLevel = -1;
         loadScreen.SetActive(true);
         await AsyncCreateLevel();
         StartCanvas.SetActive(true);
         GlobalData.Instance.UnloadLevelTexture(PlayerData.Instance.LastLevel);
-        PlayerData.Instance.LastLevel = -1;
         PlayerData.Instance.Save();
         await UniTask.Delay(1500);
         loadScreen.SetActive(false);
