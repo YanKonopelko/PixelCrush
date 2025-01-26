@@ -6,8 +6,9 @@ using UnityEngine.SceneManagement;
 public class EntryPoint : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
+    async void Start()
     {
+        await GlobalData.Instance.Init();
         SceneManager.LoadScene("NewScene");
     }
 

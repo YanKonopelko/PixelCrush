@@ -34,7 +34,7 @@ public class BrusherRotation : MonoBehaviour
         targerPoint = _rotationObject[0];
         isSwitched = true;
         startPosition = transform.position;
-        LevelCreator.Instance.OnStart += OnStart;
+        GameScene.Instance.OnStart += OnStart;
         startRotObjPositions = new Vector3[2] { _rotationObject[0].position, _rotationObject[1].position };
     }
 
@@ -47,8 +47,8 @@ public class BrusherRotation : MonoBehaviour
         {
             ReloadRot();
             FinishAnimation(0.1f);
-            LevelCreator.Instance.isLose = true;
-            LevelCreator.Instance.Restart();
+            GameScene.Instance.isLose = true;
+            GameScene.Instance.Restart();
         }
     }
     private void SwapPoints()
@@ -78,9 +78,9 @@ public class BrusherRotation : MonoBehaviour
     }
     void Update()
     {
-        if (LevelCreator.Instance.isLose) return;
-        if (!LevelCreator.Instance.isStart) return;
-        if (LevelCreator.Instance.IsFinish) return;
+        if (GameScene.Instance.isLose) return;
+        if (!GameScene.Instance.isStart) return;
+        if (GameScene.Instance.IsFinish) return;
 
 
         if (Input.GetMouseButtonDown(0) || (Input.touchCount != 0 && Input.GetTouch(0).phase == TouchPhase.Began))

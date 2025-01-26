@@ -6,13 +6,18 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 public class GlobalData : MonoBehaviour
 {
-    // [SerializeField]    
+    [SerializeField] public Pool pool;
     public static GlobalData Instance;
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private GameObject particlePrefab;
+    void Awake()
     {
         GlobalData.Instance = this;
         DontDestroyOnLoad(this.gameObject);
+    }
+
+    public async UniTask Init(){
+        pool.Init();
+        pool.PreparePool(particlePrefab, 50);
     }
 
     public async UniTask<Texture2D> GetLevelTexture(int LevelNum)

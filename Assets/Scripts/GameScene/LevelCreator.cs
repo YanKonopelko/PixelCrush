@@ -20,7 +20,6 @@ public class LevelCreator : MonoBehaviour
     [SerializeField] private Material paintedPixelMaterial;
     [SerializeField] private Material basePixelMaterial;
     [SerializeField] private Material sphereMaterial;
-    [SerializeField] private GameObject StartCanvas;
     [SerializeField] private Transform brusher;
     [SerializeField] private BrusherRotation brusherRotation;
 
@@ -28,28 +27,17 @@ public class LevelCreator : MonoBehaviour
 
     [SerializeField] private PixelScript[] pixelScripts;
 
-    [SerializeField] private Pool pool;
 
-    [SerializeField] private Text debugText;
-    [SerializeField] private GameObject loadScreen;
 
 
     private Texture2D texture2D;
 
-    public bool isStart;
-    public bool isLose;
-    public bool IsFinish;
+ 
 
-    public static LevelCreator Instance;
     private Dictionary<Color, Material> InUseColors = new Dictionary<Color, Material>();
     private List<GameObject> pixels = new List<GameObject>();
     private List<List<Vector3>> pixelsGrid = new List<List<Vector3>>();
     private NativeArray<Vector2> pixelPositions;
-
-
-    public Action OnStart;
-    public Action OnLose;
-    public Action OnFinish;
 
     private int TargetCount = 0;
     private int CurrentCount = 0;
@@ -57,19 +45,8 @@ public class LevelCreator : MonoBehaviour
     private NativeArray<bool> pixelsPainted;
     private JobHandle handle;
 
-    private async void Start()
-    {
-        loadScreen.SetActive(true);
-        Pool.Instance = this.pool;
-        LevelCreator.Instance = this;
-        pool.PreparePool(particlePrefab, 50);
-        await AsyncCreateLevel();
-        loadScreen.SetActive(false);
-        DOTween.SetTweensCapacity(200, 250);
-        // Application.targetFrameRate = 50;
-    }
 
-    private async UniTask AsyncCreateLevel()
+    public async UniTask AsyncCreateLevel()
     {
         int targetLevel;
         if(PlayerData.Instance.IsMaxLevelNow()){
@@ -85,21 +62,21 @@ public class LevelCreator : MonoBehaviour
         PlayerData.Instance.LastLevel = targetLevel;
         UniTask<Texture2D> textureTask = GlobalData.Instance.GetLevelTexture(targetLevel);
         texture2D = await textureTask;
-        CreateLevel(texture2D);
+        CreateLevel();
         PlayerData.Instance.Save();
     }
 
-    private void CreateLevel(Texture2D img)
+    public void CreateLevel()
     {
         ClearChildren();
-        CreateLevelWithImage(img);
+        CreateLevelWithImage(texture2D);
     }
 
     public void ClearChildren()
     {
         for (int i = 0; i < pixels.Count; i++)
         {
-            pool.Release(pixelPrefab, pixels[i].gameObject);
+            GlobalData.Instance.pool.Release(pixelPrefab, pixels[i].gameObject);
         }
         pixels.Clear();
         pixelsGrid.Clear();
@@ -162,7 +139,7 @@ public class LevelCreator : MonoBehaviour
 
         InUseColors.TryGetValue(color, out targetMaterial);
 
-        GameObject pixel = pool.GetFromPool(this.pixelPrefab);
+        GameObject pixel = GlobalData.Instance.pool.GetFromPool(this.pixelPrefab);
         pixel.name = pos.x.ToString() + "." + pos.z.ToString();
         pixel.transform.SetParent(pixelParent);
         pixel.transform.localPosition = new Vector3(pos.x*pixelSize.x,pos.y*pixelSize.y,pos.z*pixelSize.x);
@@ -179,8 +156,7 @@ public class LevelCreator : MonoBehaviour
     double radToAngle = Math.PI / 180;
     public void Update()
     {
-        debugText.text = "Level: " + ( (PlayerData.Instance.AdditionalIndex>-1? PlayerData.Instance.CurrentLevel + PlayerData.Instance.AdditionalIndex:PlayerData.Instance.CurrentLevel)+1).ToString() + $"\n Fps: {1/Time.deltaTime}";
-        if (!isStart) return;
+        if (!GameScene.Instance.isStart) return;
 
         // a     b
         // c     d
@@ -249,42 +225,9 @@ public class LevelCreator : MonoBehaviour
         CurrentCount++;
         if (CurrentCount == TargetCount)
         {
-            Win();
+            GameScene.Instance.Win();
         }
     }
 
-    private async UniTask Win()
-    {
-        IsFinish = true;
-        PlayerData.Instance.MarkLevelComplete();
-        brusherRotation.FinishAnimation(0.5f);
-        await UniTask.Delay(500);
-        brusherRotation.ReloadRot();
-        isStart = false;
-        isLose = false;
-        IsFinish = false;
-        PlayerData.Instance.LastLevel = -1;
-        loadScreen.SetActive(true);
-        await AsyncCreateLevel();
-        StartCanvas.SetActive(true);
-        GlobalData.Instance.UnloadLevelTexture(PlayerData.Instance.LastLevel);
-        PlayerData.Instance.Save();
-        await UniTask.Delay(1500);
-        loadScreen.SetActive(false);
-    }
-    public void Restart()
-    {
-        isStart = false;
-        isLose = false;
-        IsFinish = false;
-        CreateLevel(texture2D);
-        StartCanvas.SetActive(true);
-    }
 
-    public void StatGame()
-    {
-        isStart = true;
-        OnStart?.Invoke();
-        StartCanvas.SetActive(false);
-    }
 }

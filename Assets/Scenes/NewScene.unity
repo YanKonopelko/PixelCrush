@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 37686938}
   - component: {fileID: 37686937}
   - component: {fileID: 37686936}
+  - component: {fileID: 37686940}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -226,6 +227,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &37686940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37686935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffa1d5c556d0a284b9e5d0904d2b8849, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartCanvas: {fileID: 1506818705}
+  debugText: {fileID: 1167764521}
+  loadScreen: {fileID: 388904164}
+  levelCreator: {fileID: 1199415948}
+  brusherRotation: {fileID: 5656020644241360625}
+  isStart: 0
+  isLose: 0
+  IsFinish: 0
 --- !u!1 &38550380
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,7 +701,7 @@ GameObject:
   - component: {fileID: 1167764522}
   - component: {fileID: 1167764521}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: DebugText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -851,7 +872,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1199415949}
   - component: {fileID: 1199415948}
-  - component: {fileID: 1199415950}
   m_Layer: 0
   m_Name: LevelCreator
   m_TagString: Untagged
@@ -877,17 +897,10 @@ MonoBehaviour:
   paintedPixelMaterial: {fileID: 2100000, guid: e18366ff27fc07a4bbbba38278c7a5d7, type: 2}
   basePixelMaterial: {fileID: 2100000, guid: 1e81d7bd75ec75d47add298377c7a6a8, type: 2}
   sphereMaterial: {fileID: 2100000, guid: 84eea9d7ab2bf264e9a18bab62797b97, type: 2}
-  StartCanvas: {fileID: 1506818705}
   brusher: {fileID: 4987147676512951370}
   brusherRotation: {fileID: 5656020644241360625}
   pixelSize: {x: 1.35, y: 1.35}
   pixelScripts: []
-  pool: {fileID: 1199415950}
-  debugText: {fileID: 1167764521}
-  loadScreen: {fileID: 388904164}
-  isStart: 0
-  isLose: 0
-  IsFinish: 0
 --- !u!4 &1199415949
 Transform:
   m_ObjectHideFlags: 0
@@ -903,18 +916,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1199415950
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1199415947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c786535009ffa0b498093c45343da6f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1506818705
 GameObject:
   m_ObjectHideFlags: 0
@@ -998,8 +999,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1199415948}
-        m_TargetAssemblyTypeName: LevelCreator, Assembly-CSharp
+      - m_Target: {fileID: 37686940}
+        m_TargetAssemblyTypeName: GameScene, Assembly-CSharp
         m_MethodName: StatGame
         m_Mode: 1
         m_Arguments:

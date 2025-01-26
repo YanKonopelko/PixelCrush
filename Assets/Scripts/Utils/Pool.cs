@@ -10,12 +10,11 @@ public class Pool : MonoBehaviour
     private Dictionary<GameObject, List<GameObject>> usingObjects = new Dictionary<GameObject, List<GameObject>>();
 
     private Transform _transform;
-    public static Pool Instance;
 
-     void Awake()
-    {
+    public void Init(){
         _transform = transform;
-    }    public GameObject GetFromPool(GameObject Object)
+    }
+    public GameObject GetFromPool(GameObject Object)
     {
         return this.GetOrCreate(Object);
     }

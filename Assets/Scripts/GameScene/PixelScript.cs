@@ -49,7 +49,7 @@ public class PixelScript : MonoBehaviour
          if(sequence != null){
             sequence.Kill();
         }
-        GameObject psObject = Pool.Instance.GetFromPool(ParticleSystemKey);
+        GameObject psObject = GlobalData.Instance.pool.GetFromPool(ParticleSystemKey);
         psObject.transform.position = sphereObj.transform.position;
         ParticleSystem ps = psObject.GetComponent<ParticleSystem>();
         // ps.startColor = rgbScaleMaterial.color;
@@ -63,7 +63,7 @@ public class PixelScript : MonoBehaviour
         paintCallback();
         this.tag = "Pixel_Disabled";
         await UniTask.Delay(500);
-        Pool.Instance.Release(ParticleSystemKey,psObject);
+        GlobalData.Instance.pool.Release(ParticleSystemKey,psObject);
     }
 
     private void DisableSphere(){

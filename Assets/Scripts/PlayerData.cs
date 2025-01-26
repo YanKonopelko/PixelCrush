@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using YG;
 
 public class PlayerData
 {
     // const variables
     public static PlayerData Instance = new PlayerData();
-    public const int LevelsCount = 11;
+    public const int LevelsCount = 5;
     private Queue<int> LevelScheduleList = new Queue<int>();
 
     public PlayerData()
@@ -66,6 +67,7 @@ public class PlayerData
             {
                 LevelScheduleList.Enqueue(ar[i]);
             }
+            Debug.Print("Update schedule");
         }
         return LevelScheduleList.Dequeue();
     }
