@@ -5,8 +5,18 @@
     "floatValues": [],
     "intKeys": [],
     "intValues": [],
-    "idSave": 33,
-    "currentLevel": 11,
-    "additionalIndex": 1,
-    "LastLevel": 0
+    "idSave": 80,
+    "currentLevel": 13,
+    "additionalIndex": 15,
+    "LastLevel": 6,
+    "LevelScheduleList": [
+        0,
+        3,
+        1,
+        7,
+        8,
+        9,
+        5,
+        10
+    ]
 }

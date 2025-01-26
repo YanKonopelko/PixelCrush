@@ -10,7 +10,7 @@ namespace YG
         public int currentLevel = 0;
         public int additionalIndex = -1;
         public int LastLevel = -1;
-        public Queue<int> LevelScheduleList = new Queue<int>();
+        public List<int> LevelScheduleList = new List<int>();
 
     }
 }

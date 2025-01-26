@@ -10,6 +10,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using YG;
 
 // [ExecuteAlways]
 public class LevelCreator : MonoBehaviour
@@ -87,6 +88,10 @@ public class LevelCreator : MonoBehaviour
         int height = texture.height;
         int width = texture.width;
         var pixelData = texture.GetPixels();
+        
+        for(int i = 0; i < YG2.saves.LevelScheduleList.Count;i++){
+            Debug.Log(YG2.saves.LevelScheduleList[i]);
+        }
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
@@ -129,7 +134,6 @@ public class LevelCreator : MonoBehaviour
     {
         Material targetMaterial;
         float gs = color.grayscale;
-
         if (!InUseColors.ContainsKey(color))
         {
             Material newMaterial = new Material(paintedPixelMaterial);
@@ -138,7 +142,6 @@ public class LevelCreator : MonoBehaviour
         }
 
         InUseColors.TryGetValue(color, out targetMaterial);
-
         GameObject pixel = GlobalData.Instance.pool.GetFromPool(this.pixelPrefab);
         pixel.name = pos.x.ToString() + "." + pos.z.ToString();
         pixel.transform.SetParent(pixelParent);

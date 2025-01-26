@@ -7,8 +7,8 @@ public class PlayerData
 {
     // const variables
     public static PlayerData Instance = new PlayerData();
-    public const int LevelsCount = 11;
-    private Queue<int> LevelScheduleList = new Queue<int>();
+    public const int LevelsCount = 13;
+    private List<int> LevelScheduleList = new List<int>();
 
     public PlayerData()
     {
@@ -65,11 +65,14 @@ public class PlayerData
             Shuffle(ar);
             for (int i = 0; i < LevelsCount; i++)
             {
-                LevelScheduleList.Enqueue(ar[i]);
+                LevelScheduleList.Add(ar[i]);
             }
             Debug.Print("Update schedule");
         }
-        return LevelScheduleList.Dequeue();
+        int num = LevelScheduleList[LevelScheduleList.Count-1];
+        LevelScheduleList.Remove(LevelScheduleList[LevelScheduleList.Count-1]);
+        Save();
+        return num;
     }
 
     public void Save()
