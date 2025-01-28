@@ -7,7 +7,7 @@ public class PlayerData
 {
     // const variables
     public static PlayerData Instance = new PlayerData();
-    public const int LevelsCount = 13;
+    public const int LevelsCount = 112;
     private List<int> LevelScheduleList = new List<int>();
 
     public PlayerData()

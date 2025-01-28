@@ -89,9 +89,6 @@ public class LevelCreator : MonoBehaviour
         int width = texture.width;
         var pixelData = texture.GetPixels();
         
-        for(int i = 0; i < YG2.saves.LevelScheduleList.Count;i++){
-            Debug.Log(YG2.saves.LevelScheduleList[i]);
-        }
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
@@ -150,7 +147,7 @@ public class LevelCreator : MonoBehaviour
         pixel.GetComponent<PixelScript>().rgbScaleMaterial = targetMaterial;
         pixel.GetComponent<PixelScript>().InitPixel(particlePrefab, OnPaint, basePixelMaterial, new bool[3] { true, isFront, isRight });
         pixels.Add(pixel);
-        if (pixelsGrid.Count <= pos.z)
+        while(pixelsGrid.Count <= pos.z)
         {
             pixelsGrid.Add(new List<Vector3>());
         }
