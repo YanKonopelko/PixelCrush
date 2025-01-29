@@ -229,5 +229,10 @@ public class LevelCreator : MonoBehaviour
         }
     }
 
+    public Vector3 GetLevelCenter(){
+        Vector2 pos = pixelPositions[pixelPositions.Length/2];
+        return new Vector3(pos.x,2,pos.y);
+    }
+
 
 }

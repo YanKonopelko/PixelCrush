@@ -31,6 +31,7 @@ public class GameScene : MonoBehaviour
         loadScreen.SetActive(true);
         // LevelCreator.Instance = this;
         await levelCreator.AsyncCreateLevel();
+        brusherRotation.gameObject.transform.position = levelCreator.GetLevelCenter();
         loadScreen.SetActive(false);
         DOTween.SetTweensCapacity(200, 250);
         // Application.targetFrameRate = 50;
@@ -53,6 +54,7 @@ public class GameScene : MonoBehaviour
         loadScreen.SetActive(true);
         await levelCreator.AsyncCreateLevel();
         StartCanvas.SetActive(true);
+        brusherRotation.gameObject.transform.position = levelCreator.GetLevelCenter();
         GlobalData.Instance.UnloadLevelTexture(PlayerData.Instance.LastLevel);
         PlayerData.Instance.Save();
         await UniTask.Delay(1500);
@@ -64,6 +66,7 @@ public class GameScene : MonoBehaviour
         isLose = false;
         IsFinish = false;
         levelCreator.CreateLevel();
+        brusherRotation.gameObject.transform.position = levelCreator.GetLevelCenter();
         StartCanvas.SetActive(true);
     }
 
