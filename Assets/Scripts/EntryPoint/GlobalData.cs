@@ -7,12 +7,17 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class GlobalData : MonoBehaviour
 {
     [SerializeField] public Pool pool;
+    [SerializeField] public UIManager UIManager;
+    [SerializeField] public SoundManager SoundManager;
+    [SerializeField] public MusicManager MusicManager;
     public static GlobalData Instance;
     [SerializeField] private GameObject particlePrefab;
     void Awake()
     {
         GlobalData.Instance = this;
         DontDestroyOnLoad(this.gameObject);
+        MusicManager.Init();
+        SoundManager.Init();
     }
 
     public async UniTask Init(){

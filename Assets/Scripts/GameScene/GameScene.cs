@@ -76,4 +76,9 @@ public class GameScene : MonoBehaviour
         OnStart?.Invoke();
         StartCanvas.SetActive(false);
     }
+
+    public void OpenSettings(){
+        GlobalData.Instance.UIManager.ShowWindow(EWindowType.Settings);
+    }
+
 }

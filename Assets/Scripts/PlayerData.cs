@@ -7,7 +7,7 @@ public class PlayerData
 {
     // const variables
     public static PlayerData Instance = new PlayerData();
-    public const int LevelsCount = 112;
+    public const int LevelsCount = 113;
     private List<int> LevelScheduleList = new List<int>();
 
     public PlayerData()
@@ -18,6 +18,16 @@ public class PlayerData
     // cahngable variables
     int currentLevel;
     int additionalIndex;
+    private bool fxEnable = true;
+
+    public bool EffectsEnabled
+    {
+        get { return fxEnable; }
+        set
+        {
+            fxEnable = value; YG2.saves.fxEnable = fxEnable;
+        }
+    }
 
     // public variables
     public int CurrentLevel
@@ -51,6 +61,7 @@ public class PlayerData
         additionalIndex = YG2.saves.additionalIndex;
         LastLevel = YG2.saves.LastLevel;
         LevelScheduleList = YG2.saves.LevelScheduleList;
+        fxEnable = YG2.saves.fxEnable;
     }
 
     public int GetLevelFromList()
@@ -69,8 +80,8 @@ public class PlayerData
             }
             Debug.Print("Update schedule");
         }
-        int num = LevelScheduleList[LevelScheduleList.Count-1];
-        LevelScheduleList.Remove(LevelScheduleList[LevelScheduleList.Count-1]);
+        int num = LevelScheduleList[LevelScheduleList.Count - 1];
+        LevelScheduleList.Remove(LevelScheduleList[LevelScheduleList.Count - 1]);
         Save();
         return num;
     }
@@ -81,6 +92,7 @@ public class PlayerData
         YG2.saves.additionalIndex = additionalIndex;
         YG2.saves.LastLevel = LastLevel;
         YG2.saves.LevelScheduleList = LevelScheduleList;
+        YG2.saves.fxEnable = fxEnable;
         YG2.SaveProgress();
     }
     void Shuffle(int[] array)

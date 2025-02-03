@@ -12,5 +12,9 @@ namespace YG
         public int LastLevel = -1;
         public List<int> LevelScheduleList = new List<int>();
 
+        public bool soundsEnabled = true;
+        public bool musicEnabled = true;
+        public bool fxEnable = true;
+
     }
 }
