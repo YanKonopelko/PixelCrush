@@ -16,7 +16,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] List<CustomArrayWithEnum<EWindowType, GameObject>> windows;
     private Dictionary<EWindowType, GameObject> windowsMap = new Dictionary<EWindowType, GameObject>();
 
-    private List<EWindowType> activeWindows = new List<EWindowType>();
+    private List<EWindowType>activeWindows = new List<EWindowType>();
 
 
     private void Start(){
@@ -29,18 +29,18 @@ public class UIManager : MonoBehaviour
     }
 
 
-    public void ShowWindow(EWindowType windowType, BaseWindowData windowData = null)
+    public BaseWindow ShowWindow(EWindowType windowType, BaseWindowData windowData = null)
     {
         if (IsOpen(windowType))
         {
-            return;
+            return null;
         }
         GameObject obj = new GameObject();
         bool has = windowsMap.TryGetValue(windowType, out obj);
         if (!has)
         {
             Debug.LogError($"Have no prefab for windowType - {windowType}");
-            return;
+            return null;
         }
         activeWindows.Add(windowType);
         BaseWindow window = Instantiate(obj).GetComponent<BaseWindow>();
@@ -49,9 +49,10 @@ public class UIManager : MonoBehaviour
         window.gameObject.transform.localPosition = new Vector3(0,0,0);
         window.Show();
         window.gameObject.transform.localPosition = new Vector3(0,0,0);
+        return window;
     }
 
-    public void HideWindow(EWindowType windowType)
+    public void HideWindow(EWindowType windowType,bool foced = false)
     {
         if (IsOpen(windowType))
         {

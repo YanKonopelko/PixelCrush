@@ -12,7 +12,7 @@ public class GameScene : MonoBehaviour
     [SerializeField] private GameObject StartCanvas;
 
     [SerializeField] private Text debugText;
-    [SerializeField] private GameObject loadScreen;
+    // [SerializeField] private GameObject loadScreen;
 
     [SerializeField] private LevelCreator levelCreator;
     [SerializeField] private BrusherRotation brusherRotation;
@@ -28,13 +28,11 @@ public class GameScene : MonoBehaviour
     private async void Start()
     {
         Instance = this;
-        loadScreen.SetActive(true);
-        // LevelCreator.Instance = this;
+        BaseWindow window = GlobalData.Instance.UIManager.ShowWindow(EWindowType.LoadingWindow);
         await levelCreator.AsyncCreateLevel();
         brusherRotation.gameObject.transform.position = levelCreator.GetLevelCenter();
-        loadScreen.SetActive(false);
         DOTween.SetTweensCapacity(200, 250);
-        // Application.targetFrameRate = 50;
+        window.Hide();
     }
     public void Update()
     {
@@ -51,14 +49,14 @@ public class GameScene : MonoBehaviour
         isLose = false;
         IsFinish = false;
         PlayerData.Instance.LastLevel = -1;
-        loadScreen.SetActive(true);
+        BaseWindow window = GlobalData.Instance.UIManager.ShowWindow(EWindowType.LoadingWindow);
         await levelCreator.AsyncCreateLevel();
         StartCanvas.SetActive(true);
         brusherRotation.gameObject.transform.position = levelCreator.GetLevelCenter();
         GlobalData.Instance.UnloadLevelTexture(PlayerData.Instance.LastLevel);
         PlayerData.Instance.Save();
         await UniTask.Delay(1500);
-        loadScreen.SetActive(false);
+        window.Hide();
     }
     public void Restart()
     {

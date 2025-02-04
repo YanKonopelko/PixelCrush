@@ -411,6 +411,8 @@ MonoBehaviour:
   windows:
   - key: 0
     value: {fileID: 8493786742443909826, guid: 7d26f09fa9ff9dd4ba0be850802dbd9d, type: 3}
+  - key: 1
+    value: {fileID: 6944159053232235600, guid: 606ad2baa2454144b82e696a72cec84e, type: 3}
 --- !u!114 &1012342994
 MonoBehaviour:
   m_ObjectHideFlags: 0
