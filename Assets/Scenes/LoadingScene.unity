@@ -285,6 +285,11 @@ MonoBehaviour:
   SoundManager: {fileID: 331641630}
   MusicManager: {fileID: 331641631}
   particlePrefab: {fileID: 7762894531867462151, guid: 179986e534f697c4fa46c010a53bd788, type: 3}
+  particlePrefabs: []
+  stickMaterials: []
+  stickMeshes: []
+  circleMaterials: []
+  circleMeshes: []
 --- !u!4 &423763132
 Transform:
   m_ObjectHideFlags: 0
@@ -413,6 +418,8 @@ MonoBehaviour:
     value: {fileID: 8493786742443909826, guid: 7d26f09fa9ff9dd4ba0be850802dbd9d, type: 3}
   - key: 1
     value: {fileID: 6944159053232235600, guid: 606ad2baa2454144b82e696a72cec84e, type: 3}
+  - key: 2
+    value: {fileID: 6944159053232235600, guid: a8c3b9fb8e2e7454ea7515c17cc898da, type: 3}
 --- !u!114 &1012342994
 MonoBehaviour:
   m_ObjectHideFlags: 0

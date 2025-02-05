@@ -40,6 +40,10 @@ public class GameScene : MonoBehaviour
     }
     public async UniTask Win()
     {
+        if (!PlayerData.Instance.TutorialComplete)
+        {
+            PlayerData.Instance.MarkTutorialComplete();
+        }
         IsFinish = true;
         PlayerData.Instance.MarkLevelComplete();
         brusherRotation.FinishAnimation(0.5f);
@@ -73,9 +77,17 @@ public class GameScene : MonoBehaviour
         isStart = true;
         OnStart?.Invoke();
         StartCanvas.SetActive(false);
+        if (!PlayerData.Instance.TutorialComplete)
+        {
+            TutorialWindowData windowData = new TutorialWindowData();
+            windowData.HideCallback = () => brusherRotation.ChangeDirection();
+            windowData.Step = 0;
+            GlobalData.Instance.UIManager.ShowWindow(EWindowType.TutorialWindow, windowData);
+        }
     }
 
-    public void OpenSettings(){
+    public void OpenSettings()
+    {
         GlobalData.Instance.UIManager.ShowWindow(EWindowType.Settings);
     }
 

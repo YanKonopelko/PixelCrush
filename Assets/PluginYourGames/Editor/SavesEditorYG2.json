@@ -5,10 +5,18 @@
     "floatValues": [],
     "intKeys": [],
     "intValues": [],
-    "idSave": 315,
+    "intExample": 5,
+    "strExample": "Hello!",
+    "boolExample": [
+        false,
+        false,
+        false,
+        false
+    ],
+    "idSave": 347,
     "currentLevel": 113,
-    "additionalIndex": 44,
-    "LastLevel": 32,
+    "additionalIndex": 46,
+    "LastLevel": 47,
     "LevelScheduleList": [
         0,
         68,
@@ -97,11 +105,11 @@
         38,
         70,
         16,
-        91,
-        47,
-        108
+        91
     ],
     "soundsEnabled": false,
     "musicEnabled": false,
-    "fxEnable": true
+    "fxEnable": true,
+    "tutorialComplete": true,
+    "loseTutorialComplete": true
 }

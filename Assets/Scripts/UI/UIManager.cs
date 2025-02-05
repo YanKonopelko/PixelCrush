@@ -47,6 +47,7 @@ public class UIManager : MonoBehaviour
         window.gameObject.transform.SetParent(this.transform);
         window.gameObject.transform.localScale = new Vector3(1,1,1);
         window.gameObject.transform.localPosition = new Vector3(0,0,0);
+        window.PrepareWindowData(windowData);
         window.Show();
         window.gameObject.transform.localPosition = new Vector3(0,0,0);
         return window;

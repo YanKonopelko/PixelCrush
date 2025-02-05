@@ -43,6 +43,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1693088947427367018}
   - component: {fileID: 5074329518034605854}
+  - component: {fileID: 3797782657748837947}
   m_Layer: 0
   m_Name: Brusher
   m_TagString: Brusher
@@ -82,7 +83,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 293f81ad1bf63ee4f8ce4df7a3cfa5f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targerPoint: {fileID: 0}
   _rotationSpeed: 175
   _camera: {fileID: 0}
   trailRenderer: {fileID: 8878205398190582600}
@@ -93,6 +93,26 @@ MonoBehaviour:
   _rotationObject:
   - {fileID: 5351315993705662880}
   - {fileID: 5903417845758078003}
+--- !u!114 &3797782657748837947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780532335464434109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1913c2fe83e4f904c9af06fbe0fd0291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  circlesRenderer:
+  - {fileID: 6605499662197453875}
+  - {fileID: 1367832257193408081}
+  brusherStickRenderer: {fileID: 7181517321502274421}
+  circlesFilters:
+  - {fileID: 8957525226014179577}
+  - {fileID: 3827905172626309787}
+  brusherStickFilter: {fileID: 971629706220615299}
 --- !u!1 &2007179809093159546
 GameObject:
   m_ObjectHideFlags: 0
@@ -5367,6 +5387,16 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1fe8cd3340b20944c8db7ecdd566c8d5, type: 3}
   m_PrefabInstance: {fileID: 376632833457253077}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &1367832257193408081 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 1fe8cd3340b20944c8db7ecdd566c8d5, type: 3}
+  m_PrefabInstance: {fileID: 376632833457253077}
+  m_PrefabAsset: {fileID: 0}
+--- !u!33 &3827905172626309787 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: -5754084199372789682, guid: 1fe8cd3340b20944c8db7ecdd566c8d5, type: 3}
+  m_PrefabInstance: {fileID: 376632833457253077}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5506467841632594103
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5475,5 +5505,15 @@ PrefabInstance:
 --- !u!4 &5467473502193979228 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1fe8cd3340b20944c8db7ecdd566c8d5, type: 3}
+  m_PrefabInstance: {fileID: 5506467841632594103}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &6605499662197453875 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 1fe8cd3340b20944c8db7ecdd566c8d5, type: 3}
+  m_PrefabInstance: {fileID: 5506467841632594103}
+  m_PrefabAsset: {fileID: 0}
+--- !u!33 &8957525226014179577 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: -5754084199372789682, guid: 1fe8cd3340b20944c8db7ecdd566c8d5, type: 3}
   m_PrefabInstance: {fileID: 5506467841632594103}
   m_PrefabAsset: {fileID: 0}

@@ -241,7 +241,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartCanvas: {fileID: 1506818705}
   debugText: {fileID: 1167764521}
-  loadScreen: {fileID: 0}
   levelCreator: {fileID: 1199415948}
   brusherRotation: {fileID: 5656020644241360625}
   isStart: 0

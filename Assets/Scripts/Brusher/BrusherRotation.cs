@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class BrusherRotation : MonoBehaviour 
+public class BrusherRotation : MonoBehaviour
 {
     [SerializeField] private float _rotationSpeed = 175;
     static public bool isSwitched = true;
@@ -22,7 +22,7 @@ public class BrusherRotation : MonoBehaviour
 
     private Vector3 direction = Vector3.up;
 
-    private Vector3 startPosition;  
+    private Vector3 startPosition;
     private Transform targerPoint;
 
     private bool AnimationNow = false;
@@ -30,7 +30,7 @@ public class BrusherRotation : MonoBehaviour
     private Vector3[] startRotObjPositions;
     private void Start()
     {
-        instance =  this;
+        instance = this;
         targerPoint = _rotationObject[0];
         isSwitched = true;
         startPosition = transform.position;
@@ -38,13 +38,23 @@ public class BrusherRotation : MonoBehaviour
         startRotObjPositions = new Vector3[2] { _rotationObject[0].position, _rotationObject[1].position };
     }
 
-    private void ChangeDirection()
+    public void ChangeDirection()
     {
         isSwitched = !isSwitched;
 
         SwapPoints();
         if (!this.CheckFloorAtThePoint(targerPoint))
         {
+            if (!PlayerData.Instance.LoseTutorialComplete)
+            {
+                isSwitched = !isSwitched;
+                SwapPoints();
+                TutorialWindowData windowData = new TutorialWindowData();
+                windowData.Step = 1;
+                GlobalData.Instance.UIManager.ShowWindow(EWindowType.TutorialWindow, windowData);
+                PlayerData.Instance.MarkLoseTutorialComplete();
+                return;
+            }
             ReloadRot();
             FinishAnimation(0.1f);
             GameScene.Instance.isLose = true;
@@ -53,7 +63,7 @@ public class BrusherRotation : MonoBehaviour
     }
     private void SwapPoints()
     {
-       if(AnimationNow) return;
+        if (AnimationNow) return;
         var pos = _rotationObject[0].position;
         //targerPoint = isSwitched?_rotationObject[0]:_rotationObject[1];
         _rotationObject[0].position = _rotationObject[1].position;
@@ -62,7 +72,8 @@ public class BrusherRotation : MonoBehaviour
         stompAnim.Play();
     }
 
-    public void OnStart(){
+    public void OnStart()
+    {
         StartAnimation(0.3f);
     }
 
@@ -127,13 +138,13 @@ public class BrusherRotation : MonoBehaviour
     {
         get
         {
-            return _rotationObject[0].transform.localScale.x*circleSizeScaler;
+            return _rotationObject[0].transform.localScale.x * circleSizeScaler;
         }
     }
     public Vector3[] CirclePositions
     {
         get
-        {           
+        {
             return new Vector3[2] { _rotationObject[0].transform.position, _rotationObject[1].transform.position };
         }
     }
@@ -141,28 +152,31 @@ public class BrusherRotation : MonoBehaviour
     public bool CheckFloorAtThePoint(Transform point)
     {
         RaycastHit hit;
-        Debug.DrawRay(point.position, point.TransformDirection(Vector3.down),new Color(1,1,1));
+        Debug.DrawRay(point.position, point.TransformDirection(Vector3.down), new Color(1, 1, 1));
         return Physics.Raycast(point.position, point.TransformDirection(Vector3.down), out hit, 5f);
     }
-    public void StartAnimation(float animationDuration){
+    public void StartAnimation(float animationDuration)
+    {
         AnimationNow = true;
-        var Seq = DOTween.Sequence(); 
+        var Seq = DOTween.Sequence();
         Seq.Append(_rotationObject[1].DOLocalMoveX(6.4f, animationDuration));
         Seq.Join(stick.DOLocalMoveX(3.2f, animationDuration));
         Seq.Join(stick.DOScaleY(2, animationDuration));
-        Seq.OnComplete(()=>{AnimationNow = false;});
+        Seq.OnComplete(() => { AnimationNow = false; });
     }
-      public void FinishAnimation(float animationDuration){
+    public void FinishAnimation(float animationDuration)
+    {
         float targetPos = 0;
-        if(!isSwitched){
+        if (!isSwitched)
+        {
             targetPos = 6.4f;
-        } 
+        }
         AnimationNow = true;
-        var Seq = DOTween.Sequence(); 
+        var Seq = DOTween.Sequence();
         Seq.Append(_rotationObject[1].DOLocalMoveX(targetPos, animationDuration));
         Seq.Join(_rotationObject[0].DOLocalMoveX(targetPos, animationDuration));
         Seq.Join(stick.DOLocalMoveX(targetPos, animationDuration));
         Seq.Join(stick.DOScaleY(0, animationDuration));
-        Seq.OnComplete(()=>{AnimationNow = false;});
+        Seq.OnComplete(() => { AnimationNow = false; });
     }
 }

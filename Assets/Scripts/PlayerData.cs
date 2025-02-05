@@ -16,8 +16,18 @@ public class PlayerData
     }
 
     // cahngable variables
-    int currentLevel;
-    int additionalIndex;
+    private int currentLevel;
+    private int additionalIndex;
+    private bool tutorialComplete = false;
+    public bool TutorialComplete{
+        get{return tutorialComplete;}
+    }
+
+    private bool loseTutorialComplete = false;
+    public bool LoseTutorialComplete{
+        get{return loseTutorialComplete;}
+    }
+
     private bool fxEnable = true;
 
     public bool EffectsEnabled
@@ -39,6 +49,19 @@ public class PlayerData
         get { return additionalIndex; }
     }
     public int LastLevel;
+
+    public void MarkTutorialComplete(){
+        Dictionary<string, string> eventData = new Dictionary<string, string>();
+        eventData.Add("Step","0");
+        YG2.MetricaSend("TutorialCompleted",eventData);
+        tutorialComplete = true;
+    }
+    public void MarkLoseTutorialComplete(){
+        Dictionary<string, string> eventData = new Dictionary<string, string>();
+        eventData.Add("Step","1");
+        YG2.MetricaSend("TutorialCompleted",eventData);
+        loseTutorialComplete = true;
+    }
 
     public void MarkLevelComplete()
     {
@@ -62,6 +85,8 @@ public class PlayerData
         LastLevel = YG2.saves.LastLevel;
         LevelScheduleList = YG2.saves.LevelScheduleList;
         fxEnable = YG2.saves.fxEnable;
+        tutorialComplete = YG2.saves.tutorialComplete;
+        loseTutorialComplete = YG2.saves.loseTutorialComplete;
     }
 
     public int GetLevelFromList()
@@ -93,6 +118,8 @@ public class PlayerData
         YG2.saves.LastLevel = LastLevel;
         YG2.saves.LevelScheduleList = LevelScheduleList;
         YG2.saves.fxEnable = fxEnable;
+        YG2.saves.tutorialComplete = tutorialComplete;
+        YG2.saves.loseTutorialComplete = loseTutorialComplete;
         YG2.SaveProgress();
     }
     void Shuffle(int[] array)

@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 
-public enum MusicType
+public enum EMusicType
 {
     MainMenuMusic,
     Level_0,
@@ -15,12 +15,12 @@ public enum MusicType
 }
 public class MusicManager : MonoBehaviour
 {
-    [SerializeField] private CustomArrayWithEnum<MusicType, AudioClip>[] clips;
-    private Dictionary<MusicType, AudioSource> sources = new Dictionary<MusicType, AudioSource>();
+    [SerializeField] private CustomArrayWithEnum<EMusicType, AudioClip>[] clips;
+    private Dictionary<EMusicType, AudioSource> sources = new Dictionary<EMusicType, AudioSource>();
 
     public float volume { get; private set; }
 
-    private MusicType curMusic;
+    private EMusicType curMusic;
 
     private bool musicEnabled = true;
 
@@ -43,7 +43,7 @@ public class MusicManager : MonoBehaviour
 
         // volume = YandexGame.savesData.MusicVolume;
         musicEnabled = YG2.saves.musicEnabled;
-        curMusic = MusicType.NULL;
+        curMusic = EMusicType.NULL;
         for (int i = 0; i < clips.Length; i++)
         {
             var Obj = clips[i];
@@ -60,19 +60,19 @@ public class MusicManager : MonoBehaviour
     {
         volume = _volume;
         var keys = sources.Keys;
-        foreach (MusicType type in keys)
+        foreach (EMusicType type in keys)
         {
             sources[type].volume = volume;
         }
         // YandexGame.savesData.MusicVolume = volume;
     }
 
-    async public void Swap(MusicType type, float time = 1.5f)
+    async public void Swap(EMusicType type, float time = 1.5f)
     {
         if (type == curMusic) return;
         sources[type].Play();
 
-        if (curMusic != MusicType.NULL)
+        if (curMusic != EMusicType.NULL)
         {
             float curTime = 0;
             while (curTime < time)

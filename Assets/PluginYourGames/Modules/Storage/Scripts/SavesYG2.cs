@@ -15,6 +15,8 @@ namespace YG
         public bool soundsEnabled = true;
         public bool musicEnabled = true;
         public bool fxEnable = true;
-
+        public bool tutorialComplete = false;
+        public bool loseTutorialComplete = false;
+        
     }
 }

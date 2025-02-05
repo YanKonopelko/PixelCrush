@@ -5,16 +5,20 @@ using UnityEngine;
 public class BaseWindow : MonoBehaviour
 {
     [SerializeField] EWindowType windowType;
-    public async void Show()
+    public virtual void Show()
     {
         gameObject.SetActive(true);
         transform.position = new Vector3(0,0,0);
     }
 
-    public async void Hide()
+    public virtual void Hide()
     {
         gameObject.SetActive(false);
         Destroy(this.gameObject);
         GlobalData.Instance.UIManager.HideWindow(windowType);
+    }
+    public virtual void PrepareWindowData<T>(T data) where T : BaseWindowData
+    {
+        
     }
 }
