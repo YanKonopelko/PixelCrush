@@ -132,7 +132,7 @@ Material:
     - __dummy__: 0
     m_Colors:
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
-    - _Color: {r: 0.04649088, g: 0.042108007, b: 0.12100001, a: 0.3254902}
+    - _Color: {r: 0.19011794, g: 0.1492524, b: 0.24528301, a: 0.54901963}
     - _ColorAddSubDiff: {r: -1, g: 0, b: 0, a: 0}
     - _DepthColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
