@@ -562,6 +562,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   windowType: 0
+  orderInSort: 1
   musicToggle: {fileID: 6602081012390714756}
   soundsToggle: {fileID: 7572317622303408325}
   effectsToggle: {fileID: 4492073972494646823}
