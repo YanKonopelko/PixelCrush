@@ -27,13 +27,14 @@ public class LevelCreator : MonoBehaviour
     [SerializeField] private Vector2 pixelSize;
 
     [SerializeField] private PixelScript[] pixelScripts;
+    [SerializeField] private Texture2D testTexture;
 
 
 
 
     private Texture2D texture2D;
 
- 
+
 
     private Dictionary<Color, Material> InUseColors = new Dictionary<Color, Material>();
     private List<GameObject> pixels = new List<GameObject>();
@@ -49,15 +50,23 @@ public class LevelCreator : MonoBehaviour
 
     public async UniTask AsyncCreateLevel()
     {
+        if (testTexture != null)
+        {
+            texture2D = testTexture;
+            CreateLevel();
+            return;
+        }
         int targetLevel;
-        if(PlayerData.Instance.IsMaxLevelNow()){
+        if (PlayerData.Instance.IsMaxLevelNow())
+        {
 
-            if(PlayerData.Instance.LastLevel != -1)
+            if (PlayerData.Instance.LastLevel != -1)
                 targetLevel = PlayerData.Instance.LastLevel;
             else
                 targetLevel = PlayerData.Instance.GetLevelFromList();
         }
-        else{
+        else
+        {
             targetLevel = PlayerData.Instance.CurrentLevel;
         }
         PlayerData.Instance.LastLevel = targetLevel;
@@ -88,7 +97,7 @@ public class LevelCreator : MonoBehaviour
         int height = texture.height;
         int width = texture.width;
         var pixelData = texture.GetPixels();
-        
+
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
@@ -142,12 +151,12 @@ public class LevelCreator : MonoBehaviour
         GameObject pixel = GlobalData.Instance.pool.GetFromPool(this.pixelPrefab);
         pixel.name = pos.x.ToString() + "." + pos.z.ToString();
         pixel.transform.SetParent(pixelParent);
-        pixel.transform.localPosition = new Vector3(pos.x*pixelSize.x,pos.y*pixelSize.y,pos.z*pixelSize.x);
+        pixel.transform.localPosition = new Vector3(pos.x * pixelSize.x, pos.y * pixelSize.y, pos.z * pixelSize.x);
 
         pixel.GetComponent<PixelScript>().rgbScaleMaterial = targetMaterial;
         pixel.GetComponent<PixelScript>().InitPixel(particlePrefab, OnPaint, basePixelMaterial, new bool[3] { true, isFront, isRight });
         pixels.Add(pixel);
-        while(pixelsGrid.Count <= pos.z)
+        while (pixelsGrid.Count <= pos.z)
         {
             pixelsGrid.Add(new List<Vector3>());
         }
@@ -229,9 +238,10 @@ public class LevelCreator : MonoBehaviour
         }
     }
 
-    public Vector3 GetLevelCenter(){
-        Vector2 pos = pixelPositions[pixelPositions.Length/2];
-        return new Vector3(pos.x,2,pos.y);
+    public Vector3 GetLevelCenter()
+    {
+        Vector2 pos = pixelPositions[pixelPositions.Length / 2];
+        return new Vector3(pos.x, 2, pos.y);
     }
 
 
