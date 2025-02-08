@@ -10,7 +10,11 @@ public class PixelScript : MonoBehaviour
 {
     [SerializeField] GameObject ParticleSystemKey;
     [SerializeField] MeshRenderer[] corners;
+
+    [SerializeField] MeshRenderer basePixel;
+
     [SerializeField] public GameObject sphereObj;
+    [SerializeField] public MeshRenderer sphereRend;
     [SerializeField] public Animation sphereAnim;
     public Action paintCallback;
 
@@ -52,8 +56,8 @@ public class PixelScript : MonoBehaviour
         GameObject psObject = GlobalData.Instance.pool.GetFromPool(ParticleSystemKey);
         psObject.transform.position = sphereObj.transform.position;
         ParticleSystem ps = psObject.GetComponent<ParticleSystem>();
-        // ps.startColor = rgbScaleMaterial.color;
-        ps.Play();
+        ps.startColor = rgbScaleMaterial.color;
+        // ps.Play();
         sequence = DOTween.Sequence();
         var myCallback = new TweenCallback(()=>DisableSphere());
         sequence.Append(sphereObj.transform.DOScale(new Vector3(0,0,0),0.1f).SetEase(Ease.InOutCirc)).OnComplete(myCallback);
@@ -71,17 +75,19 @@ public class PixelScript : MonoBehaviour
     }
 
      public void InitPixel(GameObject paticlePrefabKey,Action callback,Material startMat,bool[] enabledCorners){
-        for(int i =0; i < corners.Length;i++){
-            corners[i].enabled = false;
-            corners[i].material= startMat;
-        }
-        for(int i =0; i < enabledCorners.Length;i++){
-            corners[i].enabled =enabledCorners[i];
-        }
+        // for(int i =0; i < corners.Length;i++){
+        //     corners[i].enabled = false;
+        //     corners[i].material= startMat;
+        // }
+        // for(int i =0; i < enabledCorners.Length;i++){
+        //     corners[i].enabled =enabledCorners[i];
+        // }
+        sphereRend.material= rgbScaleMaterial;
         paintCallback = callback;
         ParticleSystemKey = paticlePrefabKey;
         isPainted = false;
         sphereObj.SetActive(true);
+        basePixel.material = startMat;
         this.tag = "Pixel";
         if(sequence != null){
             sequence.Kill();
