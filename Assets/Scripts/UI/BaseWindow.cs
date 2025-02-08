@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class BaseWindow : MonoBehaviour
 {
-    [SerializeField] EWindowType windowType;
+    [SerializeField] EWindowType windowType = EWindowType.LoadingWindow;
+    [SerializeField] private int orderInSort = 0;
+    public int OrderInSort{
+        get{return orderInSort;}
+    }
     public virtual void Show()
     {
         gameObject.SetActive(true);
