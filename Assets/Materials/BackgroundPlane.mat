@@ -13,7 +13,6 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ALPHAPREMULTIPLY_ON
-  - _COLOROVERLAY_ON
   m_InvalidKeywords: []
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
@@ -86,7 +85,7 @@ Material:
     - _CameraFadingEnabled: 0
     - _CameraFarFadeDistance: 2
     - _CameraNearFadeDistance: 1
-    - _ColorMode: 3
+    - _ColorMode: 0
     - _Cull: 2
     - _Cutoff: 0.5
     - _DepthDistance: 0.5
@@ -132,7 +131,7 @@ Material:
     - __dummy__: 0
     m_Colors:
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
-    - _Color: {r: 0.19011794, g: 0.1492524, b: 0.24528301, a: 0.54901963}
+    - _Color: {r: 0.09505897, g: 0.0746262, b: 0.122641504, a: 0.5529412}
     - _ColorAddSubDiff: {r: -1, g: 0, b: 0, a: 0}
     - _DepthColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

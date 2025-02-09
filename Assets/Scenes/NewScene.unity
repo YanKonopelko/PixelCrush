@@ -1198,7 +1198,7 @@ MonoBehaviour:
   topMaterial: {fileID: 2100000, guid: c0a6001d911333342afe09ca9e4a7c1f, type: 2}
   startTopMaterialColor: {r: 1, g: 0.70980394, b: 0, a: 1}
   startBottomMaterialColor: {r: 0.5568628, g: 0.38431373, b: 0.7921569, a: 1}
-  fogColor: {r: 0.3843137, g: 0.7921569, b: 0.41635042, a: 0.54901963}
+  fogColor: {r: 0.5568628, g: 0.38431373, b: 0.7921569, a: 0.78431374}
   brusher: {fileID: 4987147676512951370}
   brusherRotation: {fileID: 5656020644241360625}
   pixelSize: {x: 1.1, y: 1.1}
