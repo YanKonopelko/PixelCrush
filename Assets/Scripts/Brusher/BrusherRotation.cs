@@ -177,6 +177,8 @@ public class BrusherRotation : MonoBehaviour
         Seq.Join(_rotationObject[0].DOLocalMoveX(targetPos, animationDuration));
         Seq.Join(stick.DOLocalMoveX(targetPos, animationDuration));
         Seq.Join(stick.DOScaleY(0, animationDuration));
-        Seq.OnComplete(() => { AnimationNow = false; });
+        Seq.OnComplete(() => { AnimationNow = false; 
+        stick.localPosition = new Vector3(0,stick.localPosition.y,stick.localPosition.z);
+        });
     }
 }

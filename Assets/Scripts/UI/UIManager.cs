@@ -38,7 +38,7 @@ public class UIManager : MonoBehaviour
         {
             return null;
         }
-        GameObject obj = new GameObject();
+        GameObject obj = null;
         bool has = windowsMap.TryGetValue(windowType, out obj);
         if (!has)
         {
@@ -57,7 +57,7 @@ public class UIManager : MonoBehaviour
             layer.gameObject.transform.localPosition = new Vector3(0, 0, 0);
             layer.name = layerValue.ToString();
         }
-        GameObject parent = new GameObject();
+        GameObject parent = null;
         layers.TryGetValue(layerValue, out parent);
         window.gameObject.transform.SetParent(parent.transform);
         window.gameObject.transform.localScale = new Vector3(1, 1, 1);
