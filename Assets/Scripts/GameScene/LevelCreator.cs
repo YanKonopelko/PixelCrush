@@ -17,10 +17,16 @@ public class LevelCreator : MonoBehaviour
 {
     [SerializeField] private GameObject pixelPrefab;
     [SerializeField] private GameObject particlePrefab;
+    [SerializeField] private Transform fogParent;
     [SerializeField] private Transform pixelParent;
-    [SerializeField] private Material paintedPixelMaterial;
-    [SerializeField] private Material basePixelMaterial;
-    [SerializeField] private Material sphereMaterial;
+    [SerializeField] private Material bottomMaterial;
+    [SerializeField] private Material topMaterial;
+    // [SerializeField] private Material sphereMaterial;
+
+    [SerializeField] private Color startTopMaterialColor;
+    [SerializeField] private Color startBottomMaterialColor;
+    [SerializeField] private Color fogColor;
+
     [SerializeField] private Transform brusher;
     [SerializeField] private BrusherRotation brusherRotation;
 
@@ -30,7 +36,7 @@ public class LevelCreator : MonoBehaviour
     [SerializeField] private Texture2D testTexture;
 
 
-
+    private List<MeshRenderer> fogMeshes = new List<MeshRenderer>();
 
     private Texture2D texture2D;
 
@@ -47,6 +53,13 @@ public class LevelCreator : MonoBehaviour
     private NativeArray<bool> pixelsPainted;
     private JobHandle handle;
 
+    void Start()
+    {
+        for (int i = 0; i < fogParent.childCount; i++)
+        {
+           fogMeshes.Add(fogParent.GetChild(i).GetComponent<MeshRenderer>());
+        }
+    }
 
     public async UniTask AsyncCreateLevel()
     {
@@ -78,6 +91,11 @@ public class LevelCreator : MonoBehaviour
 
     public void CreateLevel()
     {
+        topMaterial.color = startTopMaterialColor;
+        bottomMaterial.color = startBottomMaterialColor;
+        for(int i = 0; i < fogMeshes.Count;i++){
+            fogMeshes[i].material.color = fogColor;
+        }
         ClearChildren();
         CreateLevelWithImage(texture2D);
     }
@@ -142,7 +160,7 @@ public class LevelCreator : MonoBehaviour
         float gs = color.grayscale;
         if (!InUseColors.ContainsKey(color))
         {
-            Material newMaterial = new Material(paintedPixelMaterial);
+            Material newMaterial = new Material(topMaterial);
             newMaterial.color = color;
             InUseColors.Add(color, newMaterial);
         }
@@ -154,7 +172,7 @@ public class LevelCreator : MonoBehaviour
         pixel.transform.localPosition = new Vector3(pos.x * pixelSize.x, pos.y * pixelSize.y, pos.z * pixelSize.x);
 
         pixel.GetComponent<PixelScript>().rgbScaleMaterial = targetMaterial;
-        pixel.GetComponent<PixelScript>().InitPixel(particlePrefab, OnPaint, basePixelMaterial, new bool[3] { true, isFront, isRight });
+        pixel.GetComponent<PixelScript>().InitPixel(particlePrefab, OnPaint, bottomMaterial, topMaterial, new bool[3] { true, isFront, isRight });
         pixels.Add(pixel);
         while (pixelsGrid.Count <= pos.z)
         {

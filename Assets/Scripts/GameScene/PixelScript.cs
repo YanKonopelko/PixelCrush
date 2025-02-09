@@ -10,8 +10,9 @@ public class PixelScript : MonoBehaviour
 {
     [SerializeField] GameObject ParticleSystemKey;
     [SerializeField] MeshRenderer[] corners;
+    [SerializeField] MeshRenderer[] bottoms;
 
-    [SerializeField] MeshRenderer basePixel;
+    // [SerializeField] MeshRenderer basePixel;
 
     [SerializeField] public GameObject sphereObj;
     [SerializeField] public MeshRenderer sphereRend;
@@ -20,7 +21,7 @@ public class PixelScript : MonoBehaviour
 
     public Action paintCallback;
 
-    public Material rgbScaleMaterial;    
+    public Material rgbScaleMaterial;
 
     private bool isPainted = false;
     private Sequence sequence = null;
@@ -49,10 +50,12 @@ public class PixelScript : MonoBehaviour
     //     }
     // }
 
-    public async void Paint(){
-        if(isPainted) return;
-        isPainted =  true;
-         if(sequence != null){
+    public async void Paint()
+    {
+        if (isPainted) return;
+        isPainted = true;
+        if (sequence != null)
+        {
             sequence.Kill();
         }
         GameObject psObject = GlobalData.Instance.pool.GetFromPool(ParticleSystemKey);
@@ -61,25 +64,32 @@ public class PixelScript : MonoBehaviour
         ps.startColor = rgbScaleMaterial.color;
         // ps.Play();
         sequence = DOTween.Sequence();
-        var myCallback = new TweenCallback(()=>DisableSphere());
-        sequence.Append(sphereObj.transform.DOScale(new Vector3(0,0,0),0.1f).SetEase(Ease.InOutCirc)).OnComplete(myCallback);
-        for(int i =0; i < corners.Length;i++){
-            corners[i].material= rgbScaleMaterial;
+        var myCallback = new TweenCallback(() => DisableSphere());
+        sequence.Append(sphereObj.transform.DOScale(new Vector3(0, 0, 0), 0.1f).SetEase(Ease.InOutCirc)).OnComplete(myCallback);
+        for (int i = 0; i < corners.Length; i++)
+        {
+            corners[i].material = rgbScaleMaterial;
         }
-        if(!isTopColored){
-            basePixel.material = rgbScaleMaterial;
+        if (!isTopColored)
+        {
+            for (int i = 0; i < bottoms.Length; i++)
+            {
+                bottoms[i].material = rgbScaleMaterial;
+            }
         }
         paintCallback();
         this.tag = "Pixel_Disabled";
         await UniTask.Delay(500);
-        GlobalData.Instance.pool.Release(ParticleSystemKey,psObject);
+        GlobalData.Instance.pool.Release(ParticleSystemKey, psObject);
     }
 
-    private void DisableSphere(){
+    private void DisableSphere()
+    {
         sphereObj.SetActive(false);
     }
 
-     public void InitPixel(GameObject paticlePrefabKey,Action callback,Material startMat,bool[] enabledCorners){
+    public void InitPixel(GameObject paticlePrefabKey, Action callback, Material bottomStartMat, Material topStartMaterial, bool[] enabledCorners)
+    {
         // for(int i =0; i < corners.Length;i++){
         //     corners[i].enabled = false;
         //     corners[i].material= startMat;
@@ -87,31 +97,39 @@ public class PixelScript : MonoBehaviour
         // for(int i =0; i < enabledCorners.Length;i++){
         //     corners[i].enabled =enabledCorners[i];
         // }
-        if(!isTopColored){
-            sphereRend.material= startMat;
+        if (!isTopColored)
+        {
+            sphereRend.material = topStartMaterial;
         }
-        else{
-            sphereRend.material= rgbScaleMaterial;
+        else
+        {
+            sphereRend.material = rgbScaleMaterial;
         }
         paintCallback = callback;
         ParticleSystemKey = paticlePrefabKey;
         isPainted = false;
         sphereObj.SetActive(true);
-        basePixel.material = startMat;
+        for (int i = 0; i < bottoms.Length; i++)
+        {
+            bottoms[i].material = bottomStartMat;
+        }
         this.tag = "Pixel";
-        if(sequence != null){
+        if (sequence != null)
+        {
             sequence.Kill();
         }
-        sphereObj.transform.localScale = new Vector3(1,1,1);
+        sphereObj.transform.localScale = new Vector3(1, 1, 1);
 
     }
 
-    private void SphereResize(float size){
-         if(sequence != null){
+    private void SphereResize(float size)
+    {
+        if (sequence != null)
+        {
             sequence.Kill();
         }
         sequence = DOTween.Sequence();
-        sequence.Append(sphereObj.transform.DOScale(new Vector3(1,1,size),0.08f));
+        sequence.Append(sphereObj.transform.DOScale(new Vector3(1, 1, size), 0.08f));
         // sphereObj.transform.localScale = ;
     }
 
