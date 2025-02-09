@@ -38,6 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -806,7 +807,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 25
+  field of view: 10
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -833,7 +834,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0.39044788, y: 0.34683135, z: -0.16173005, w: 0.8373183}
-  m_LocalPosition: {x: -19.87, y: 46.44, z: -30.47}
+  m_LocalPosition: {x: -114.1, y: 196.4, z: -124.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -852,9 +853,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 428862872327368110}
-  offset: {x: -19.4, y: 34.5, z: -20}
+  offset: {x: -80, y: 135.45, z: -80}
   LevelParent: {fileID: 1199415949}
-  baseRot: {x: 50, y: 45, z: 0, w: 0}
+  baseRot: {x: 50, y: 45, z: 0}
   FinishAnimNow: 0
 --- !u!1 &969578656
 GameObject:
@@ -1292,7 +1293,7 @@ MonoBehaviour:
   brusherRotation: {fileID: 5656020644241360625}
   pixelSize: {x: 1.1, y: 1.1}
   pixelScripts: []
-  testTexture: {fileID: 0}
+  testTexture: {fileID: 2800000, guid: e7b6f44e94594f34992703c8a654cd35, type: 3}
 --- !u!4 &1199415949
 Transform:
   m_ObjectHideFlags: 0
