@@ -16,6 +16,8 @@ public class PixelScript : MonoBehaviour
     [SerializeField] public GameObject sphereObj;
     [SerializeField] public MeshRenderer sphereRend;
     [SerializeField] public Animation sphereAnim;
+    [SerializeField] public bool isTopColored;
+
     public Action paintCallback;
 
     public Material rgbScaleMaterial;    
@@ -64,6 +66,9 @@ public class PixelScript : MonoBehaviour
         for(int i =0; i < corners.Length;i++){
             corners[i].material= rgbScaleMaterial;
         }
+        if(!isTopColored){
+            basePixel.material = rgbScaleMaterial;
+        }
         paintCallback();
         this.tag = "Pixel_Disabled";
         await UniTask.Delay(500);
@@ -82,7 +87,12 @@ public class PixelScript : MonoBehaviour
         // for(int i =0; i < enabledCorners.Length;i++){
         //     corners[i].enabled =enabledCorners[i];
         // }
-        sphereRend.material= rgbScaleMaterial;
+        if(!isTopColored){
+            sphereRend.material= startMat;
+        }
+        else{
+            sphereRend.material= rgbScaleMaterial;
+        }
         paintCallback = callback;
         ParticleSystemKey = paticlePrefabKey;
         isPainted = false;

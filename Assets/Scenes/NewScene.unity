@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -174,7 +173,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -280,7 +279,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -612,7 +611,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -851,7 +850,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d40686a0b66391b4690de97e136115bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1653276919}
+  player: {fileID: 428862872327368110}
+  offset: {x: -19.4, y: 34.5, z: -20}
 --- !u!1 &969578656
 GameObject:
   m_ObjectHideFlags: 0
@@ -1115,7 +1115,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -1288,7 +1288,7 @@ MonoBehaviour:
   brusherRotation: {fileID: 5656020644241360625}
   pixelSize: {x: 1.1, y: 1.1}
   pixelScripts: []
-  testTexture: {fileID: 2800000, guid: e7b6f44e94594f34992703c8a654cd35, type: 3}
+  testTexture: {fileID: 0}
 --- !u!4 &1199415949
 Transform:
   m_ObjectHideFlags: 0
@@ -1355,7 +1355,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -1594,7 +1594,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -1743,11 +1743,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!4 &1653276919 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5351315993705662880, guid: 7d8106df57f340e4584ee986a03f345a, type: 3}
-  m_PrefabInstance: {fileID: 428862872327368109}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1696298184
 GameObject:
   m_ObjectHideFlags: 0
@@ -1799,7 +1794,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -1890,7 +1885,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -2028,6 +2023,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d8106df57f340e4584ee986a03f345a, type: 3}
+--- !u!4 &428862872327368110 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5467473502193979228, guid: 7d8106df57f340e4584ee986a03f345a, type: 3}
+  m_PrefabInstance: {fileID: 428862872327368109}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4987147676512951370 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1693088947427367018, guid: 7d8106df57f340e4584ee986a03f345a, type: 3}

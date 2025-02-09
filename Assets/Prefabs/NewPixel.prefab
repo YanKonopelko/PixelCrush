@@ -139,6 +139,7 @@ MonoBehaviour:
   sphereObj: {fileID: 7461951098860039970}
   sphereRend: {fileID: 3894939534022206250}
   sphereAnim: {fileID: 0}
+  isTopColored: 0
   rgbScaleMaterial: {fileID: 0}
 --- !u!65 &3292364881387117945
 BoxCollider:

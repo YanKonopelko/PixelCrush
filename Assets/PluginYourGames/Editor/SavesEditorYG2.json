@@ -13,10 +13,10 @@
         false,
         false
     ],
-    "idSave": 426,
+    "idSave": 457,
     "currentLevel": 113,
-    "additionalIndex": 57,
-    "LastLevel": 98,
+    "additionalIndex": 64,
+    "LastLevel": 78,
     "LevelScheduleList": [
         0,
         68,
@@ -88,13 +88,7 @@
         6,
         18,
         24,
-        43,
-        78,
-        67,
-        22,
-        89,
-        82,
-        77
+        43
     ],
     "soundsEnabled": false,
     "musicEnabled": false,
