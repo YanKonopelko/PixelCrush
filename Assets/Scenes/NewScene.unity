@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -785,7 +784,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 428862872327368110}
   offset: {x: -80, y: 135.45, z: -80}
-  LevelParent: {fileID: 1199415949}
+  LevelParent: {fileID: 1199415948}
   baseRot: {x: 50, y: 45, z: 0}
   FinishAnimNow: 0
 --- !u!1 &969578656
@@ -1199,12 +1198,12 @@ MonoBehaviour:
   topMaterial: {fileID: 2100000, guid: c0a6001d911333342afe09ca9e4a7c1f, type: 2}
   startTopMaterialColor: {r: 1, g: 0.70980394, b: 0, a: 1}
   startBottomMaterialColor: {r: 0.5568628, g: 0.38431373, b: 0.7921569, a: 1}
-  fogColor: {r: 0.3843137, g: 0.7921569, b: 0.41635042, a: 1}
+  fogColor: {r: 0.3843137, g: 0.7921569, b: 0.41635042, a: 0.54901963}
   brusher: {fileID: 4987147676512951370}
   brusherRotation: {fileID: 5656020644241360625}
   pixelSize: {x: 1.1, y: 1.1}
   pixelScripts: []
-  testTexture: {fileID: 2800000, guid: e7b6f44e94594f34992703c8a654cd35, type: 3}
+  testTexture: {fileID: 0}
 --- !u!4 &1199415949
 Transform:
   m_ObjectHideFlags: 0

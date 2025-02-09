@@ -263,8 +263,12 @@ public class LevelCreator : MonoBehaviour
 
     public Vector3 GetLevelCenter()
     {
-        Vector2 pos = pixelPositions[pixelPositions.Length / 2];
-        return new Vector3(pos.x, 2, pos.y);
+        int height = texture2D.height;
+        int width = texture2D.width;
+        float x = width/2.4f*pixelSize.x;
+        float z = height/5*pixelSize.y;
+        // Vector2 pos = pixelPositions[pixelPositions.Length / 2];
+        return new Vector3(x, 2, z);
     }
 
 

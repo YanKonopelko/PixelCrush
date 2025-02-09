@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform player;
     [SerializeField] private Vector3 offset;
-    [SerializeField] private Transform LevelParent;
+    [SerializeField] private LevelCreator LevelParent;
     [SerializeField] private Vector3 baseRot;
 
     [Range(0,1)]private float cameraSpeed = 0.042f;
@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviour
     public bool FinishAnimNow = false;
 
     private Transform _transform;
-    private float animationDuration = 3;
+    private float animationDuration = 2.5f;
 
     private void Start(){
         _transform = transform;
@@ -33,11 +33,12 @@ public class CameraController : MonoBehaviour
         FinishAnimNow = true;
         var Seq = DOTween.Sequence();
         Vector3 targetRotation = new Vector3(90,0,0);
-        Vector3 targetPos = LevelParent.position;
-        Seq.Append(_transform.DOLocalMoveX(targetPos.x+17, animationDuration));
-        Seq.Join(_transform.DOLocalMoveY(230, animationDuration));
-        Seq.Join(_transform.DOLocalMoveZ(targetPos.z+3, animationDuration));
-        Seq.Join(_transform.DORotate(targetRotation, animationDuration));
+        Vector3 targetPos = LevelParent.transform.position;
+        Vector3 center = LevelParent.GetLevelCenter();
+        Seq.Append(_transform.DOLocalMoveX(center.x, animationDuration/3));
+        Seq.Join(_transform.DOLocalMoveY(340, animationDuration));
+        Seq.Join(_transform.DOLocalMoveZ(center.z, animationDuration/3));
+        Seq.Join(_transform.DORotate(targetRotation, animationDuration/3));
         Seq.OnComplete(() => { animEnd = true; 
         });
         await UniTask.WaitUntil(()=> animEnd == true);
