@@ -63,6 +63,7 @@ public class LevelCreator : MonoBehaviour
         bottomMaterial.color = startBottomMaterialColor;
         for(int i = 0; i < fogMeshes.Count;i++){
             fogMeshes[i].material.color = fogColor;
+            // fogMeshes[i].material.SetColor("_Color",fogColor);
         }
     }
 
@@ -100,6 +101,7 @@ public class LevelCreator : MonoBehaviour
         bottomMaterial.color = startBottomMaterialColor;
         for(int i = 0; i < fogMeshes.Count;i++){
             fogMeshes[i].material.color = fogColor;
+            // fogMeshes[i].material.SetColor("_Color",fogColor);
         }
         ClearChildren();
         CreateLevelWithImage(texture2D);
@@ -177,7 +179,7 @@ public class LevelCreator : MonoBehaviour
         pixel.transform.localPosition = new Vector3(pos.x * pixelSize.x, pos.y * pixelSize.y, pos.z * pixelSize.x);
 
         pixel.GetComponent<PixelScript>().rgbScaleMaterial = targetMaterial;
-        pixel.GetComponent<PixelScript>().InitPixel(particlePrefab, OnPaint, bottomMaterial, topMaterial, new bool[3] { true, isFront, isRight });
+        pixel.GetComponent<PixelScript>().InitPixel(particlePrefab, OnPaint, targetMaterial, topMaterial, new bool[3] { true, isFront, isRight });
         pixels.Add(pixel);
         while (pixelsGrid.Count <= pos.z)
         {
