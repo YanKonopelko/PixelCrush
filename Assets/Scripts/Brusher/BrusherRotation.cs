@@ -164,7 +164,7 @@ public class BrusherRotation : MonoBehaviour
         Seq.Join(stick.DOScaleY(2, animationDuration));
         Seq.OnComplete(() => { AnimationNow = false; });
     }
-    public void FinishAnimation(float animationDuration)
+    public async UniTask FinishAnimation(float animationDuration)
     {
         float targetPos = 0;
         if (!isSwitched)
@@ -180,5 +180,6 @@ public class BrusherRotation : MonoBehaviour
         Seq.OnComplete(() => { AnimationNow = false; 
         stick.localPosition = new Vector3(0,stick.localPosition.y,stick.localPosition.z);
         });
+        await UniTask.WaitUntil(()=> AnimationNow == true);
     }
 }

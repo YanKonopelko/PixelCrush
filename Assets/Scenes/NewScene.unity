@@ -455,6 +455,7 @@ MonoBehaviour:
   debugText: {fileID: 1167764521}
   levelCreator: {fileID: 1199415948}
   brusherRotation: {fileID: 5656020644241360625}
+  cameraController: {fileID: 963194230}
   isStart: 0
   isLose: 0
   IsFinish: 0
@@ -852,6 +853,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 428862872327368110}
   offset: {x: -19.4, y: 34.5, z: -20}
+  LevelParent: {fileID: 1199415949}
+  baseRot: {x: 50, y: 45, z: 0, w: 0}
+  FinishAnimNow: 0
 --- !u!1 &969578656
 GameObject:
   m_ObjectHideFlags: 0
@@ -1298,7 +1302,7 @@ Transform:
   m_GameObject: {fileID: 1199415947}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.28, y: 0, z: -6}
+  m_LocalPosition: {x: 0, y: 0, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -16,6 +16,7 @@ public class GameScene : MonoBehaviour
 
     [SerializeField] private LevelCreator levelCreator;
     [SerializeField] private BrusherRotation brusherRotation;
+    [SerializeField] private CameraController cameraController;
 
     public static GameScene Instance;
 
@@ -46,8 +47,8 @@ public class GameScene : MonoBehaviour
         }
         IsFinish = true;
         PlayerData.Instance.MarkLevelComplete();
-        brusherRotation.FinishAnimation(0.5f);
-        await UniTask.Delay(500);
+        await brusherRotation.FinishAnimation(0.5f);
+        await cameraController.FinishAnim();
         brusherRotation.ReloadRot();
         isStart = false;
         isLose = false;
@@ -55,6 +56,7 @@ public class GameScene : MonoBehaviour
         PlayerData.Instance.LastLevel = -1;
         BaseWindow window = GlobalData.Instance.UIManager.ShowWindow(EWindowType.LoadingWindow);
         await levelCreator.AsyncCreateLevel();
+        cameraController.ToDefaultValues();
         StartCanvas.SetActive(true);
         brusherRotation.gameObject.transform.position = levelCreator.GetLevelCenter();
         GlobalData.Instance.UnloadLevelTexture(PlayerData.Instance.LastLevel);
