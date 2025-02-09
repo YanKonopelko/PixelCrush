@@ -59,6 +59,11 @@ public class LevelCreator : MonoBehaviour
         {
            fogMeshes.Add(fogParent.GetChild(i).GetComponent<MeshRenderer>());
         }
+        topMaterial.color = startTopMaterialColor;
+        bottomMaterial.color = startBottomMaterialColor;
+        for(int i = 0; i < fogMeshes.Count;i++){
+            fogMeshes[i].material.color = fogColor;
+        }
     }
 
     public async UniTask AsyncCreateLevel()

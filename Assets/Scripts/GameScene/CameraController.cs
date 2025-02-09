@@ -35,7 +35,7 @@ public class CameraController : MonoBehaviour
         Vector3 targetRotation = new Vector3(90,0,0);
         Vector3 targetPos = LevelParent.position;
         Seq.Append(_transform.DOLocalMoveX(targetPos.x+17, animationDuration));
-        Seq.Join(_transform.DOLocalMoveY(130, animationDuration));
+        Seq.Join(_transform.DOLocalMoveY(230, animationDuration));
         Seq.Join(_transform.DOLocalMoveZ(targetPos.z+3, animationDuration));
         Seq.Join(_transform.DORotate(targetRotation, animationDuration));
         Seq.OnComplete(() => { animEnd = true; 
