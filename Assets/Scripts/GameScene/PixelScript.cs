@@ -63,6 +63,7 @@ public class PixelScript : MonoBehaviour
         ParticleSystem ps = psObject.GetComponent<ParticleSystem>();
         ps.startColor = rgbScaleMaterial.color;
         // ps.Play();
+        GlobalData.Instance.SoundManager.PlaySound(ESoundType.PixelDisapearSound);
         sequence = DOTween.Sequence();
         var myCallback = new TweenCallback(() => DisableSphere());
         sequence.Append(sphereObj.transform.DOScale(new Vector3(0, 0, 0), 0.1f).SetEase(Ease.InOutCirc)).OnComplete(myCallback);

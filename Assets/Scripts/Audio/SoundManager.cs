@@ -4,57 +4,19 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using YG;
 
-public enum SoundType
+public enum ESoundType
 {
-    ButtonSound = 0,
-    SliderSound,
-    WinSound,
-    LoseSound,
-    WolfSound,
-    ZombieSound,
-    SkeletonSound,
-    CreeperSound,
-    IronGolemSound,
-    SteveSound,
-
-    ChickenSound,
-    CatSound,
-    AxolotlSound,
-    CowSound,
-    LamaSound,
-    DolphinSound,
-    PandaSound,
-
-    BeeSound,
-    BatSound,
-    SlugSound,
-    SpiderSound,
-    SnowGolemSound,
-    CamelSound,
-    ResidentSound,
-    TraderSound,
-
-    SilverfishSound,
-    PiglinSound,
-    IfritSound,
-    WitchSound,
-    PhantomSound,
-    OutlawSound,
-    LavaCubeSound,
-    GastSound,
-    EdgeWandererSound,
-    DesiccantSound,
-    DragonSound,
-    SpawnSound
-
+    PixelDisapearSound = 0
 };
 
 
 public class SoundManager : MonoBehaviour
 {
 
-    [SerializeField] private CustomArrayWithEnum<SoundType, AudioClip>[] clips;
-    private Dictionary<SoundType, AudioSource> sources = new Dictionary<SoundType, AudioSource>();
+    [SerializeField] private CustomArrayWithEnum<ESoundType, AudioClip>[] clips;
+    private Dictionary<ESoundType, AudioClip> sourcesClips = new Dictionary<ESoundType, AudioClip>();
+
+    private Dictionary<ESoundType, List<AudioSource>> sources = new Dictionary<ESoundType, List<AudioSource>>();
 
     public float volume = 0.4f;
 
@@ -76,15 +38,14 @@ public class SoundManager : MonoBehaviour
         // }
         // volume = YG2.saves.soundsEnable;
         soundsEnabled = YG2.saves.soundsEnabled;
+        DontDestroyOnLoad(this.gameObject);
 
         for (int i = 0; i < clips.Length; i++)
         {
             var Obj = clips[i];
-            sources[Obj.key] = gameObject.AddComponent<AudioSource>();
-            sources[Obj.key].volume = volume;
-            // sources[Obj.key].clip = Obj.Value;
-            sources[Obj.key].loop = false;
-            sources[Obj.key].playOnAwake = false;
+            sourcesClips[Obj.key] = Obj.value;
+            sources[Obj.key] = new List<AudioSource>();
+            // sources[Obj.key].Add(CreateSource());
         }
     }
 
@@ -93,17 +54,42 @@ public class SoundManager : MonoBehaviour
         volume = newVolume;
 
         var keys = sources.Keys;
-        foreach (SoundType type in keys)
+        foreach (ESoundType type in keys)
         {
-            sources[type].volume = volume;
+            for (int i = 0; i < sources[type].Count; i++)
+            {
+                sources[type][i].volume = volume;
+            }
         }
 
         // YandexGame.savesData.SoundsVolume = volume;
     }
 
-    public void PlaySound(SoundType type)
+    public void PlaySound(ESoundType type)
     {
-        sources[type].Play();
+        if(!soundsEnabled) return;
+        List<AudioSource> array = sources[type];
+        for (int i = 0; i < array.Count; i++)
+        {
+            if (!array[i].isPlaying)
+            {
+                array[i].Play();
+                return;
+            }
+        }
+        if(array.Count>=2) return;
+        var source = CreateSource(sourcesClips[type]);
+        array.Add(source);
     }
 
+    private AudioSource CreateSource(AudioClip clip)
+    {
+        
+        AudioSource source = this.gameObject.AddComponent<AudioSource>();
+        source.volume = volume;
+        source.clip = clip;
+        source.loop = false;
+        source.playOnAwake = false;
+        return source;
+    }
 }

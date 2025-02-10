@@ -740,7 +740,7 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: DOTWEEN;YG_PLUGIN_YANDEX_GAME
+    Android: DOTWEEN;YG_PLUGIN_YANDEX_GAME;PLUGIN_YG_2;YandexGamesPlatform_yg;Authorization_yg;AutoTranslateLangs_yg;EnvirData_yg;Flags_yg;InterstitialAdv_yg;Localization_yg;Metrica_yg;OpenURL_yg;Payments_yg;PlayerStats_yg;QuitGameEvent_yg;RedefinePlayerPrefs_yg;Review_yg;RewardedAdv_yg;ServerTime_yg;StickyAdv_yg;Storage_yg;TMP_YG2;NJSON_YG2
     EmbeddedLinux: DOTWEEN
     GameCoreScarlett: DOTWEEN
     GameCoreXboxOne: DOTWEEN

@@ -152,8 +152,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db58046cc4cc8ea40a7e1399b1f38b51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clips: []
-  volume: 0.4
+  clips:
+  - key: 0
+    value: {fileID: 8300000, guid: 02b12cbf03ac26642a85a6b78498cdb6, type: 3}
+  volume: 1
 --- !u!114 &331641631
 MonoBehaviour:
   m_ObjectHideFlags: 0

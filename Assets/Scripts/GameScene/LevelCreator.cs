@@ -97,6 +97,7 @@ public class LevelCreator : MonoBehaviour
 
     public void CreateLevel()
     {
+        Vibrator.Vibrate(250);
         topMaterial.color = startTopMaterialColor;
         bottomMaterial.color = startBottomMaterialColor;
         for(int i = 0; i < fogMeshes.Count;i++){
