@@ -24,7 +24,7 @@ public class LevelCreator : MonoBehaviour
     // [SerializeField] private Material sphereMaterial;
 
     [SerializeField] private Color startTopMaterialColor;
-    [SerializeField] private Color startBottomMaterialColor;
+    // [SerializeField] private Color startBottomMaterialColor;
     [SerializeField] private Color fogColor;
 
     [SerializeField] private Transform brusher;
@@ -60,7 +60,7 @@ public class LevelCreator : MonoBehaviour
            fogMeshes.Add(fogParent.GetChild(i).GetComponent<MeshRenderer>());
         }
         topMaterial.color = startTopMaterialColor;
-        bottomMaterial.color = startBottomMaterialColor;
+        // bottomMaterial.color = startBottomMaterialColor;
         for(int i = 0; i < fogMeshes.Count;i++){
             fogMeshes[i].material.color = fogColor;
             // fogMeshes[i].material.SetColor("_Color",fogColor);
@@ -97,12 +97,13 @@ public class LevelCreator : MonoBehaviour
 
     public void CreateLevel()
     {
-        Vibrator.Vibrate(250);
+        startTopMaterialColor = PlayerData.Instance.CurentLevelConfig.StartTopMaterialColor;
+        // startBottomMaterialColor = PlayerData.Instance.CurentLevelConfig.StartBottomMaterialColor;
+        fogColor = PlayerData.Instance.CurentLevelConfig.FogColor;
         topMaterial.color = startTopMaterialColor;
-        bottomMaterial.color = startBottomMaterialColor;
+        // bottomMaterial.color = startBottomMaterialColor;
         for(int i = 0; i < fogMeshes.Count;i++){
             fogMeshes[i].material.color = fogColor;
-            // fogMeshes[i].material.SetColor("_Color",fogColor);
         }
         ClearChildren();
         CreateLevelWithImage(texture2D);

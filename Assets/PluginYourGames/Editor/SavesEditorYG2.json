@@ -13,15 +13,15 @@
         false,
         false
     ],
-    "idSave": 845,
-    "currentLevel": 7,
+    "idSave": 873,
+    "currentLevel": 18,
     "additionalIndex": -1,
-    "LastLevel": 7,
+    "LastLevel": 18,
     "LevelScheduleList": [],
-    "soundsEnabled": true,
+    "soundsEnabled": false,
     "musicEnabled": false,
     "fxEnable": false,
-    "vibrationEnable": true,
+    "vibrationEnable": false,
     "tutorialComplete": true,
     "loseTutorialComplete": true
 }

@@ -157,6 +157,7 @@ public class BrusherRotation : MonoBehaviour
     }
     public void StartAnimation(float animationDuration)
     {
+        trailRenderer.enabled = true;
         AnimationNow = true;
         var Seq = DOTween.Sequence();
         Seq.Append(_rotationObject[1].DOLocalMoveX(6.4f, animationDuration));
@@ -166,6 +167,8 @@ public class BrusherRotation : MonoBehaviour
     }
     public async UniTask FinishAnimation(float animationDuration)
     {
+        trailRenderer.Clear();
+        trailRenderer.enabled = false;
         float targetPos = 0;
         if (!isSwitched)
         {

@@ -9,7 +9,7 @@ public class PlayerData
     public static PlayerData Instance = new PlayerData();
     public const int LevelsCount = 113;
     private List<int> LevelScheduleList = new List<int>();
-
+    
     public PlayerData()
     {
         FromSave();
@@ -57,6 +57,11 @@ public class PlayerData
     public int AdditionalIndex
     {
         get { return additionalIndex; }
+    }
+    private const int levelsPerConfig = 5; 
+    public LevelConfig CurentLevelConfig
+    {
+        get { return GlobalData.Instance.levelConfigss[(currentLevel/5)%GlobalData.Instance.levelConfigss.Count]; }
     }
     public int LastLevel;
 

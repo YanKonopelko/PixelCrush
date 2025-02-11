@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Cysharp.Threading.Tasks;
 using Unity.VisualScripting;
@@ -22,6 +23,8 @@ public class GlobalData : MonoBehaviour
 
     [SerializeField] private CustomArrayWithEnum<EBrusherCircleMaterialType, Material>[] circleMaterials;
     [SerializeField] private CustomArrayWithEnum<EBrusherCircleSkinType, Material>[] circleMeshes;
+    [SerializeField] public List<LevelConfig> levelConfigss;
+
 
     [DllImport("__Internal")]
     private static extern bool IsReleaseVersion();

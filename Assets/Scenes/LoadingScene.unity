@@ -453,6 +453,9 @@ MonoBehaviour:
   stickMeshes: []
   circleMaterials: []
   circleMeshes: []
+  levelConfigss:
+  - {fileID: 11400000, guid: 0e6e94e2d9a5e9140b9d97d244e0e4a7, type: 2}
+  - {fileID: 11400000, guid: 78cabb4b3d2cd164980e800c25b41995, type: 2}
 --- !u!4 &423763132
 Transform:
   m_ObjectHideFlags: 0

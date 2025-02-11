@@ -68,7 +68,7 @@ public class PixelScript : MonoBehaviour
             ps.Play();
         }
         GlobalData.Instance.SoundManager.PlaySound(ESoundType.PixelDisapearSound);
-        Vibrator.Vibrate(3);
+        Vibrator.Vibrate(10);
         sequence = DOTween.Sequence();
         var myCallback = new TweenCallback(() => DisableSphere());
         sequence.Append(sphereObj.transform.DOScale(new Vector3(0, 0, 0), 0.1f).SetEase(Ease.InOutCirc)).OnComplete(myCallback);
