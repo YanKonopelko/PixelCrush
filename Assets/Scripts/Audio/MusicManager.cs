@@ -6,23 +6,20 @@ using Cysharp.Threading.Tasks;
 
 public enum EMusicType
 {
-    MainMenuMusic,
-    Level_0,
-    Level_1,
-    Level_2,
-    Level_3,
-    NULL
+    NULL = 0,
+    BaseBackMusic = 1,
 }
 public class MusicManager : MonoBehaviour
 {
     [SerializeField] private CustomArrayWithEnum<EMusicType, AudioClip>[] clips;
     private Dictionary<EMusicType, AudioSource> sources = new Dictionary<EMusicType, AudioSource>();
 
-    public float volume { get; private set; }
+    [SerializeField] private float volume;
 
     private EMusicType curMusic;
 
     private bool musicEnabled = true;
+    private float lastVolumeValue = 1;
 
     public bool MusicEnabled
     {
@@ -30,19 +27,18 @@ public class MusicManager : MonoBehaviour
         set
         {
             musicEnabled = value; YG2.saves.musicEnabled = musicEnabled;
-            ChangeVolume(musicEnabled ? 1 : 0);
+            ChangeVolume(musicEnabled ? lastVolumeValue : 0);
         }
     }
 
     async public void Init()
     {
-        // YandexGame.GetDataEvent
-        // while(!YandexGame.SDKEnabled){
-        //     await UniTask.Delay(3);
-        // }
-
-        // volume = YandexGame.savesData.MusicVolume;
         musicEnabled = YG2.saves.musicEnabled;
+        lastVolumeValue = volume;
+        if (!musicEnabled)
+        {
+            volume = 0;
+        }
         curMusic = EMusicType.NULL;
         for (int i = 0; i < clips.Length; i++)
         {
@@ -58,6 +54,10 @@ public class MusicManager : MonoBehaviour
 
     public void ChangeVolume(float _volume)
     {
+        if (_volume != 0)
+        {
+            lastVolumeValue = _volume;
+        }
         volume = _volume;
         var keys = sources.Keys;
         foreach (EMusicType type in keys)

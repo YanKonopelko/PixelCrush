@@ -38,6 +38,16 @@ public class PlayerData
             fxEnable = value; YG2.saves.fxEnable = fxEnable;
         }
     }
+    private bool vibrationEnable = true;
+
+    public bool VibrationEnable
+    {
+        get { return vibrationEnable; }
+        set
+        {
+            vibrationEnable = value; YG2.saves.vibrationEnable = fxEnable;
+        }
+    }
 
     // public variables
     public int CurrentLevel
@@ -87,6 +97,7 @@ public class PlayerData
         fxEnable = YG2.saves.fxEnable;
         tutorialComplete = YG2.saves.tutorialComplete;
         loseTutorialComplete = YG2.saves.loseTutorialComplete;
+        vibrationEnable = YG2.saves.vibrationEnable;
     }
 
     public int GetLevelFromList()
@@ -120,6 +131,7 @@ public class PlayerData
         YG2.saves.fxEnable = fxEnable;
         YG2.saves.tutorialComplete = tutorialComplete;
         YG2.saves.loseTutorialComplete = loseTutorialComplete;
+        YG2.saves.vibrationEnable = vibrationEnable;
         YG2.SaveProgress();
     }
     void Shuffle(int[] array)

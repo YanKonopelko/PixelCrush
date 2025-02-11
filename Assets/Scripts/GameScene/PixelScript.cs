@@ -58,12 +58,17 @@ public class PixelScript : MonoBehaviour
         {
             sequence.Kill();
         }
-        GameObject psObject = GlobalData.Instance.pool.GetFromPool(ParticleSystemKey);
-        psObject.transform.position = sphereObj.transform.position;
-        ParticleSystem ps = psObject.GetComponent<ParticleSystem>();
-        ps.startColor = rgbScaleMaterial.color;
-        // ps.Play();
+        
+        GameObject psObject = null;
+        if(PlayerData.Instance.EffectsEnabled){
+            psObject = GlobalData.Instance.pool.GetFromPool(ParticleSystemKey);
+            psObject.transform.position = sphereObj.transform.position;
+            ParticleSystem ps = psObject.GetComponent<ParticleSystem>();
+            ps.startColor = rgbScaleMaterial.color;
+            ps.Play();
+        }
         GlobalData.Instance.SoundManager.PlaySound(ESoundType.PixelDisapearSound);
+        Vibrator.Vibrate(3);
         sequence = DOTween.Sequence();
         var myCallback = new TweenCallback(() => DisableSphere());
         sequence.Append(sphereObj.transform.DOScale(new Vector3(0, 0, 0), 0.1f).SetEase(Ease.InOutCirc)).OnComplete(myCallback);
@@ -80,8 +85,10 @@ public class PixelScript : MonoBehaviour
         }
         paintCallback();
         this.tag = "Pixel_Disabled";
+        if(psObject != null){
         await UniTask.Delay(500);
         GlobalData.Instance.pool.Release(ParticleSystemKey, psObject);
+        }
     }
 
     private void DisableSphere()

@@ -29,6 +29,7 @@ public class GameScene : MonoBehaviour
     private async void Start()
     {
         Instance = this;
+        GlobalData.Instance.MusicManager.Swap(EMusicType.BaseBackMusic); 
         BaseWindow window = GlobalData.Instance.UIManager.ShowWindow(EWindowType.LoadingWindow);
         await levelCreator.AsyncCreateLevel();
         brusherRotation.gameObject.transform.position = levelCreator.GetLevelCenter();

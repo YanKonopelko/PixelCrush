@@ -1,4 +1,6 @@
 
+using System;
+using System.Runtime.InteropServices;
 using Cysharp.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -21,11 +23,30 @@ public class GlobalData : MonoBehaviour
     [SerializeField] private CustomArrayWithEnum<EBrusherCircleMaterialType, Material>[] circleMaterials;
     [SerializeField] private CustomArrayWithEnum<EBrusherCircleSkinType, Material>[] circleMeshes;
 
+    [DllImport("__Internal")]
+    private static extern bool IsReleaseVersion();
+    [DllImport("__Internal")]
+    private static extern int GetBuildNumber();
+
+    private bool isRelease;
+    public bool IsRelease { get { return isRelease; } }
 
     void Awake()
     {
         GlobalData.Instance = this;
         DontDestroyOnLoad(this.gameObject);
+#if !UNITY_EDITOR && UNITY_WEBGL
+
+    try
+    {
+        isRelease = IsReleaseVersion();
+    }
+    catch(Exception e){
+        Debug.Log(e);
+    }
+#else
+        isRelease = false;
+#endif
         MusicManager.Init();
         SoundManager.Init();
     }

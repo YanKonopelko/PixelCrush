@@ -11,7 +11,7 @@ public static class Vibrator
 
     public static void Vibrate(int timeInMs)
     {
-        
+        if(!PlayerData.Instance.VibrationEnable) return;
     #if !UNITY_EDITOR && UNITY_WEBGL
 
     try
