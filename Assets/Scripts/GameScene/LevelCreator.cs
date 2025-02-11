@@ -168,7 +168,7 @@ public class LevelCreator : MonoBehaviour
         float gs = color.grayscale;
         if (!InUseColors.ContainsKey(color))
         {
-            Material newMaterial = new Material(topMaterial);
+            Material newMaterial = new Material(bottomMaterial);
             newMaterial.color = color;
             InUseColors.Add(color, newMaterial);
         }
