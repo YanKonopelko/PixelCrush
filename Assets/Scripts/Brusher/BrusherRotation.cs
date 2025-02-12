@@ -117,7 +117,7 @@ public class BrusherRotation : MonoBehaviour
         }
         transform.RotateAround(targerPoint.position, direction * (isSwitched ? 1 : -1), _rotationSpeed * Time.deltaTime);
     }
-
+    public float Angle{get{return transform.rotation.eulerAngles.y;}}
     public Vector2 StickSize
     {
         get

@@ -106,13 +106,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   circlesRenderer:
-  - {fileID: 0}
-  - {fileID: 0}
-  brusherStickRenderer: {fileID: 0}
+  - {fileID: 9056947928704987972}
+  - {fileID: 1446525326358093354}
+  brusherStickRenderer: {fileID: 6646183027517631810}
   circlesFilters:
-  - {fileID: 0}
-  - {fileID: 0}
-  brusherStickFilter: {fileID: 0}
+  - {fileID: 8906720093260170659}
+  - {fileID: 204858002443010198}
+  brusherStickFilter: {fileID: 7120100831772833195}
 --- !u!1 &2007179809093159546
 GameObject:
   m_ObjectHideFlags: 0

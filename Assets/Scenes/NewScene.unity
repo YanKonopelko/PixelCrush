@@ -1233,10 +1233,9 @@ MonoBehaviour:
   bottomMaterial: {fileID: 2100000, guid: f5902e16f86430743a578f2edb35bc48, type: 2}
   topMaterial: {fileID: 2100000, guid: c0a6001d911333342afe09ca9e4a7c1f, type: 2}
   startTopMaterialColor: {r: 1, g: 0.70980394, b: 0, a: 1}
-  startBottomMaterialColor: {r: 0.5568628, g: 0.38431373, b: 0.7921569, a: 1}
   fogColor: {r: 0.5568628, g: 0.38431373, b: 0.7921569, a: 0.78431374}
-  brusher: {fileID: 4987147676512951370}
   brusherRotation: {fileID: 5656020644241360625}
+  brusher: {fileID: 428862872327368111}
   pixelSize: {x: 1.1, y: 1.1}
   pixelScripts: []
   testTexture: {fileID: 0}
@@ -1916,14 +1915,20 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 7d8106df57f340e4584ee986a03f345a, type: 3}
 --- !u!4 &428862872327368110 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 5467473502193979228, guid: 7d8106df57f340e4584ee986a03f345a, type: 3}
+  m_CorrespondingSourceObject: {fileID: 531593168563293230, guid: 7d8106df57f340e4584ee986a03f345a, type: 3}
   m_PrefabInstance: {fileID: 428862872327368109}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &4987147676512951370 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1693088947427367018, guid: 7d8106df57f340e4584ee986a03f345a, type: 3}
+--- !u!114 &428862872327368111 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3797782657748837947, guid: 7d8106df57f340e4584ee986a03f345a, type: 3}
   m_PrefabInstance: {fileID: 428862872327368109}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1913c2fe83e4f904c9af06fbe0fd0291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5656020644241360625 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5074329518034605854, guid: 7d8106df57f340e4584ee986a03f345a, type: 3}
