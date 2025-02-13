@@ -77,7 +77,7 @@ public class SoundManager : MonoBehaviour
                 return;
             }
         }
-        if(array.Count>=1) return;
+        if(array.Count>=2) return;
         var source = CreateSource(sourcesClips[type]);
         array.Add(source);
     }

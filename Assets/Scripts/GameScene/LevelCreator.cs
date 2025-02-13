@@ -97,11 +97,10 @@ public class LevelCreator : MonoBehaviour
 
     public void CreateLevel()
     {
+        YG2.InterstitialAdvShow();
         startTopMaterialColor = PlayerData.Instance.CurentLevelConfig.StartTopMaterialColor;
-        // startBottomMaterialColor = PlayerData.Instance.CurentLevelConfig.StartBottomMaterialColor;
         fogColor = PlayerData.Instance.CurentLevelConfig.FogColor;
         topMaterial.color = startTopMaterialColor;
-        // bottomMaterial.color = startBottomMaterialColor;
         for(int i = 0; i < fogMeshes.Count;i++){
             fogMeshes[i].material.color = fogColor;
         }

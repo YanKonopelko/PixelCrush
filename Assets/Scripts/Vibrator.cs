@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using YG;
 
 public static class Vibrator
 {
@@ -11,7 +12,7 @@ public static class Vibrator
 
     public static void Vibrate(int timeInMs)
     {
-        if(!PlayerData.Instance.VibrationEnable) return;
+        if(!PlayerData.Instance.VibrationEnable || YG2.envir.device != YG2.Device.Mobile) return;
     #if !UNITY_EDITOR && UNITY_WEBGL
 
     try

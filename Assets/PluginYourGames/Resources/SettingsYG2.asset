@@ -236,7 +236,7 @@ MonoBehaviour:
     simulationLoadScene: 0
   Simulation:
     device: 0
-    language: ru
+    language: en
     advIntervalSimulation: 60
     durationAdv: 0.5
     loadAdv: 0
@@ -271,12 +271,14 @@ MonoBehaviour:
   platformInfo:
     ownHost: 0
   platformToggles:
-    showFirstAdv: 0
+    showFirstAdv: 1
     interAdvInterval: 0
     postponeCallByFail: 0
-    useYandexMetrica: 0
-    metricaCounterID: 0
-    skipInterAdvAfterReward: 0
+    useYandexMetrica: 1
+    metricaCounterID: 1
+    skipInterAdvAfterReward: 1
+    saveLocal: 1
+    saveCloud: 1
     selectWebGLTemplate: 1
     runInBackground: 1
     enableExceptions: 1

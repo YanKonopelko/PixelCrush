@@ -16,7 +16,11 @@ public class SettingsWindow : BaseWindowWithData<SettingsWindowData>
         musicToggle.Init(GlobalData.Instance.MusicManager.MusicEnabled, OnMusicSwitch);
         soundsToggle.Init(GlobalData.Instance.SoundManager.SoundsEnable, OnSoundsSwitch);
         effectsToggle.Init(PlayerData.Instance.EffectsEnabled, OnEffectsSwitch);
-        vibrationToggle.Init(PlayerData.Instance.VibrationEnable, OnVibrationSwitch);
+        vibrationToggle.transform.parent.gameObject.SetActive(false);
+        if(YG2.envir.device == YG2.Device.Mobile){
+            vibrationToggle.Init(PlayerData.Instance.VibrationEnable, OnVibrationSwitch);
+            vibrationToggle.transform.parent.gameObject.SetActive(true);
+        }
     }
 
     private void OnMusicSwitch(bool value)

@@ -12,8 +12,6 @@ public class PixelScript : MonoBehaviour
     [SerializeField] MeshRenderer[] corners;
     [SerializeField] MeshRenderer[] bottoms;
 
-    // [SerializeField] MeshRenderer basePixel;
-
     [SerializeField] public GameObject sphereObj;
     [SerializeField] public MeshRenderer sphereRend;
     [SerializeField] public Animation sphereAnim;
@@ -26,49 +24,16 @@ public class PixelScript : MonoBehaviour
     private bool isPainted = false;
     private Sequence sequence = null;
 
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     if(isPainted) return;
-    //       if(other.CompareTag("Brusher")){
-    //        BrusherRotation.instance.SetCollidersEnable(true);
-    //        Paint();
-    //       }
-    //     if(other.CompareTag("Sizer_0")){
-    //         SphereResize(0.75f);
-    //     }
-    //     else if(other.CompareTag("Sizer_1")){
-    //         SphereResize(0.65f);
-    //     }
-    // }
-    // private void OnTriggerExit(Collider other)
-    // {
-    //     if(isPainted) {
-    //         BrusherRotation.instance.SetCollidersEnable(false);
-    //     }
-    //     else{
-    //         SphereResize(1);
-    //     }
-    // }
-
     public async void Paint()
     {
         if (isPainted) return;
+        GlobalData.Instance.SoundManager.PlaySound(ESoundType.PixelDisapearSound);
         isPainted = true;
         if (sequence != null)
         {
             sequence.Kill();
         }
-        
-        GameObject psObject = null;
-        if(PlayerData.Instance.EffectsEnabled){
-            psObject = GlobalData.Instance.pool.GetFromPool(ParticleSystemKey);
-            psObject.transform.position = sphereObj.transform.position;
-            ParticleSystem ps = psObject.GetComponent<ParticleSystem>();
-            ps.startColor = rgbScaleMaterial.color;
-            ps.Play();
-        }
-        GlobalData.Instance.SoundManager.PlaySound(ESoundType.PixelDisapearSound);
-        Vibrator.Vibrate(10);
+        Vibrator.Vibrate(7);
         sequence = DOTween.Sequence();
         var myCallback = new TweenCallback(() => DisableSphere());
         sequence.Append(sphereObj.transform.DOScale(new Vector3(0, 0, 0), 0.1f).SetEase(Ease.InOutCirc)).OnComplete(myCallback);
@@ -85,9 +50,13 @@ public class PixelScript : MonoBehaviour
         }
         paintCallback();
         this.tag = "Pixel_Disabled";
-        if(psObject != null){
-        await UniTask.Delay(500);
-        GlobalData.Instance.pool.Release(ParticleSystemKey, psObject);
+        if(PlayerData.Instance.EffectsEnabled){
+            GameObject psObject = GlobalData.Instance.pool.GetFromPool(ParticleSystemKey);
+            psObject.transform.position = sphereObj.transform.position;
+            ParticleSystem ps = psObject.GetComponent<ParticleSystem>();
+            ps.Play();
+            await UniTask.Delay(500);
+            GlobalData.Instance.pool.Release(ParticleSystemKey, psObject);
         }
     }
 
@@ -98,13 +67,6 @@ public class PixelScript : MonoBehaviour
 
     public void InitPixel(GameObject paticlePrefabKey, Action callback, Material bottomStartMat, Material topStartMaterial, bool[] enabledCorners)
     {
-        // for(int i =0; i < corners.Length;i++){
-        //     corners[i].enabled = false;
-        //     corners[i].material= startMat;
-        // }
-        // for(int i =0; i < enabledCorners.Length;i++){
-        //     corners[i].enabled =enabledCorners[i];
-        // }
         if (!isTopColored)
         {
             sphereRend.material = topStartMaterial;
@@ -130,15 +92,15 @@ public class PixelScript : MonoBehaviour
 
     }
 
-    private void SphereResize(float size)
-    {
-        if (sequence != null)
-        {
-            sequence.Kill();
-        }
-        sequence = DOTween.Sequence();
-        sequence.Append(sphereObj.transform.DOScale(new Vector3(1, 1, size), 0.08f));
-        // sphereObj.transform.localScale = ;
-    }
+    // private void SphereResize(float size)
+    // {
+    //     if (sequence != null)
+    //     {
+    //         sequence.Kill();
+    //     }
+    //     sequence = DOTween.Sequence();
+    //     sequence.Append(sphereObj.transform.DOScale(new Vector3(1, 1, size), 0.08f));
+    //     // sphereObj.transform.localScale = ;
+    // }
 
 }

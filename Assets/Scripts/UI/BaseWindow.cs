@@ -13,7 +13,7 @@ public class BaseWindow : MonoBehaviour
     {
         gameObject.SetActive(true);
         transform.position = new Vector3(0,0,0);
-        Vibrator.Vibrate(50);
+        Vibrator.Vibrate(15);
     }
 
     public virtual void Hide()
@@ -21,7 +21,7 @@ public class BaseWindow : MonoBehaviour
         gameObject.SetActive(false);
         Destroy(this.gameObject);
         GlobalData.Instance.UIManager.HideWindow(windowType);
-        Vibrator.Vibrate(50);
+        Vibrator.Vibrate(15);
     }
     public virtual void PrepareWindowData<T>(T data) where T : BaseWindowData
     {
