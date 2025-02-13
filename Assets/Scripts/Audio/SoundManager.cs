@@ -80,6 +80,25 @@ public class SoundManager : MonoBehaviour
         if(array.Count>=2) return;
         var source = CreateSource(sourcesClips[type]);
         array.Add(source);
+        PlaySound(type);
+    }
+     public void PlaySound(ESoundType type,Vector3 pos)
+    {
+        if(!soundsEnabled) return;
+        List<AudioSource> array = sources[type];
+        for (int i = 0; i < array.Count; i++)
+        {
+            if (!array[i].isPlaying)
+            {
+                AudioSource.PlayClipAtPoint(array[i].clip,pos,volume);
+                // array[i].Play();
+                return;
+            }
+        }
+        if(array.Count>=1) return;
+        var source = CreateSource(sourcesClips[type]);
+        array.Add(source);
+        PlaySound(type,pos);
     }
 
     private AudioSource CreateSource(AudioClip clip)

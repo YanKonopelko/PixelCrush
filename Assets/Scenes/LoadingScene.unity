@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -155,7 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clips:
   - key: 0
-    value: {fileID: 8300000, guid: 7834a568fc98068469bbf76971bceba4, type: 3}
+    value: {fileID: 8300000, guid: da6db8fe51e98364f9fb0da9adac40bb, type: 3}
   volume: 0.4
 --- !u!114 &331641631
 MonoBehaviour:
@@ -172,7 +171,7 @@ MonoBehaviour:
   clips:
   - key: 1
     value: {fileID: 8300000, guid: 00057e77ca413d4429549c922f4e3a03, type: 3}
-  volume: 0.3
+  volume: 0
 --- !u!4 &331641632
 Transform:
   m_ObjectHideFlags: 0
