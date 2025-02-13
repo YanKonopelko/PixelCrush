@@ -272,7 +272,7 @@ public class LevelCreator : MonoBehaviour
         float x = width/2.4f*pixelSize.x;
         float z = height/5*pixelSize.y;
         // Vector2 pos = pixelPositions[pixelPositions.Length / 2];
-        return new Vector3(x, 2, z);
+        return new Vector3(x, 0.5f, z);
     }
 
 

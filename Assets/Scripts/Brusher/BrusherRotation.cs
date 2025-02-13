@@ -35,6 +35,7 @@ public class BrusherRotation : MonoBehaviour
         isSwitched = true;
         startPosition = transform.position;
         GameScene.Instance.OnStart += OnStart;
+        trailRenderer.enabled = false;
         startRotObjPositions = new Vector3[2] { _rotationObject[0].position, _rotationObject[1].position };
     }
 
@@ -43,7 +44,9 @@ public class BrusherRotation : MonoBehaviour
         isSwitched = !isSwitched;
 
         SwapPoints();
-        if (!this.CheckFloorAtThePoint(targerPoint))
+        Vector3 pos = targerPoint.position;
+        pos.y+=2;
+        if (!this.CheckFloorAtThePoint(pos))
         {
             if (!PlayerData.Instance.LoseTutorialComplete)
             {
@@ -74,6 +77,7 @@ public class BrusherRotation : MonoBehaviour
 
     public void OnStart()
     {
+        trailRenderer.enabled = true;
         StartAnimation(0.3f);
     }
 
@@ -149,11 +153,11 @@ public class BrusherRotation : MonoBehaviour
         }
     }
 
-    public bool CheckFloorAtThePoint(Transform point)
+    public bool CheckFloorAtThePoint(Vector3 pos)
     {
         RaycastHit hit;
-        Debug.DrawRay(point.position, point.TransformDirection(Vector3.down), new Color(1, 1, 1));
-        return Physics.Raycast(point.position, point.TransformDirection(Vector3.down), out hit, 5f);
+        Debug.DrawRay(pos, Vector3.down, new Color(1, 1, 1));
+        return Physics.Raycast(pos, Vector3.down, out hit, 5f);
     }
     public void StartAnimation(float animationDuration)
     {
