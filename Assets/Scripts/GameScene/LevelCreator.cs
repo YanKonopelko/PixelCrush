@@ -27,8 +27,8 @@ public class LevelCreator : MonoBehaviour
     // [SerializeField] private Color startBottomMaterialColor;
     [SerializeField] private Color fogColor;
 
-    [SerializeField] private Transform brusher;
     [SerializeField] private BrusherRotation brusherRotation;
+    [SerializeField] private Brusher brusher;
 
     [SerializeField] private Vector2 pixelSize;
 
@@ -98,6 +98,7 @@ public class LevelCreator : MonoBehaviour
     public void CreateLevel()
     {
         YG2.InterstitialAdvShow();
+        brusher.UpdateFromCongif();
         startTopMaterialColor = PlayerData.Instance.CurentLevelConfig.StartTopMaterialColor;
         fogColor = PlayerData.Instance.CurentLevelConfig.FogColor;
         topMaterial.color = startTopMaterialColor;
@@ -195,7 +196,7 @@ public class LevelCreator : MonoBehaviour
 
         // a     b
         // c     d
-        float angle = brusher.rotation.eulerAngles.y * (BrusherRotation.isSwitched ? -1 : -1);
+        float angle = brusherRotation.Angle * (BrusherRotation.isSwitched ? -1 : -1);
         var brusherStickSize = brusherRotation.StickSize;
         float x = -0.5f * brusherStickSize.x;
         float y = +0.5f * brusherStickSize.y;

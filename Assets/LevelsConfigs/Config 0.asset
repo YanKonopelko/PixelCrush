@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Config 0
   m_EditorClassIdentifier: 
   startTopMaterialColor: {r: 0.735849, g: 0.735849, b: 0.735849, a: 0.7019608}
-  startBottomMaterialColor: {r: 0.6603774, g: 0.13394447, b: 0.13394447, a: 0.78039217}
   fogColor: {r: 0.7924528, g: 0.43734425, b: 0.43734425, a: 0.7294118}
+  brusherColor: {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 1}

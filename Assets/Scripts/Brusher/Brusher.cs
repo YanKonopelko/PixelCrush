@@ -8,6 +8,16 @@ public class Brusher : MonoBehaviour
     [SerializeField] MeshRenderer brusherStickRenderer = new MeshRenderer();
     [SerializeField] MeshFilter[] circlesFilters = new MeshFilter[2];
     [SerializeField] MeshFilter brusherStickFilter = new MeshFilter();
+
+    public void UpdateFromCongif()
+    {
+        LevelConfig config = PlayerData.Instance.CurentLevelConfig;
+        brusherStickRenderer.material.color = config.BrusherStickColor;
+          for (int i = 0; i < circlesRenderer.Length; i++)
+        {
+            circlesRenderer[i].material.color = config.BrusherCircleColor;
+        }
+    }
     public void ChangeStickMesh(Mesh mesh)
     {
         brusherStickFilter.mesh = mesh;

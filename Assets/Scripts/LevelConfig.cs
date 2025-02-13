@@ -7,6 +7,8 @@ public class LevelConfig:ScriptableObject
     [SerializeField] private Color startTopMaterialColor;
     // [SerializeField] private Color startBottomMaterialColor;
     [SerializeField] private Color fogColor;
+    [SerializeField] private Color brusherStickColor;
+    [SerializeField] private Color brusherCircleColor = UnityEngine.Color.white;
 
     public Color StartTopMaterialColor{
         get{return startTopMaterialColor;}
@@ -16,5 +18,11 @@ public class LevelConfig:ScriptableObject
     // }
     public Color FogColor{
         get{return fogColor;}
+    }
+    public Color BrusherStickColor{
+        get{return brusherStickColor;}
+    }
+    public Color BrusherCircleColor{
+        get{return brusherCircleColor;}
     }
 }
