@@ -18,6 +18,12 @@ public class PlayerData
     // cahngable variables
     private int currentLevel;
     private int additionalIndex;
+
+    private int coins = 0;
+    public int Coins{
+        get{return coins;}
+    }
+
     private bool tutorialComplete = false;
     public bool TutorialComplete{
         get{return tutorialComplete;}
@@ -48,6 +54,7 @@ public class PlayerData
             vibrationEnable = value; YG2.saves.vibrationEnable = fxEnable;
         }
     }
+
 
     // public variables
     public int CurrentLevel
@@ -103,6 +110,7 @@ public class PlayerData
         tutorialComplete = YG2.saves.tutorialComplete;
         loseTutorialComplete = YG2.saves.loseTutorialComplete;
         vibrationEnable = YG2.saves.vibrationEnable;
+        coins = YG2.saves.coins;
     }
 
     public int GetLevelFromList()
@@ -114,7 +122,7 @@ public class PlayerData
             {
                 ar[i] = i;
             }
-            Shuffle(ar);
+            ShuffleUtills.Shuffle(ref ar);
             for (int i = 0; i < LevelsCount; i++)
             {
                 LevelScheduleList.Add(ar[i]);
@@ -137,18 +145,10 @@ public class PlayerData
         YG2.saves.tutorialComplete = tutorialComplete;
         YG2.saves.loseTutorialComplete = loseTutorialComplete;
         YG2.saves.vibrationEnable = vibrationEnable;
+        YG2.saves.coins = coins;
         YG2.SaveProgress();
     }
-    void Shuffle(int[] array)
-    {
-        Random random = new Random();
-        int p = array.Length;
-        for (int n = p - 1; n > 0; n--)
-        {
-            int r = random.Next(1, n);
-            int t = array[r];
-            array[r] = array[n];
-            array[n] = t;
-        }
+    public void AddCoins(int amount){
+        coins = Math.Clamp(coins+amount,0,int.MaxValue);
     }
 }

@@ -447,7 +447,7 @@ MonoBehaviour:
   UIManager: {fileID: 1012342993}
   SoundManager: {fileID: 331641630}
   MusicManager: {fileID: 331641631}
-  particlePrefab: {fileID: 7762894531867462151, guid: 179986e534f697c4fa46c010a53bd788, type: 3}
+  particlePrefab: {fileID: 6786338954415586547, guid: 9dc973b9ee1c743468d556e24b1351ca, type: 3}
   particlePrefabs: []
   stickMaterials: []
   stickMeshes: []
@@ -459,6 +459,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2c556f41acab76d459d409258e6717e3, type: 2}
   - {fileID: 11400000, guid: a0a7cf0fc2e8eb74a8cc25080a440b2d, type: 2}
   - {fileID: 11400000, guid: 88dd4516ca6362a4e9091b0e51a32869, type: 2}
+  allItems: []
+  itemsJSON: {fileID: 4900000, guid: 5220d44e410e0bf4c8ec9e783e40fbcf, type: 3}
 --- !u!4 &423763132
 Transform:
   m_ObjectHideFlags: 0

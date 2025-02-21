@@ -1,15 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using Unity.Collections;
 using Unity.Jobs;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using YG;
 
 // [ExecuteAlways]
@@ -39,9 +33,6 @@ public class LevelCreator : MonoBehaviour
     private List<MeshRenderer> fogMeshes = new List<MeshRenderer>();
 
     private Texture2D texture2D;
-
-
-
     private Dictionary<Color, Material> InUseColors = new Dictionary<Color, Material>();
     private List<GameObject> pixels = new List<GameObject>();
     private List<List<Vector3>> pixelsGrid = new List<List<Vector3>>();
@@ -52,18 +43,18 @@ public class LevelCreator : MonoBehaviour
 
     private NativeArray<bool> pixelsPainted;
     private JobHandle handle;
+    private const int MaxCoins = 5;
 
     void Start()
     {
         for (int i = 0; i < fogParent.childCount; i++)
         {
-           fogMeshes.Add(fogParent.GetChild(i).GetComponent<MeshRenderer>());
+            fogMeshes.Add(fogParent.GetChild(i).GetComponent<MeshRenderer>());
         }
         topMaterial.color = startTopMaterialColor;
-        // bottomMaterial.color = startBottomMaterialColor;
-        for(int i = 0; i < fogMeshes.Count;i++){
+        for (int i = 0; i < fogMeshes.Count; i++)
+        {
             fogMeshes[i].material.color = fogColor;
-            // fogMeshes[i].material.SetColor("_Color",fogColor);
         }
     }
 
@@ -102,7 +93,8 @@ public class LevelCreator : MonoBehaviour
         startTopMaterialColor = PlayerData.Instance.CurentLevelConfig.StartTopMaterialColor;
         fogColor = PlayerData.Instance.CurentLevelConfig.FogColor;
         topMaterial.color = startTopMaterialColor;
-        for(int i = 0; i < fogMeshes.Count;i++){
+        for (int i = 0; i < fogMeshes.Count; i++)
+        {
             fogMeshes[i].material.color = fogColor;
         }
         ClearChildren();
@@ -160,9 +152,34 @@ public class LevelCreator : MonoBehaviour
             pixelsPainted[i] = false;
             pixelScripts[i] = pixels[i].GetComponent<PixelScript>();
         }
-
+        InitCoins();
+        InitCrosses();
     }
 
+    private void InitCoins()
+    {
+        System.Random random = new System.Random();
+        int coinsCount = random.Next(0, MaxCoins);
+        for (int i = 0; i < coinsCount; i++)
+        {
+            pixelScripts[random.Next(0, pixelScripts.Length)].SetCoin(SpawnCoin);
+        }
+    }
+    private void InitCrosses()
+    {
+        System.Random random = new System.Random();
+        pixelScripts[random.Next(0, pixelScripts.Length)].SetCrosses(SpawnCrosses);
+
+    }
+    private void SpawnCrosses(Vector3 pos){
+        Debug.Log($"Spawn Crosses: {pos}");
+    }
+    private void SpawnCoin(Vector3 pos){
+        //Запустить партикл монетки вверх
+        Debug.Log($"Spawn Coin: {pos}");
+        PlayerData.Instance.AddCoins(1);
+        YG2.SaveProgress();
+    }
     private void CreatPixel(Vector3 pos, Color color, bool isFront = false, bool isRight = false)
     {
         Material targetMaterial;
@@ -269,8 +286,8 @@ public class LevelCreator : MonoBehaviour
     {
         int height = texture2D.height;
         int width = texture2D.width;
-        float x = width/2.4f*pixelSize.x;
-        float z = height/5*pixelSize.y;
+        float x = width / 2.4f * pixelSize.x;
+        float z = height / 5 * pixelSize.y;
         // Vector2 pos = pixelPositions[pixelPositions.Length / 2];
         return new Vector3(x, 0.5f, z);
     }

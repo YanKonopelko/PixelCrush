@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Cysharp.Threading.Tasks;
+using InventoryNamespace;
+using Newtonsoft.Json;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -24,6 +26,8 @@ public class GlobalData : MonoBehaviour
     [SerializeField] private CustomArrayWithEnum<EBrusherCircleMaterialType, Material>[] circleMaterials;
     [SerializeField] private CustomArrayWithEnum<EBrusherCircleSkinType, Material>[] circleMeshes;
     [SerializeField] public List<LevelConfig> levelConfigss;
+    [SerializeField] private List<Item> allItems;
+    [SerializeField] TextAsset itemsJSON;
 
 
     [DllImport("__Internal")]
@@ -33,6 +37,7 @@ public class GlobalData : MonoBehaviour
 
     private bool isRelease;
     public bool IsRelease { get { return isRelease; } }
+    public List<Item> AllItems { get { return allItems; } }
 
     void Awake()
     {
@@ -58,6 +63,9 @@ public class GlobalData : MonoBehaviour
     {
         pool.Init();
         pool.PreparePool(particlePrefab, 50);
+        string str = itemsJSON.text;
+        ItemList itemList = JsonConvert.DeserializeObject<ItemList>(str);
+        allItems = itemList.Items;
     }
 
     public async UniTask<Texture2D> GetLevelTexture(int LevelNum)

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using InventoryNamespace;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,6 +36,10 @@ public class GameScene : MonoBehaviour
         brusherRotation.gameObject.transform.position = levelCreator.GetLevelCenter();
         DOTween.SetTweensCapacity(200, 250);
         window.Hide();
+        Item a = ItemFabric.GetItem(0);
+        await UniTask.Delay(2);
+        Debug.Log(a.ID);
+        Debug.Log(a.Icon);
     }
     public void Update()
     {

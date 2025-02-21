@@ -152,6 +152,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3e3d7dce5d7cbd94ab26297978805c6b
+    m_Address: BrusherCircle0Icon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3f1ce94b5b6cef447a9a4520dfbfab4c
     m_Address: Level_74
     m_ReadOnly: 0
@@ -224,6 +229,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5b99a1b2b9dfd5c49bdd729c0570b50e
     m_Address: Level_45
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5d52f8cc0ec7dc2478163906d7d54fa0
+    m_Address: BrusherCircle0Mat
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -384,6 +394,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a1f366269b546b64ab4f4e4c142a8893
     m_Address: Level_26
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a3cd2b1a0623fba4b9633b787b445003
+    m_Address: BrusherCircle0
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

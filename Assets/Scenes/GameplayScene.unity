@@ -1563,7 +1563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pixelPrefab: {fileID: 3924517076960894905, guid: 57f887e23a6807341ab7bdecee0a1079, type: 3}
-  particlePrefab: {fileID: 7762894531867462151, guid: 179986e534f697c4fa46c010a53bd788, type: 3}
+  particlePrefab: {fileID: 6786338954415586547, guid: 9dc973b9ee1c743468d556e24b1351ca, type: 3}
   fogParent: {fileID: 1652758181}
   pixelParent: {fileID: 1199415949}
   bottomMaterial: {fileID: 2100000, guid: f5902e16f86430743a578f2edb35bc48, type: 2}
@@ -2244,6 +2244,10 @@ PrefabInstance:
       propertyPath: _camera
       value: 
       objectReference: {fileID: 963194230}
+    - target: {fileID: 5074329518034605854, guid: 7d8106df57f340e4584ee986a03f345a, type: 3}
+      propertyPath: brusherSizeScaler.y
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

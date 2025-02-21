@@ -9,7 +9,7 @@ public class EntryPoint : MonoBehaviour
     async void Start()
     {
         await GlobalData.Instance.Init();
-        SceneManager.LoadScene("NewScene");
+        SceneManager.LoadScene(1);  
     }
 
 }
