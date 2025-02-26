@@ -101,7 +101,9 @@ public class PixelScript : MonoBehaviour
         // Vector3 targetRotation = new Vector3(90,0,-90);
         // Vector3 targetRotation1 = new Vector3(-90,0,0);
         Vector3 targetRotation = new Vector3(180,90,0);
-        Seq.Append(bottomRotatorParent.transform.DORotate(targetRotation, animationDuration));
+        Seq.Append(bottomRotatorParent.transform.DOScale(new Vector3(0.8f,0.8f,0.8f), animationDuration/3));
+        Seq.Append(bottomRotatorParent.transform.DORotate(targetRotation, animationDuration/3));
+        Seq.Append(bottomRotatorParent.transform.DOScale(1, animationDuration/3));
        
         // Seq.Append(bottoms[0].transform.DORotate(targetRotation, animationDuration));
         // Seq.Join(bottoms[0].transform.DOLocalMoveY(-0.007f, animationDuration));
@@ -113,6 +115,7 @@ public class PixelScript : MonoBehaviour
          Quaternion quat = new Quaternion();
         quat.eulerAngles = new Vector3(0,-180,0);
         bottomRotatorParent.transform.rotation = quat;
+        bottomRotatorParent.transform.localScale = new Vector3(1,1,1);
         // Quaternion quat = new Quaternion();
         // quat.eulerAngles = new Vector3(90,0,-90);
         // reverseBottomObj.transform.rotation = quat;
