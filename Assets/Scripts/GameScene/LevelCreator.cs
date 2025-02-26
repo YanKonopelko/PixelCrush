@@ -15,12 +15,6 @@ public class LevelCreator : MonoBehaviour
     [SerializeField] private Transform pixelParent;
     [SerializeField] private Material bottomMaterial;
     [SerializeField] private Material topMaterial;
-    // [SerializeField] private Material sphereMaterial;
-
-    [SerializeField] private Color startTopMaterialColor;
-    // [SerializeField] private Color startBottomMaterialColor;
-    [SerializeField] private Color fogColor;
-
     [SerializeField] private BrusherRotation brusherRotation;
     [SerializeField] private Brusher brusher;
 
@@ -47,14 +41,19 @@ public class LevelCreator : MonoBehaviour
 
     void Start()
     {
+        // brusher.UpdateFromInventory();
         for (int i = 0; i < fogParent.childCount; i++)
         {
             fogMeshes.Add(fogParent.GetChild(i).GetComponent<MeshRenderer>());
         }
-        topMaterial.color = startTopMaterialColor;
+        var config =  PlayerData.Instance.CurentLevelConfig;
+        ShaderColorPack pack = config.StartTopMaterialColor;
+        topMaterial.SetColor("Color",pack.MainColor);
+        topMaterial.SetColor("HighlightColor",pack.HighlightColor);
+        topMaterial.SetColor("ShadowColor",pack.ShadowColor);
         for (int i = 0; i < fogMeshes.Count; i++)
         {
-            fogMeshes[i].material.color = fogColor;
+            fogMeshes[i].material.color = config.FogColor;
         }
     }
 
@@ -90,15 +89,22 @@ public class LevelCreator : MonoBehaviour
     {
         YG2.InterstitialAdvShow();
         brusher.UpdateFromCongif();
-        startTopMaterialColor = PlayerData.Instance.CurentLevelConfig.StartTopMaterialColor;
-        fogColor = PlayerData.Instance.CurentLevelConfig.FogColor;
-        topMaterial.color = startTopMaterialColor;
+        var config =  PlayerData.Instance.CurentLevelConfig;
+        ShaderColorPack topPack = config.StartTopMaterialColor;
+        ShaderColorPack bottomPack = config.StartBottomMaterialColor;
+        topMaterial.SetColor("Color",topPack.MainColor);
+        topMaterial.SetColor("HighlightColor",topPack.HighlightColor);
+        topMaterial.SetColor("ShadowColor",topPack.ShadowColor);
+        bottomMaterial.SetColor("Color",bottomPack.MainColor);
+        bottomMaterial.SetColor("HighlightColor",bottomPack.HighlightColor);
+        bottomMaterial.SetColor("ShadowColor",bottomPack.ShadowColor);
         for (int i = 0; i < fogMeshes.Count; i++)
         {
-            fogMeshes[i].material.color = fogColor;
+            fogMeshes[i].material.color = config.FogColor;
         }
         ClearChildren();
         CreateLevelWithImage(texture2D);
+        brusherRotation.gameObject.SetActive(true);
     }
 
     public void ClearChildren()
@@ -152,8 +158,8 @@ public class LevelCreator : MonoBehaviour
             pixelsPainted[i] = false;
             pixelScripts[i] = pixels[i].GetComponent<PixelScript>();
         }
-        InitCoins();
-        InitCrosses();
+        // InitCoins();
+        // InitCrosses();
     }
 
     private void InitCoins()
@@ -198,7 +204,7 @@ public class LevelCreator : MonoBehaviour
         pixel.transform.localPosition = new Vector3(pos.x * pixelSize.x, pos.y * pixelSize.y, pos.z * pixelSize.x);
 
         pixel.GetComponent<PixelScript>().rgbScaleMaterial = targetMaterial;
-        pixel.GetComponent<PixelScript>().InitPixel(particlePrefab, OnPaint, targetMaterial, topMaterial, new bool[3] { true, isFront, isRight });
+        pixel.GetComponent<PixelScript>().InitPixel(particlePrefab, OnPaint, bottomMaterial, topMaterial, new bool[3] { true, isFront, isRight });
         pixels.Add(pixel);
         while (pixelsGrid.Count <= pos.z)
         {
@@ -278,10 +284,17 @@ public class LevelCreator : MonoBehaviour
         CurrentCount++;
         if (CurrentCount == TargetCount)
         {
+            brusherRotation.gameObject.SetActive(false);
+            PixelsEndAnim();
             GameScene.Instance.Win();
+
         }
     }
-
+    public void PixelsEndAnim(){
+        for(int i = 0; i < pixelScripts.Length;i++){
+            pixelScripts[i].EndAnim();
+        }
+    }
     public Vector3 GetLevelCenter()
     {
         int height = texture2D.height;

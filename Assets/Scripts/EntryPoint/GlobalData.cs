@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using InventoryNamespace;
 using Newtonsoft.Json;
@@ -38,8 +39,9 @@ public class GlobalData : MonoBehaviour
     private bool isRelease;
     public bool IsRelease { get { return isRelease; } }
     public List<Item> AllItems { get { return allItems; } }
+    public Inventory Inventory{get;private set;}
 
-    void Awake()
+    async Task Awake()
     {
         GlobalData.Instance = this;
         DontDestroyOnLoad(this.gameObject);
@@ -53,10 +55,11 @@ public class GlobalData : MonoBehaviour
         Debug.Log(e);
     }
 #else
-        isRelease = false;
+        isRelease = true;
 #endif
         MusicManager.Init();
         SoundManager.Init();
+        Inventory = new Inventory();
     }
 
     public async UniTask Init()
@@ -66,6 +69,10 @@ public class GlobalData : MonoBehaviour
         string str = itemsJSON.text;
         ItemList itemList = JsonConvert.DeserializeObject<ItemList>(str);
         allItems = itemList.Items;
+        for(int i = 0; i < allItems.Count;i++){
+            allItems[i].Init();
+        }
+        await Inventory.Init();
     }
 
     public async UniTask<Texture2D> GetLevelTexture(int LevelNum)

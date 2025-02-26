@@ -268,7 +268,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b02d08827a27ea84195402a1940c829d, type: 2}
+  - {fileID: 2100000, guid: 20f515fa9883e1f4ba3ef5f9a903a805, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -351,7 +351,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 34e66d2214b27dc42b9e2e4c66aeaffc, type: 2}
+  - {fileID: 2100000, guid: 20f515fa9883e1f4ba3ef5f9a903a805, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -434,7 +434,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b02d08827a27ea84195402a1940c829d, type: 2}
+  - {fileID: 2100000, guid: 20f515fa9883e1f4ba3ef5f9a903a805, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5260,7 +5260,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_RenderMode: 2
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -5366,7 +5366,7 @@ TrailRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Time: 0.45
   m_PreviewTimeScale: 1
   m_Parameters:

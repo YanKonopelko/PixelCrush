@@ -26,11 +26,9 @@ public class BrusherRotation : MonoBehaviour
     private Transform targerPoint;
 
     private bool AnimationNow = false;
-    public static BrusherRotation instance;
     private Vector3[] startRotObjPositions;
     private void Start()
     {
-        instance = this;
         targerPoint = _rotationObject[0];
         isSwitched = true;
         startPosition = transform.position;

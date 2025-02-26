@@ -13,10 +13,10 @@
         false,
         false
     ],
-    "idSave": 1076,
-    "currentLevel": 43,
+    "idSave": 1266,
+    "currentLevel": 72,
     "additionalIndex": -1,
-    "LastLevel": 43,
+    "LastLevel": 72,
     "LevelScheduleList": [],
     "soundsEnabled": false,
     "musicEnabled": true,
@@ -24,5 +24,45 @@
     "vibrationEnable": false,
     "tutorialComplete": true,
     "loseTutorialComplete": true,
-    "coins": 0
+    "coins": 10,
+    "collectedItems": [],
+    "equipedItems": [],
+    "equipedCircleSkin": {
+        "ID": 0,
+        "Name": "",
+        "Description": "",
+        "ItemType": 0,
+        "Model": {
+            "instanceID": 0
+        },
+        "Material": {
+            "instanceID": 0
+        },
+        "Icon": {
+            "instanceID": 0
+        },
+        "ModelName": "",
+        "MaterialName": "",
+        "IconName": "",
+        "isInit": false
+    },
+    "equipedStickSkin": {
+        "ID": 0,
+        "Name": "",
+        "Description": "",
+        "ItemType": 0,
+        "Model": {
+            "instanceID": 0
+        },
+        "Material": {
+            "instanceID": 0
+        },
+        "Icon": {
+            "instanceID": 0
+        },
+        "ModelName": "",
+        "MaterialName": "",
+        "IconName": "",
+        "isInit": false
+    }
 }

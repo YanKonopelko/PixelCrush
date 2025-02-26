@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviour
     public bool FinishAnimNow = false;
 
     private Transform _transform;
-    private float animationDuration = 2.5f;
+    private float animationDuration = 4.5f;
 
     private void Start(){
         _transform = transform;

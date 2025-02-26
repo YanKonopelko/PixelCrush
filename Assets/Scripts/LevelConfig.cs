@@ -1,28 +1,38 @@
 using UnityEngine;
 
-// [System.Serializable]
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/LevelConfig", order = 1)]
-public class LevelConfig:ScriptableObject
+[System.Serializable]
+public struct ShaderColorPack
 {
-    [SerializeField] private Color startTopMaterialColor;
-    // [SerializeField] private Color startBottomMaterialColor;
-    [SerializeField] private Color fogColor;
-    [SerializeField] private Color brusherStickColor;
-    [SerializeField] private Color brusherCircleColor = UnityEngine.Color.white;
+    [SerializeField] public Color MainColor;
+    [SerializeField] public Color HighlightColor;
+    [SerializeField] public Color ShadowColor;
+}
 
-    public Color StartTopMaterialColor{
-        get{return startTopMaterialColor;}
+[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/LevelConfig", order = 1)]
+public class LevelConfig : ScriptableObject
+{
+    [SerializeField] private ShaderColorPack startTopMaterialColor;
+    [SerializeField] private ShaderColorPack startBottomMaterialColor;
+    [SerializeField] private ShaderColorPack brusherColor;
+
+    [SerializeField] private Color fogColor;
+    // 3 цвета на пиксель 
+    // 3 цвета на низ
+    // 3 цвета на палку 
+    public ShaderColorPack StartTopMaterialColor
+    {
+        get { return startTopMaterialColor; }
     }
-    // public Color StartBottomMaterialColor{
-    //     get{return startBottomMaterialColor;}
-    // }
-    public Color FogColor{
-        get{return fogColor;}
+    public ShaderColorPack StartBottomMaterialColor
+    {
+        get { return startBottomMaterialColor; }
     }
-    public Color BrusherStickColor{
-        get{return brusherStickColor;}
+    public Color FogColor
+    {
+        get { return fogColor; }
     }
-    public Color BrusherCircleColor{
-        get{return brusherCircleColor;}
+    public ShaderColorPack BrusherColor
+    {
+        get { return brusherColor; }
     }
 }

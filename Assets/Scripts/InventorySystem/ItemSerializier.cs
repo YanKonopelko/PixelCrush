@@ -1,10 +1,9 @@
+#if UNITY_EDITOR
 
 using System.Collections.Generic;
 using System.IO;
 using InventoryNamespace;
 using UnityEngine;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using UnityEditor;
 // [ExecuteInEditMode]
@@ -58,3 +57,4 @@ public class ItemSerializier : MonoBehaviour
         return jsonString;
     }
 }
+#endif

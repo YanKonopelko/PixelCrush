@@ -152,6 +152,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 384b3dc5f1801884e90d25e22fb43d9e
+    m_Address: Cylinder
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3e3d7dce5d7cbd94ab26297978805c6b
     m_Address: BrusherCircle0Icon
     m_ReadOnly: 0
@@ -359,6 +364,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 945b6de45572f684b964d58ccf44b2fc
     m_Address: Level_62
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 95db4fa942a0f264790b306d419c0b15
+    m_Address: Cylinder0Mat
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

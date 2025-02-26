@@ -348,10 +348,22 @@ MonoBehaviour:
     ModelName: BrusherCircle0
     MaterialName: BrusherCircle0Mat
     IconName: BrusherCircle0Icon
+    isInit: 0
+  - ID: 0
+    Name: BrusherCircle0
+    Description: FirstBrusherSkin
+    ItemType: 1
+    Model: {fileID: 4300000, guid: 384b3dc5f1801884e90d25e22fb43d9e, type: 2}
+    Material: {fileID: 2100000, guid: 95db4fa942a0f264790b306d419c0b15, type: 2}
+    Icon: {fileID: 21300000, guid: 3e3d7dce5d7cbd94ab26297978805c6b, type: 3}
+    ModelName: Cylinder
+    MaterialName: Cylinder0Mat
+    IconName: Cylinder0Icon
+    isInit: 0
   directInputFile: {fileID: 0}
   outputFilePath: Assets/Resources/Items/Items.json
   inputFilePath: Assets/Resources/Items/Items.json
-  outputField: '{"Items":[{"ID":0,"Name":"BrusherCircle0","Description":"FirstBrusherSkin","ItemType":1,"ModelName":"BrusherCircle0","MaterialName":"BrusherCircle0Mat","IconName":"BrusherCircle0Icon"}]}'
+  outputField: '{"Items":[{"ID":0,"Name":"BrusherCircle0","Description":"FirstBrusherSkin","ItemType":1,"ModelName":"BrusherCircle0","MaterialName":"BrusherCircle0Mat","IconName":"BrusherCircle0Icon","isInit":false},{"ID":0,"Name":"BrusherCircle0","Description":"FirstBrusherSkin","ItemType":1,"ModelName":"Cylinder","MaterialName":"Cylinder0Mat","IconName":"Cylinder0Icon","isInit":false}]}'
 --- !u!4 &1856110990
 Transform:
   m_ObjectHideFlags: 0

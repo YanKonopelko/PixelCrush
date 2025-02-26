@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using InventoryNamespace;
 
 namespace YG
 {
@@ -25,6 +26,13 @@ namespace YG
 
         //Currencies
         public int coins = 0;
+
+
+        //Inventory
+        public List<uint> collectedItems;
+        public List<uint> equipedItems;
+        public Item equipedCircleSkin;
+        public Item equipedStickSkin;
 
     }
 }

@@ -27,7 +27,7 @@ public class GameScene : MonoBehaviour
     public bool isStart;
     public bool isLose;
     public bool IsFinish;
-    private async void Start()
+    private async void Awake()
     {
         Instance = this;
         GlobalData.Instance.MusicManager.Swap(EMusicType.BaseBackMusic); 
@@ -36,14 +36,16 @@ public class GameScene : MonoBehaviour
         brusherRotation.gameObject.transform.position = levelCreator.GetLevelCenter();
         DOTween.SetTweensCapacity(200, 250);
         window.Hide();
-        Item a = ItemFabric.GetItem(0);
-        await UniTask.Delay(2);
+        Item a = await ItemFabric.GetItem(0);
         Debug.Log(a.ID);
         Debug.Log(a.Icon);
     }
     public void Update()
     {
-        debugText.text = "Level: " + ((PlayerData.Instance.AdditionalIndex > -1 ? PlayerData.Instance.CurrentLevel + PlayerData.Instance.AdditionalIndex : PlayerData.Instance.CurrentLevel) + 1).ToString() + $"\n Fps: {1 / Time.deltaTime}";
+        if(!GlobalData.Instance.IsRelease)
+            debugText.text = "Level: " + ((PlayerData.Instance.AdditionalIndex > -1 ? PlayerData.Instance.CurrentLevel + PlayerData.Instance.AdditionalIndex : PlayerData.Instance.CurrentLevel) + 1).ToString() + $"\n Fps: {1 / Time.deltaTime}";
+        else
+            debugText.text = "";
     }
     public async UniTask Win()
     {

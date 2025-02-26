@@ -11,8 +11,11 @@ public class PixelScript : MonoBehaviour
 {
     [SerializeField] MeshRenderer[] bottoms;
 
-    [SerializeField] public GameObject sphereObj;
-    [SerializeField] public MeshRenderer sphereRend;
+    [SerializeField] public GameObject TopObj;
+    [SerializeField] public MeshRenderer topRend;
+    [SerializeField] public MeshRenderer reverseBottomRend;
+    [SerializeField] public GameObject reverseBottomObj;
+    [SerializeField] public GameObject bottomRotatorParent;
 
     public Action paintCallback;
 
@@ -31,13 +34,13 @@ public class PixelScript : MonoBehaviour
     public bool HasCrosses { get { return hasCrosses; } }
     public void SetCoin(Action<Vector3> callback)
     {
-        sphereRend.material.color = new Color(0,0,0);
+        topRend.material.color = new Color(0,0,0);
         hasCoin = true;
         CoinCallback = callback;
     }
     public void SetCrosses(Action<Vector3> callback)
     {
-        sphereRend.material.color = new Color(1,1,1);
+        topRend.material.color = new Color(1,1,1);
         hasCrosses = true;
         CrossesCallback = callback;
     }
@@ -50,7 +53,7 @@ public class PixelScript : MonoBehaviour
         Vibrator.Vibrate(7);
         sequence = DOTween.Sequence();
         var myCallback = new TweenCallback(() => DisableSphere());
-        sequence.Append(sphereObj.transform.DOScale(new Vector3(0, 0, 0), 0.1f).SetEase(Ease.InOutCirc)).OnComplete(myCallback);
+        sequence.Append(TopObj.transform.DOScale(new Vector3(0, 0, 0), 0.1f).SetEase(Ease.InOutCirc)).OnComplete(myCallback);
         
         CoinCall();
         CrossesCall();
@@ -59,7 +62,7 @@ public class PixelScript : MonoBehaviour
         if (PlayerData.Instance.EffectsEnabled)
         {
             GameObject psObject = GlobalData.Instance.pool.GetFromPool(ParticleSystemKey);
-            psObject.transform.position = sphereObj.transform.position;
+            psObject.transform.position = TopObj.transform.position;
             ParticleSystem ps = psObject.GetComponent<ParticleSystem>();
             ParticleSystem.MainModule main = ps.main;
             main.startColor = topMaterial.color;
@@ -71,25 +74,53 @@ public class PixelScript : MonoBehaviour
 
     private void DisableSphere()
     {
-        sphereObj.SetActive(false);
+        TopObj.SetActive(false);
     }
     private Material topMaterial;
     public void InitPixel(GameObject paticlePrefabKey, Action callback, Material bottomStartMat, Material topStartMaterial, bool[] enabledCorners)
     {
+        ResetEndAnim();
         topMaterial = topStartMaterial;
-        sphereRend.material = topStartMaterial;
-
+        reverseBottomRend.material = rgbScaleMaterial;
         paintCallback = callback;
         ParticleSystemKey = paticlePrefabKey;
         isPainted = false;
-        sphereObj.SetActive(true);
+        TopObj.SetActive(true);
         for (int i = 0; i < bottoms.Length; i++)
         {
             bottoms[i].material = bottomStartMat;
         }
 
-        sphereObj.transform.localScale = new Vector3(1, 1, 1);
+        TopObj.transform.localScale = new Vector3(1, 1, 1);
 
+    }
+    public void EndAnim(){
+        float animationDuration = 3;
+        reverseBottomObj.SetActive(true);
+        var Seq = DOTween.Sequence();
+        // Vector3 targetRotation = new Vector3(90,0,-90);
+        // Vector3 targetRotation1 = new Vector3(-90,0,0);
+        Vector3 targetRotation = new Vector3(180,90,0);
+        Seq.Append(bottomRotatorParent.transform.DORotate(targetRotation, animationDuration));
+       
+        // Seq.Append(bottoms[0].transform.DORotate(targetRotation, animationDuration));
+        // Seq.Join(bottoms[0].transform.DOLocalMoveY(-0.007f, animationDuration));
+        // Seq.Join(reverseBottomObj.transform.DOLocalMoveY(-0.2552394f, animationDuration));
+        // Seq.Join(reverseBottomObj.transform.DORotate(targetRotation1, animationDuration));
+    }
+    private void ResetEndAnim(){
+        reverseBottomObj.SetActive(false);
+         Quaternion quat = new Quaternion();
+        quat.eulerAngles = new Vector3(0,-180,0);
+        bottomRotatorParent.transform.rotation = quat;
+        // Quaternion quat = new Quaternion();
+        // quat.eulerAngles = new Vector3(90,0,-90);
+        // reverseBottomObj.transform.rotation = quat;
+        // reverseBottomObj.transform.localPosition = new Vector3(0,-0.007f,0);
+        // Quaternion quat1 = new Quaternion();
+        // quat1.eulerAngles = new Vector3(-90,0,180);
+        // bottoms[0].transform.rotation = quat1;
+        // bottoms[0].transform.localPosition = new Vector3(0,-0.2552394f,0);
     }
     private void CoinCall(){
         if(!hasCoin){

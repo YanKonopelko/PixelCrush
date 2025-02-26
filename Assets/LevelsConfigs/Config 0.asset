@@ -12,7 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 658a9af174ced2d4591ba453ca1ef07a, type: 3}
   m_Name: Config 0
   m_EditorClassIdentifier: 
-  startTopMaterialColor: {r: 0.32156864, g: 0.7411765, b: 0.9098039, a: 1}
-  fogColor: {r: 0.54509807, g: 0.28627452, b: 0.4117647, a: 0.5882353}
-  brusherStickColor: {r: 1, g: 1, b: 1, a: 1}
-  brusherCircleColor: {r: 1, g: 1, b: 1, a: 1}
+  startTopMaterialColor:
+    MainColor: {r: 1, g: 0.7764706, b: 0.46666667, a: 1}
+    HighlightColor: {r: 1, g: 0.7607843, b: 0.42745098, a: 1}
+    ShadowColor: {r: 0.59607846, g: 0.27058825, b: 0, a: 1}
+  startBottomMaterialColor:
+    MainColor: {r: 0.7176471, g: 0.59607846, b: 0.8509804, a: 1}
+    HighlightColor: {r: 0.6862745, g: 0.6392157, b: 0.78431374, a: 1}
+    ShadowColor: {r: 0.2, g: 0.14509805, b: 0.32156864, a: 1}
+  brusherColor:
+    MainColor: {r: 0.8235294, g: 0.8039216, b: 0.8392157, a: 1}
+    HighlightColor: {r: 1, g: 1, b: 1, a: 1}
+    ShadowColor: {r: 0.5764706, g: 0.3882353, b: 0.7254902, a: 1}
+  fogColor: {r: 0.49019608, g: 0.3882353, b: 0.7372549, a: 1}

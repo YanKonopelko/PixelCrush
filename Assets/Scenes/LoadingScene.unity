@@ -455,10 +455,6 @@ MonoBehaviour:
   circleMeshes: []
   levelConfigss:
   - {fileID: 11400000, guid: 0e6e94e2d9a5e9140b9d97d244e0e4a7, type: 2}
-  - {fileID: 11400000, guid: 78cabb4b3d2cd164980e800c25b41995, type: 2}
-  - {fileID: 11400000, guid: 2c556f41acab76d459d409258e6717e3, type: 2}
-  - {fileID: 11400000, guid: a0a7cf0fc2e8eb74a8cc25080a440b2d, type: 2}
-  - {fileID: 11400000, guid: 88dd4516ca6362a4e9091b0e51a32869, type: 2}
   allItems: []
   itemsJSON: {fileID: 4900000, guid: 5220d44e410e0bf4c8ec9e783e40fbcf, type: 3}
 --- !u!4 &423763132

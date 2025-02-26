@@ -11,7 +11,7 @@ namespace InventoryNamespace
     public class Item
     {
         [SerializeField]
-        public int ID;
+        public uint ID;
         [SerializeField]
         public string Name;
         [SerializeField]
@@ -33,9 +33,11 @@ namespace InventoryNamespace
         public string MaterialName;
         [SerializeField]
         public string IconName;
+        public bool isInit = false;
 
-        public async void Init()
+        public async UniTask Init()
         {
+            if(isInit) return;
             try
             {
                 Model = await Addressables.LoadAssetAsync<Mesh>(ModelName);
