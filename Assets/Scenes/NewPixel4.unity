@@ -236,7 +236,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pixelPrefab: {fileID: 3827772687522734632, guid: 3e5af4f5987d3744b8b4f42fd9e30261, type: 3}
   particlePrefab: {fileID: 6786338954415586547, guid: 9dc973b9ee1c743468d556e24b1351ca, type: 3}
-  fogParent: {fileID: 273593839}
   pixelParent: {fileID: 20125317}
   bottomMaterial: {fileID: 2100000, guid: 3c84a33f3ba15d84fbaddaa38d383e23, type: 2}
   topMaterial: {fileID: 2100000, guid: 1446d3b55cf501542a914b8498006be2, type: 2}
@@ -245,6 +244,8 @@ MonoBehaviour:
   pixelSize: {x: 1.2, y: 1.2}
   pixelScripts: []
   testTexture: {fileID: 0}
+  fogMeshes:
+  - {fileID: 1766550286}
 --- !u!4 &20125317
 Transform:
   m_ObjectHideFlags: 0

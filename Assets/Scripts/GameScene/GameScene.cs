@@ -33,7 +33,7 @@ public class GameScene : MonoBehaviour
         GlobalData.Instance.MusicManager.Swap(EMusicType.BaseBackMusic); 
         BaseWindow window = GlobalData.Instance.UIManager.ShowWindow(EWindowType.LoadingWindow);
         await levelCreator.AsyncCreateLevel();
-        brusherRotation.gameObject.transform.position = levelCreator.GetLevelCenter();
+        brusherRotation.gameObject.transform.position = levelCreator.GetPoses()[levelCreator.GetPoses().Length%50];
         DOTween.SetTweensCapacity(200, 250);
         window.Hide();
         Item a = await ItemFabric.GetItem(0);
@@ -65,12 +65,12 @@ public class GameScene : MonoBehaviour
         BaseWindow window = GlobalData.Instance.UIManager.ShowWindow(EWindowType.LoadingWindow);
         await levelCreator.AsyncCreateLevel();
         cameraController.ToDefaultValues();
-        StartCanvas.SetActive(true);
-        brusherRotation.gameObject.transform.position = levelCreator.GetLevelCenter();
+        brusherRotation.gameObject.transform.position = levelCreator.GetPoses()[levelCreator.GetPoses().Length%20];
         GlobalData.Instance.UnloadLevelTexture(PlayerData.Instance.LastLevel);
         PlayerData.Instance.Save();
         await UniTask.Delay(1500);
         window.Hide();
+        StartCanvas.SetActive(true);
     }
     public void Restart()
     {
@@ -78,7 +78,7 @@ public class GameScene : MonoBehaviour
         isLose = false;
         IsFinish = false;
         levelCreator.CreateLevel();
-        brusherRotation.gameObject.transform.position = levelCreator.GetLevelCenter();
+        brusherRotation.gameObject.transform.position = levelCreator.GetPoses()[levelCreator.GetPoses().Length%20];
         StartCanvas.SetActive(true);
     }
 

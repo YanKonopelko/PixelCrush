@@ -81,7 +81,6 @@ public class PixelScript : MonoBehaviour
     {
         ResetEndAnim();
         topMaterial = topStartMaterial;
-        reverseBottomRend.material = rgbScaleMaterial;
         paintCallback = callback;
         ParticleSystemKey = paticlePrefabKey;
         isPainted = false;
@@ -96,19 +95,12 @@ public class PixelScript : MonoBehaviour
     }
     public void EndAnim(){
         float animationDuration = 3;
-        reverseBottomObj.SetActive(true);
+        reverseBottomObj.SetActive(false);
         var Seq = DOTween.Sequence();
-        // Vector3 targetRotation = new Vector3(90,0,-90);
-        // Vector3 targetRotation1 = new Vector3(-90,0,0);
         Vector3 targetRotation = new Vector3(180,90,0);
         Seq.Append(bottomRotatorParent.transform.DOScale(new Vector3(0.8f,0.8f,0.8f), animationDuration/3));
-        Seq.Append(bottomRotatorParent.transform.DORotate(targetRotation, animationDuration/3));
+        Seq.AppendCallback(()=>{bottoms[0].material = rgbScaleMaterial;});
         Seq.Append(bottomRotatorParent.transform.DOScale(1, animationDuration/3));
-       
-        // Seq.Append(bottoms[0].transform.DORotate(targetRotation, animationDuration));
-        // Seq.Join(bottoms[0].transform.DOLocalMoveY(-0.007f, animationDuration));
-        // Seq.Join(reverseBottomObj.transform.DOLocalMoveY(-0.2552394f, animationDuration));
-        // Seq.Join(reverseBottomObj.transform.DORotate(targetRotation1, animationDuration));
     }
     private void ResetEndAnim(){
         reverseBottomObj.SetActive(false);
@@ -116,14 +108,6 @@ public class PixelScript : MonoBehaviour
         quat.eulerAngles = new Vector3(0,-180,0);
         bottomRotatorParent.transform.rotation = quat;
         bottomRotatorParent.transform.localScale = new Vector3(1,1,1);
-        // Quaternion quat = new Quaternion();
-        // quat.eulerAngles = new Vector3(90,0,-90);
-        // reverseBottomObj.transform.rotation = quat;
-        // reverseBottomObj.transform.localPosition = new Vector3(0,-0.007f,0);
-        // Quaternion quat1 = new Quaternion();
-        // quat1.eulerAngles = new Vector3(-90,0,180);
-        // bottoms[0].transform.rotation = quat1;
-        // bottoms[0].transform.localPosition = new Vector3(0,-0.2552394f,0);
     }
     private void CoinCall(){
         if(!hasCoin){

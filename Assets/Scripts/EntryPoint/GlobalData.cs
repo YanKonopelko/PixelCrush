@@ -55,7 +55,7 @@ public class GlobalData : MonoBehaviour
         Debug.Log(e);
     }
 #else
-        isRelease = true;
+        isRelease = false;
 #endif
         MusicManager.Init();
         SoundManager.Init();

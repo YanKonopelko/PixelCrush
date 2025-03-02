@@ -11,7 +11,6 @@ public class LevelCreator : MonoBehaviour
 {
     [SerializeField] private GameObject pixelPrefab;
     [SerializeField] private GameObject particlePrefab;
-    [SerializeField] private Transform fogParent;
     [SerializeField] private Transform pixelParent;
     [SerializeField] private Material bottomMaterial;
     [SerializeField] private Material topMaterial;
@@ -24,7 +23,7 @@ public class LevelCreator : MonoBehaviour
     [SerializeField] private Texture2D testTexture;
 
 
-    private List<MeshRenderer> fogMeshes = new List<MeshRenderer>();
+    [SerializeField] private List<MeshRenderer> fogMeshes = new List<MeshRenderer>();
 
     private Texture2D texture2D;
     private Dictionary<Color, Material> InUseColors = new Dictionary<Color, Material>();
@@ -38,24 +37,6 @@ public class LevelCreator : MonoBehaviour
     private NativeArray<bool> pixelsPainted;
     private JobHandle handle;
     private const int MaxCoins = 5;
-
-    void Start()
-    {
-        // brusher.UpdateFromInventory();
-        for (int i = 0; i < fogParent.childCount; i++)
-        {
-            fogMeshes.Add(fogParent.GetChild(i).GetComponent<MeshRenderer>());
-        }
-        var config =  PlayerData.Instance.CurentLevelConfig;
-        ShaderColorPack pack = config.StartTopMaterialColor;
-        topMaterial.SetColor("Color",pack.MainColor);
-        topMaterial.SetColor("HighlightColor",pack.HighlightColor);
-        topMaterial.SetColor("ShadowColor",pack.ShadowColor);
-        for (int i = 0; i < fogMeshes.Count; i++)
-        {
-            fogMeshes[i].material.color = config.FogColor;
-        }
-    }
 
     public async UniTask AsyncCreateLevel()
     {
@@ -89,15 +70,15 @@ public class LevelCreator : MonoBehaviour
     {
         YG2.InterstitialAdvShow();
         brusher.UpdateFromCongif();
-        var config =  PlayerData.Instance.CurentLevelConfig;
+        var config = PlayerData.Instance.CurentLevelConfig;
         ShaderColorPack topPack = config.StartTopMaterialColor;
         ShaderColorPack bottomPack = config.StartBottomMaterialColor;
-        topMaterial.SetColor("Color",topPack.MainColor);
-        topMaterial.SetColor("HighlightColor",topPack.HighlightColor);
-        topMaterial.SetColor("ShadowColor",topPack.ShadowColor);
-        bottomMaterial.SetColor("Color",bottomPack.MainColor);
-        bottomMaterial.SetColor("HighlightColor",bottomPack.HighlightColor);
-        bottomMaterial.SetColor("ShadowColor",bottomPack.ShadowColor);
+        topMaterial.SetColor("Color", topPack.MainColor);
+        topMaterial.SetColor("_HColor", topPack.HighlightColor);
+        topMaterial.SetColor("_SColor", topPack.ShadowColor);
+        bottomMaterial.SetColor("Color", bottomPack.MainColor);
+        bottomMaterial.SetColor("_HColor", bottomPack.HighlightColor);
+        bottomMaterial.SetColor("_SColor", bottomPack.ShadowColor);
         for (int i = 0; i < fogMeshes.Count; i++)
         {
             fogMeshes[i].material.color = config.FogColor;
@@ -177,10 +158,12 @@ public class LevelCreator : MonoBehaviour
         pixelScripts[random.Next(0, pixelScripts.Length)].SetCrosses(SpawnCrosses);
 
     }
-    private void SpawnCrosses(Vector3 pos){
+    private void SpawnCrosses(Vector3 pos)
+    {
         Debug.Log($"Spawn Crosses: {pos}");
     }
-    private void SpawnCoin(Vector3 pos){
+    private void SpawnCoin(Vector3 pos)
+    {
         //Запустить партикл монетки вверх
         Debug.Log($"Spawn Coin: {pos}");
         PlayerData.Instance.AddCoins(1);
@@ -192,8 +175,13 @@ public class LevelCreator : MonoBehaviour
         float gs = color.grayscale;
         if (!InUseColors.ContainsKey(color))
         {
-            Material newMaterial = new Material(bottomMaterial);
+            Material newMaterial = new Material(topMaterial);
+            Color hColor = new Color(color.r*0.98f,color.g*0.98f,color.b*0.92f);
+            Color sColor = new Color(color.r*0.6f,color.g*0.35f,color.b*0.1f);
             newMaterial.color = color;
+            newMaterial.SetColor("Color", color);
+            newMaterial.SetColor("_HColor", hColor);
+            newMaterial.SetColor("_SColor", sColor);
             InUseColors.Add(color, newMaterial);
         }
 
@@ -290,8 +278,10 @@ public class LevelCreator : MonoBehaviour
 
         }
     }
-    public void PixelsEndAnim(){
-        for(int i = 0; i < pixelScripts.Length;i++){
+    public void PixelsEndAnim()
+    {
+        for (int i = 0; i < pixelScripts.Length; i++)
+        {
             pixelScripts[i].EndAnim();
         }
     }
@@ -301,9 +291,9 @@ public class LevelCreator : MonoBehaviour
         int width = texture2D.width;
         float x = width / 2.4f * pixelSize.x;
         float z = height / 5 * pixelSize.y;
-        // Vector2 pos = pixelPositions[pixelPositions.Length / 2];
         return new Vector3(x, 0.5f, z);
     }
-
-
+    public NativeArray<Vector2> GetPoses(){
+        return pixelPositions;
+    }
 }
