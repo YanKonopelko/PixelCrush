@@ -102,7 +102,7 @@ public class LevelCreator : MonoBehaviour
     {
         int height = texture.height;
         int width = texture.width;
-        var pixelData = texture.GetPixels();
+        var pixelData = texture.GetPixels32();
 
         for (int y = 0; y < height; y++)
         {

@@ -139,8 +139,8 @@ MonoBehaviour:
   Flags:
     flags: []
   InterstitialAdv:
-    showFirstAdv: 1
-    interAdvInterval: 60
+    showFirstAdv: 0
+    interAdvInterval: 90
     postponeCallByFail: 0
     postponeCallTimer: 10
     labelAdvSimLabel: 0
@@ -148,7 +148,7 @@ MonoBehaviour:
     setLanguageMod: 1
   Metrica:
     enable: 1
-    metricaCounterID: 99813080
+    metricaCounterID: 99005242
     log: 1
     useYandexMetrica: 1
   OpenURL:
@@ -218,7 +218,7 @@ MonoBehaviour:
   ServerTime:
     serverTime: 1721201231000
   Storage:
-    saveLocal: 1
+    saveLocal: 0
     saveCloud: 1
     saveCloudInterval: 0
     flush: 0
@@ -237,7 +237,7 @@ MonoBehaviour:
   Simulation:
     device: 0
     language: en
-    advIntervalSimulation: 60
+    advIntervalSimulation: 90
     durationAdv: 0.5
     loadAdv: 0
     testFailAds: 0
