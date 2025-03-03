@@ -24,6 +24,7 @@ public class LevelCreator : MonoBehaviour
 
 
     [SerializeField] private List<MeshRenderer> fogMeshes = new List<MeshRenderer>();
+    [SerializeField] private List<TutorialStage> tutorialStages = new List<TutorialStage>();
 
     private Texture2D texture2D;
     private Dictionary<Color, Material> InUseColors = new Dictionary<Color, Material>();
@@ -32,12 +33,12 @@ public class LevelCreator : MonoBehaviour
     private NativeArray<Vector2> pixelPositions;
 
     private int TargetCount = 0;
-    private int CurrentCount = 0;
+    public int CurrentCount {get; private set;}
 
     private NativeArray<bool> pixelsPainted;
     private JobHandle handle;
     private const int MaxCoins = 5;
-
+    private int lastTutorialStep = 0;
     public async UniTask AsyncCreateLevel()
     {
         if (testTexture != null)
@@ -254,6 +255,8 @@ public class LevelCreator : MonoBehaviour
 
         this.handle.Complete();
         TriggerPixels();
+        if(!PlayerData.Instance.TutorialComplete)
+            CheckForTutorialStep();
     }
 
     private void TriggerPixels()
@@ -295,5 +298,19 @@ public class LevelCreator : MonoBehaviour
     }
     public NativeArray<Vector2> GetPoses(){
         return pixelPositions;
+    }
+    private void CheckForTutorialStep(){
+        if(tutorialStages.Count<=lastTutorialStep) return;
+        var stage = tutorialStages[lastTutorialStep];
+        if(CurrentCount >= stage.targetPixelsCount && Math.Abs(brusherRotation.Angle - stage.targetAngle) <= 5){
+            lastTutorialStep += 1;
+            // brusherRotation.ChangeDirection();
+            // Time.timeScale = 0;
+            GameScene.Instance.isStart = false;
+             TutorialWindowData windowData = new TutorialWindowData();
+            windowData.HideCallback = () => {brusherRotation.ChangeDirection();GameScene.Instance.isStart = true;};
+            windowData.Step = 0;
+            GlobalData.Instance.UIManager.ShowWindow(EWindowType.TutorialWindow, windowData);
+        }
     }
 }

@@ -40,7 +40,8 @@ public class BrusherRotation : MonoBehaviour
     public void ChangeDirection()
     {
         isSwitched = !isSwitched;
-
+        // Debug.Log("Count:" +  GameScene.Instance.levelCreator.CurrentCount);
+        // Debug.Log("Angle:" + Angle);
         SwapPoints();
         Vector3 pos = targerPoint.position;
         pos.y+=2;
@@ -95,6 +96,8 @@ public class BrusherRotation : MonoBehaviour
         if (!GameScene.Instance.isStart) return;
         if (GameScene.Instance.IsFinish) return;
 
+        transform.RotateAround(targerPoint.position, direction * (isSwitched ? 1 : -1), _rotationSpeed * Time.deltaTime);
+        if(!PlayerData.Instance.TutorialComplete) return;
 
         if (Input.GetMouseButtonDown(0) || (Input.touchCount != 0 && Input.GetTouch(0).phase == TouchPhase.Began))
         {
@@ -117,7 +120,6 @@ public class BrusherRotation : MonoBehaviour
         {
             ChangeDirection();
         }
-        transform.RotateAround(targerPoint.position, direction * (isSwitched ? 1 : -1), _rotationSpeed * Time.deltaTime);
     }
     public float Angle{get{return transform.rotation.eulerAngles.y;}}
     public Vector2 StickSize

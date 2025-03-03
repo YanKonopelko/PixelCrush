@@ -9,7 +9,7 @@ public class TutorialWindow : BaseWindowWithData<TutorialWindowData>
     [SerializeField] GameObject Step0;
     [SerializeField] GameObject Step1;
     private bool isInteractable = false;
-    private int awaitTime = 3500;
+    private int awaitTime = 1500;
 
     override public async void Show()
     {

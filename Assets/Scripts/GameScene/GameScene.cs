@@ -15,7 +15,7 @@ public class GameScene : MonoBehaviour
     [SerializeField] private Text debugText;
     // [SerializeField] private GameObject loadScreen;
 
-    [SerializeField] private LevelCreator levelCreator;
+    [SerializeField] public LevelCreator levelCreator;
     [SerializeField] private BrusherRotation brusherRotation;
     [SerializeField] private CameraController cameraController;
 
@@ -93,13 +93,13 @@ public class GameScene : MonoBehaviour
         isStart = true;
         OnStart?.Invoke();
         StartCanvas.SetActive(false);
-        if (!PlayerData.Instance.TutorialComplete)
-        {
-            TutorialWindowData windowData = new TutorialWindowData();
-            windowData.HideCallback = () => brusherRotation.ChangeDirection();
-            windowData.Step = 0;
-            GlobalData.Instance.UIManager.ShowWindow(EWindowType.TutorialWindow, windowData);
-        }
+        // if (!PlayerData.Instance.TutorialComplete)
+        // {
+        //     TutorialWindowData windowData = new TutorialWindowData();
+        //     windowData.HideCallback = () => brusherRotation.ChangeDirection();
+        //     windowData.Step = 0;
+        //     GlobalData.Instance.UIManager.ShowWindow(EWindowType.TutorialWindow, windowData);
+        // }
     }
 
     public void OpenSettings()

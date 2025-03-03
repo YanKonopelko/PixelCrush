@@ -246,6 +246,15 @@ MonoBehaviour:
   testTexture: {fileID: 0}
   fogMeshes:
   - {fileID: 1766550286}
+  tutorialStages:
+  - targetPixelsCount: 64
+    targetAngle: 286
+  - targetPixelsCount: 112
+    targetAngle: 100
+  - targetPixelsCount: 158
+    targetAngle: 173
+  - targetPixelsCount: 201
+    targetAngle: 300
 --- !u!4 &20125317
 Transform:
   m_ObjectHideFlags: 0
