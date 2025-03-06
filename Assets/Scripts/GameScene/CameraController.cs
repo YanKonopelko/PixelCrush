@@ -35,9 +35,9 @@ public class CameraController : MonoBehaviour
         Vector3 targetRotation = new Vector3(90,0,0);
         Vector3 targetPos = LevelParent.transform.position;
         Vector3 center = LevelParent.GetLevelCenter();
-        Seq.Append(_transform.DOLocalMoveX(center.x, animationDuration/3));
+        Seq.Append(_transform.DOLocalMoveX(center.x-1f, animationDuration/3));
         Seq.Join(_transform.DOLocalMoveY(180, animationDuration));
-        Seq.Join(_transform.DOLocalMoveZ(center.z, animationDuration/3));
+        Seq.Join(_transform.DOLocalMoveZ(center.z+8.5f, animationDuration/3));
         Seq.Join(_transform.DORotate(targetRotation, animationDuration/3));
         Seq.OnComplete(() => { animEnd = true; 
         });

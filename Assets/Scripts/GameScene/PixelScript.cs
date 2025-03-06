@@ -85,6 +85,7 @@ public class PixelScript : MonoBehaviour
         ParticleSystemKey = paticlePrefabKey;
         isPainted = false;
         TopObj.SetActive(true);
+        sequence.Complete();
         for (int i = 0; i < bottoms.Length; i++)
         {
             bottoms[i].material = bottomStartMat;
@@ -96,11 +97,11 @@ public class PixelScript : MonoBehaviour
     public void EndAnim(){
         float animationDuration = 3;
         reverseBottomObj.SetActive(false);
-        var Seq = DOTween.Sequence();
+        sequence = DOTween.Sequence();
         Vector3 targetRotation = new Vector3(180,90,0);
-        Seq.Append(bottomRotatorParent.transform.DOScale(new Vector3(0.8f,0.8f,0.8f), animationDuration/3));
-        Seq.AppendCallback(()=>{bottoms[0].material = rgbScaleMaterial;});
-        Seq.Append(bottomRotatorParent.transform.DOScale(1, animationDuration/3));
+        sequence.Append(bottomRotatorParent.transform.DOScale(new Vector3(0.8f,0.8f,0.8f), animationDuration/3));
+        sequence.AppendCallback(()=>{bottoms[0].material = rgbScaleMaterial;});
+        sequence.Append(bottomRotatorParent.transform.DOScale(1, animationDuration/3));
     }
     private void ResetEndAnim(){
         reverseBottomObj.SetActive(false);

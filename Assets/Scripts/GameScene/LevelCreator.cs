@@ -25,6 +25,7 @@ public class LevelCreator : MonoBehaviour
 
     [SerializeField] private List<MeshRenderer> fogMeshes = new List<MeshRenderer>();
     [SerializeField] private List<TutorialStage> tutorialStages = new List<TutorialStage>();
+    [SerializeField] private GameObject CoinPrefab = null;
 
     private Texture2D texture2D;
     private Dictionary<Color, Material> InUseColors = new Dictionary<Color, Material>();
@@ -140,7 +141,7 @@ public class LevelCreator : MonoBehaviour
             pixelsPainted[i] = false;
             pixelScripts[i] = pixels[i].GetComponent<PixelScript>();
         }
-        // InitCoins();
+        InitCoins();
         // InitCrosses();
     }
 
@@ -166,7 +167,10 @@ public class LevelCreator : MonoBehaviour
     private void SpawnCoin(Vector3 pos)
     {
         //Запустить партикл монетки вверх
-        Debug.Log($"Spawn Coin: {pos}");
+        GameObject coin = GlobalData.Instance.pool.GetFromPool(CoinPrefab);
+        coin.GetComponent<Coin>().SetPrefab(CoinPrefab);
+        // Debug.Log($"Spawn Coin: {pos}");
+        coin.transform.position = pos;
         PlayerData.Instance.AddCoins(1);
         YG2.SaveProgress();
     }
@@ -304,8 +308,6 @@ public class LevelCreator : MonoBehaviour
         var stage = tutorialStages[lastTutorialStep];
         if(CurrentCount >= stage.targetPixelsCount && Math.Abs(brusherRotation.Angle - stage.targetAngle) <= 5){
             lastTutorialStep += 1;
-            // brusherRotation.ChangeDirection();
-            // Time.timeScale = 0;
             GameScene.Instance.isStart = false;
              TutorialWindowData windowData = new TutorialWindowData();
             windowData.HideCallback = () => {brusherRotation.ChangeDirection();GameScene.Instance.isStart = true;};

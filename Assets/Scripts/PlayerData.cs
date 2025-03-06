@@ -150,5 +150,6 @@ public class PlayerData
     }
     public void AddCoins(int amount){
         coins = Math.Clamp(coins+amount,0,int.MaxValue);
+        Save();
     }
 }

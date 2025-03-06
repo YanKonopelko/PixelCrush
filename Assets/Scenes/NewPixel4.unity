@@ -255,6 +255,7 @@ MonoBehaviour:
     targetAngle: 173
   - targetPixelsCount: 201
     targetAngle: 300
+  CoinPrefab: {fileID: 3852570344440247769, guid: e7d8951ff47e95d468fbb952d1b05ffe, type: 3}
 --- !u!4 &20125317
 Transform:
   m_ObjectHideFlags: 0
