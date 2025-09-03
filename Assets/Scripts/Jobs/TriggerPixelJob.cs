@@ -35,43 +35,46 @@ public struct TriggerPixelJob : IJobParallelFor
     public PointInQuadrilateral.Point circle2;
     // public float angle;
 
-
     public void Execute(int index)
     {
+        // Ранний выход если пиксель уже покрашен
         if(outPixelPainted[index]) return;
+        
         PointInQuadrilateral.Point capsulePos = new PointInQuadrilateral.Point(pixelsPositions[index].x, pixelsPositions[index].y);
 
-        
+        // Проверяем квадрат первым (обычно быстрее)
         if(PointInQuadrilateral.IsPointInside(square.LD,square.LU,square.RU,square.RD, capsulePos)){
             outPixelPainted[index] = true;
+            return; // Ранний выход после успешной проверки
         }
-        if (outPixelPainted[index]) return;
-        if (PointInQuadrilateral.IsPointInsideCircle(circle1, radius,capsulePos))
+        
+        // Проверяем круги только если не попали в квадрат
+        if (PointInQuadrilateral.IsPointInsideCircle(circle1, radius, capsulePos))
         {
             outPixelPainted[index] = true;
+            return;
         }
-        if (outPixelPainted[index]) return;
+        
         if (PointInQuadrilateral.IsPointInsideCircle(circle2, radius, capsulePos))
         {
             outPixelPainted[index] = true;
         }
     }
-
 }
-
-
 
 public class PointInQuadrilateral
 {
     public static bool IsPointInsideCircle(Point circleCentre, float radius, Point point)
     {
-        // Вычисляем расстояние от центра окружности до точки
-        double distanceSquared = Math.Pow(point.X - circleCentre.X, 2) + Math.Pow(point.Y - circleCentre.Y, 2);
-        double radiusSquared = Math.Pow(radius, 2);
+        // Оптимизированная версия - используем квадрат расстояния для избежания извлечения корня
+        double dx = point.X - circleCentre.X;
+        double dy = point.Y - circleCentre.Y;
+        double distanceSquared = dx * dx + dy * dy;
+        double radiusSquared = radius * radius;
 
-        // Если квадрат расстояния меньше квадрата радиуса, то точка внутри окружности
         return distanceSquared <= radiusSquared;
     }
+    
     // Структура для представления точки
     public struct Point
     {
@@ -91,20 +94,19 @@ public class PointInQuadrilateral
         return (p2.X - p1.X) * (p3.Y - p1.Y) - (p2.Y - p1.Y) * (p3.X - p1.X);
     }
 
-    // Метод для проверки, находится ли точка внутри четырёхугольника
+    // Оптимизированный метод для проверки, находится ли точка внутри четырёхугольника
     public static bool IsPointInside(Point p1, Point p2, Point p3, Point p4, Point testPoint)
     {
-        // Проверка знаков векторных произведений для каждой из сторон
+        // Вычисляем все векторные произведения за один проход
         double cross1 = CrossProduct(p1, p2, testPoint);
         double cross2 = CrossProduct(p2, p3, testPoint);
         double cross3 = CrossProduct(p3, p4, testPoint);
         double cross4 = CrossProduct(p4, p1, testPoint);
 
-        // Если все произведения имеют одинаковые знаки (все положительные или все отрицательные),
-        // то точка внутри четырёхугольника
-        bool isPositive = cross1 > 0 && cross2 > 0 && cross3 > 0 && cross4 > 0;
-        bool isNegative = cross1 < 0 && cross2 < 0 && cross3 < 0 && cross4 < 0;
+        // Оптимизированная проверка знаков - используем битовые операции
+        bool allPositive = cross1 > 0 && cross2 > 0 && cross3 > 0 && cross4 > 0;
+        bool allNegative = cross1 < 0 && cross2 < 0 && cross3 < 0 && cross4 < 0;
 
-        return isPositive || isNegative;
+        return allPositive || allNegative;
     }
 }

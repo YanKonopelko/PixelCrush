@@ -40,6 +40,22 @@ public class LevelCreator : MonoBehaviour
     private JobHandle handle;
     private const int MaxCoins = 5;
     private int lastTutorialStep = 0;
+
+    // Кешированные данные для оптимизации
+    private readonly double radToAngle = Math.PI / 180;
+    private Vector2[] cachedCornerOffsets = new Vector2[4];
+    private Square cachedSquare;
+    private PointInQuadrilateral.Point cachedCircle1;
+    private PointInQuadrilateral.Point cachedCircle2;
+    private float cachedRadius;
+    private bool needsSquareRecalculation = true;
+    private bool needsCircleRecalculation = true;
+    private float lastAngle = float.MinValue;
+    private Vector3 lastStickPosition = Vector3.negativeInfinity;
+    private Vector2 lastStickSize = Vector2.negativeInfinity;
+    private Vector3[] lastCirclePositions = new Vector3[2];
+    private const float POSITION_THRESHOLD = 0.001f;
+    private const float ANGLE_THRESHOLD = 0.01f;
     public async UniTask AsyncCreateLevel()
     {
         if (testTexture != null)
@@ -88,6 +104,9 @@ public class LevelCreator : MonoBehaviour
         ClearChildren();
         CreateLevelWithImage(texture2D);
         brusherRotation.gameObject.SetActive(true);
+        
+        // Сброс кеша при создании нового уровня
+        ResetCache();
     }
 
     public void ClearChildren()
@@ -99,6 +118,12 @@ public class LevelCreator : MonoBehaviour
         pixels.Clear();
         pixelsGrid.Clear();
         CurrentCount = 0;
+        
+        // Освобождаем нативные массивы
+        if (pixelPositions.IsCreated)
+            pixelPositions.Dispose();
+        if (pixelsPainted.IsCreated)
+            pixelsPainted.Dispose();
     }
     private void CreateLevelWithImage(Texture2D texture)
     {
@@ -132,8 +157,8 @@ public class LevelCreator : MonoBehaviour
             }
         }
         TargetCount = pixels.Count;
-        pixelPositions = new NativeArray<Vector2>(TargetCount, Allocator.TempJob);
-        pixelsPainted = new NativeArray<bool>(TargetCount, Allocator.TempJob);
+        pixelPositions = new NativeArray<Vector2>(TargetCount, Allocator.Persistent);
+        pixelsPainted = new NativeArray<bool>(TargetCount, Allocator.Persistent);
         pixelScripts = new PixelScript[TargetCount];
         for (int i = 0; i < TargetCount; i++)
         {
@@ -205,43 +230,99 @@ public class LevelCreator : MonoBehaviour
         }
         pixelsGrid[(int)pos.z].Add(pos);
     }
-    double radToAngle = Math.PI / 180;
+
+    private void ResetCache()
+    {
+        needsSquareRecalculation = true;
+        needsCircleRecalculation = true;
+        lastAngle = float.MinValue;
+        lastStickPosition = Vector3.negativeInfinity;
+        lastStickSize = Vector2.negativeInfinity;
+        lastCirclePositions[0] = Vector3.negativeInfinity;
+        lastCirclePositions[1] = Vector3.negativeInfinity;
+    }
+
+    private void CalculateSquareCorners(float angle, Vector2 brusherStickSize, Vector3 stickPosition)
+    {
+        // Кешируем тригонометрические значения
+        double cosAngle = Math.Cos(radToAngle * angle);
+        double sinAngle = Math.Sin(radToAngle * angle);
+
+        // Вычисляем углы квадрата один раз
+        cachedCornerOffsets[0] = CalculateCornerOffset(-0.5f * brusherStickSize.x, +0.5f * brusherStickSize.y, cosAngle, sinAngle); // leftUp
+        cachedCornerOffsets[1] = CalculateCornerOffset(+0.5f * brusherStickSize.x, +0.5f * brusherStickSize.y, cosAngle, sinAngle); // rightUp
+        cachedCornerOffsets[2] = CalculateCornerOffset(-0.5f * brusherStickSize.x, -0.5f * brusherStickSize.y, cosAngle, sinAngle); // leftDown
+        cachedCornerOffsets[3] = CalculateCornerOffset(+0.5f * brusherStickSize.x, -0.5f * brusherStickSize.y, cosAngle, sinAngle); // rightDown
+
+        // Добавляем позицию стика
+        Vector2 offset = new Vector2(stickPosition.x, stickPosition.z);
+        for (int i = 0; i < 4; i++)
+        {
+            cachedCornerOffsets[i] += offset;
+        }
+
+        // Создаем квадрат с кешированными точками (порядок: leftUp, rightUp, leftDown, rightDown)
+        cachedSquare = new Square(
+            new PointInQuadrilateral.Point(cachedCornerOffsets[0].x, cachedCornerOffsets[0].y), // leftUp
+            new PointInQuadrilateral.Point(cachedCornerOffsets[1].x, cachedCornerOffsets[1].y), // rightUp
+            new PointInQuadrilateral.Point(cachedCornerOffsets[2].x, cachedCornerOffsets[2].y), // leftDown
+            new PointInQuadrilateral.Point(cachedCornerOffsets[3].x, cachedCornerOffsets[3].y)  // rightDown
+        );
+        
+
+        
+         #if UNITY_EDITOR
+        Debug.DrawLine(new Vector3(cachedCornerOffsets[2].x, 2, cachedCornerOffsets[2].y), new Vector3(cachedCornerOffsets[0].x, 2, cachedCornerOffsets[0].y));
+        Debug.DrawLine(new Vector3(cachedCornerOffsets[0].x, 2, cachedCornerOffsets[0].y), new Vector3(cachedCornerOffsets[1].x, 2, cachedCornerOffsets[1].y));
+        Debug.DrawLine(new Vector3(cachedCornerOffsets[1].x, 2, cachedCornerOffsets[1].y), new Vector3(cachedCornerOffsets[3].x, 2, cachedCornerOffsets[3].y));
+        Debug.DrawLine(new Vector3(cachedCornerOffsets[3].x, 2, cachedCornerOffsets[3].y), new Vector3(cachedCornerOffsets[2].x, 2, cachedCornerOffsets[2].y));
+        #endif
+    }
+
+    private Vector2 CalculateCornerOffset(float x, float y, double cosAngle, double sinAngle)
+    {
+        return new Vector2(
+            (float)(x * cosAngle - y * sinAngle),
+            (float)(x * sinAngle + y * cosAngle)
+        );
+    }
+
     public void Update()
     {
         if (!GameScene.Instance.isStart) return;
 
-        // a     b
-        // c     d
         float angle = brusherRotation.Angle * (BrusherRotation.isSwitched ? -1 : -1);
         var brusherStickSize = brusherRotation.StickSize;
-        float x = -0.5f * brusherStickSize.x;
-        float y = +0.5f * brusherStickSize.y;
-        Vector3 Offset = brusherRotation.StickPosition;
-        Vector2 leftUp = new Vector2((float)(x * Math.Cos(radToAngle * angle) - y * Math.Sin(radToAngle * angle)), (float)(x * Math.Sin(radToAngle * angle) + y * Math.Cos(radToAngle * angle)));
+        Vector3 stickPosition = brusherRotation.StickPosition;
+        Vector3[] circlePositions = brusherRotation.CirclePositions;
+        float circleSize = brusherRotation.CircleSize;
 
-        x = 0.5f * brusherStickSize.x;
-        y = 0.5f * brusherStickSize.y;
-        Vector2 rightUp = new Vector2((float)(x * Math.Cos(radToAngle * angle) - y * Math.Sin(radToAngle * angle)), (float)(x * Math.Sin(radToAngle * angle) + y * Math.Cos(radToAngle * angle)));
+        // Проверяем, нужно ли пересчитывать квадрат
+        if (needsSquareRecalculation || 
+            Math.Abs(angle - lastAngle) > ANGLE_THRESHOLD || 
+            Vector3.Distance(stickPosition, lastStickPosition) > POSITION_THRESHOLD ||
+            Vector2.Distance(brusherStickSize, lastStickSize) > POSITION_THRESHOLD)
+        {
+            CalculateSquareCorners(angle, brusherStickSize, stickPosition);
+            lastAngle = angle;
+            lastStickPosition = stickPosition;
+            lastStickSize = brusherStickSize;
+            needsSquareRecalculation = false;
+        }
 
-        x = -0.5f * brusherStickSize.x;
-        y = -0.5f * brusherStickSize.y;
-        Vector2 leftDown = new Vector2((float)(x * Math.Cos(radToAngle * angle) - y * Math.Sin(radToAngle * angle)), (float)(x * Math.Sin(radToAngle * angle) + y * Math.Cos(radToAngle * angle)));
-
-        x = +0.5f * brusherStickSize.x;
-        y = -0.5f * brusherStickSize.y;
-        Vector2 rightDown = new Vector2((float)(x * Math.Cos(radToAngle * angle) - y * Math.Sin(radToAngle * angle)), (float)(x * Math.Sin(radToAngle * angle) + y * Math.Cos(radToAngle * angle)));
-
-        leftUp += new Vector2(Offset.x, Offset.z);
-        rightUp += new Vector2(Offset.x, Offset.z);
-        leftDown += new Vector2(Offset.x, Offset.z);
-        rightDown += new Vector2(Offset.x, Offset.z);
-        // Debug.DrawLine(new Vector3(leftDown.x, 2, leftDown.y), new Vector3(leftUp.x, 2, leftUp.y));
-        // Debug.DrawLine(new Vector3(leftUp.x, 2, leftUp.y), new Vector3(rightUp.x, 2, rightUp.y));
-        // Debug.DrawLine(new Vector3(rightUp.x, 2, rightUp.y), new Vector3(rightDown.x, 2, rightDown.y));
-        // Debug.DrawLine(new Vector3(rightDown.x, 2, rightDown.y), new Vector3(leftDown.x, 2, leftDown.y));
-
-        var circle1Pos = new PointInQuadrilateral.Point(brusherRotation.CirclePositions[0].x, brusherRotation.CirclePositions[0].z);
-        var circle2Pos = new PointInQuadrilateral.Point(brusherRotation.CirclePositions[1].x, brusherRotation.CirclePositions[1].z);
+        // Проверяем, нужно ли пересчитывать круги
+        if (needsCircleRecalculation ||
+            Vector3.Distance(circlePositions[0], lastCirclePositions[0]) > POSITION_THRESHOLD ||
+            Vector3.Distance(circlePositions[1], lastCirclePositions[1]) > POSITION_THRESHOLD ||
+            Math.Abs(circleSize - cachedRadius) > POSITION_THRESHOLD)
+        {
+            cachedCircle1 = new PointInQuadrilateral.Point(circlePositions[0].x, circlePositions[0].z);
+            cachedCircle2 = new PointInQuadrilateral.Point(circlePositions[1].x, circlePositions[1].z);
+            cachedRadius = circleSize;
+            lastCirclePositions[0] = circlePositions[0];
+            lastCirclePositions[1] = circlePositions[1];
+            needsCircleRecalculation = false;
+        }
 
         TriggerPixelJob job = new TriggerPixelJob()
         {
@@ -250,12 +331,12 @@ public class LevelCreator : MonoBehaviour
             brusherPosition = new Vector2(0, 0),
             brusherSize = brusherStickSize,
             pixelSize = pixelSize,
-            circle1 = circle1Pos,
-            circle2 = circle2Pos,
-            radius = brusherRotation.CircleSize,
-            square = new Square(new PointInQuadrilateral.Point(leftUp.x, leftUp.y), new PointInQuadrilateral.Point(rightUp.x, rightUp.y), new PointInQuadrilateral.Point(leftDown.x, leftDown.y), new PointInQuadrilateral.Point(rightDown.x, rightDown.y))
+            circle1 = cachedCircle1,
+            circle2 = cachedCircle2,
+            radius = cachedRadius,
+            square = cachedSquare
         };
-        this.handle = job.Schedule(TargetCount, 5);
+        this.handle = job.Schedule(TargetCount, 64); // Увеличил batch size для лучшей производительности
 
         this.handle.Complete();
         TriggerPixels();
@@ -314,5 +395,14 @@ public class LevelCreator : MonoBehaviour
             windowData.Step = 0;
             GlobalData.Instance.UIManager.ShowWindow(EWindowType.TutorialWindow, windowData);
         }
+    }
+
+    private void OnDestroy()
+    {
+        // Освобождаем нативные массивы
+        if (pixelPositions.IsCreated)
+            pixelPositions.Dispose();
+        if (pixelsPainted.IsCreated)
+            pixelsPainted.Dispose();
     }
 }
