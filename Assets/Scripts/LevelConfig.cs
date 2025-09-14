@@ -8,7 +8,7 @@ public struct ShaderColorPack
     [SerializeField] public Color ShadowColor;
 }
 
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/LevelConfig", order = 1)]
+[CreateAssetMenu(fileName = "VisualLevelConfig", menuName = "Scriptable Objects/VisualLevelConfig", order = 1)]
 public class LevelConfig : ScriptableObject
 {
     [SerializeField] private ShaderColorPack startTopMaterialColor;

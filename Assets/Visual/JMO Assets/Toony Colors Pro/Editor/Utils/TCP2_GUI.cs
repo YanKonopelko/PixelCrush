@@ -1241,7 +1241,7 @@ namespace ToonyColorsPro
 				//Code from ColorPropertyInternal, but with alpha turned off
 				EditorGUI.BeginChangeCheck();
 				EditorGUI.showMixedValue = prop.hasMixedValue;
-				bool hdr = (prop.flags & MaterialProperty.PropFlags.HDR) != MaterialProperty.PropFlags.None;
+				bool hdr = (prop.propertyFlags & UnityEngine.Rendering.ShaderPropertyFlags.HDR) != UnityEngine.Rendering.ShaderPropertyFlags.None;
 				bool showAlpha = false;
 #if UNITY_2018_1_OR_NEWER
 				Color colorValue = EditorGUI.ColorField(position, label, prop.colorValue, true, showAlpha, hdr);
@@ -1426,7 +1426,7 @@ namespace ToonyColorsPro
 		{
 			private static bool IsPropertyTypeSuitable(MaterialProperty prop)
 			{
-				return prop.type == MaterialProperty.PropType.Float || prop.type == MaterialProperty.PropType.Range;
+				return prop.propertyType == UnityEngine.Rendering.ShaderPropertyType.Float || prop.propertyType == UnityEngine.Rendering.ShaderPropertyType.Range;
 			}
 
 			public override float GetPropertyHeight(MaterialProperty prop, string label, MaterialEditor editor)
@@ -1472,7 +1472,7 @@ namespace ToonyColorsPro
 		{
 			private static bool IsPropertyTypeSuitable(MaterialProperty prop)
 			{
-				return prop.type == MaterialProperty.PropType.Texture;
+				return prop.propertyType == UnityEngine.Rendering.ShaderPropertyType.Texture;
 			}
 
 			public override float GetPropertyHeight(MaterialProperty prop, string label, MaterialEditor editor)
@@ -1523,7 +1523,7 @@ namespace ToonyColorsPro
 
 			private static bool IsPropertyTypeSuitable(MaterialProperty prop)
 			{
-				return prop.type == MaterialProperty.PropType.Vector;
+				return prop.propertyType == UnityEngine.Rendering.ShaderPropertyType.Vector;
 			}
 
 			public override float GetPropertyHeight(MaterialProperty prop, string label, MaterialEditor editor)

@@ -89,7 +89,7 @@ namespace ToonyColorsPro
 						else
 						{
 							//Draw regular property
-							if(visible && (p.flags & (MaterialProperty.PropFlags.PerRendererData | MaterialProperty.PropFlags.HideInInspector)) == MaterialProperty.PropFlags.None)
+							if(visible && (p.propertyFlags & (UnityEngine.Rendering.ShaderPropertyFlags.PerRendererData | UnityEngine.Rendering.ShaderPropertyFlags.HideInInspector)) == UnityEngine.Rendering.ShaderPropertyFlags.None)
 								mMaterialEditor.ShaderProperty(p, p.displayName);
 						}
 					}
