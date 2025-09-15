@@ -68,7 +68,7 @@ public class LevelRedactor : MonoBehaviour
         }
         float scale = 10.5f / (float)Math.Max(config.Width, config.Height);
         pixelsParent.localScale = new Vector3(scale,scale,scale);
-        pixelsParentLayout.constraintCount = config.Height;
+        pixelsParentLayout.constraintCount = config.Width;
     }
 
     private void OnPixelTouch(PixelRedactorScript pixel)
@@ -84,6 +84,23 @@ public class LevelRedactor : MonoBehaviour
     {
         SessionData.CurrentConfig = GetConfigFromImage();
         SceneManager.LoadScene("NewPixel4");
+    }
+
+    public void SwitchCoinsState()
+    {
+        if (currentPixel)
+        {
+            var isCoin = currentPixel.SwitchCoinState();
+            if (isCoin)
+            {
+                coins.Add(currentPixel.index);
+            }
+            else
+            {
+                coins.Remove(currentPixel.index);
+            }
+        }
+        
     }
 
     public void UpdateImage()

@@ -101,6 +101,16 @@ public class GameLevelConfigEditor : Editor
             }
         }
         
+        // Создаем множество позиций монеток для быстрого поиска
+        HashSet<Vector2> coinPositions = new HashSet<Vector2>();
+        if (config.Coins != null)
+        {
+            foreach (var coin in config.Coins)
+            {
+                coinPositions.Add(coin);
+            }
+        }
+        
         // Создаем текстуру для всей сетки
         int textureWidth = width * (int)(cellSize + CELL_SPACING) - (int)CELL_SPACING;
         int textureHeight = height * (int)(cellSize + CELL_SPACING) - (int)CELL_SPACING;
@@ -130,7 +140,7 @@ public class GameLevelConfigEditor : Editor
                 
                 // Вычисляем позицию ячейки в текстуре
                 int startX = x * (int)(cellSize + CELL_SPACING);
-                int startY = y * (int)(cellSize + CELL_SPACING); // Прямой порядок Y
+                int startY = (height - 1 - y) * (int)(cellSize + CELL_SPACING); // Инвертируем Y для отображения
                 
                 // Заполняем ячейку цветом
                 for (int py = 0; py < (int)cellSize; py++)
@@ -156,7 +166,35 @@ public class GameLevelConfigEditor : Editor
         gridStyle.fixedWidth = textureWidth;
         gridStyle.fixedHeight = textureHeight;
         
-        EditorGUILayout.LabelField("", gridStyle);
+        // Получаем Rect для сетки
+        Rect gridRect = GUILayoutUtility.GetRect(textureWidth, textureHeight, gridStyle);
+        GUI.Label(gridRect, "", gridStyle);
+        
+        // Рисуем символы $ для монеток
+        if (coinPositions.Count > 0)
+        {
+            GUIStyle coinStyle = new GUIStyle(EditorStyles.boldLabel);
+            coinStyle.fontSize = Mathf.Max(8, (int)(cellSize * 0.6f)); // Адаптивный размер шрифта
+            coinStyle.normal.textColor = Color.yellow;
+            coinStyle.alignment = TextAnchor.MiddleCenter;
+            
+            foreach (var coinPos in coinPositions)
+            {
+                int x = (int)coinPos.x;
+                int y = (int)coinPos.y;
+                
+                if (x >= 0 && x < width && y >= 0 && y < height)
+                {
+                    // Вычисляем точную позицию центра ячейки (инвертируем Y для отображения)
+                    float cellX = gridRect.x + x * (cellSize + CELL_SPACING) + cellSize / 2;
+                    float cellY = gridRect.y + (height - 1 - y) * (cellSize + CELL_SPACING) + cellSize / 2;
+                    
+                    // Создаем Rect точно по центру ячейки
+                    Rect coinRect = new Rect(cellX - cellSize/4, cellY - cellSize/4, cellSize/2, cellSize/2);
+                    GUI.Label(coinRect, "$", coinStyle);
+                }
+            }
+        }
         
         // Показываем информацию о сетке
         EditorGUILayout.Space();
@@ -164,5 +202,6 @@ public class GameLevelConfigEditor : Editor
         EditorGUILayout.LabelField($"Cell Size: {cellSize:F1}px");
         EditorGUILayout.LabelField($"Pixels Count: {(pixels != null ? pixels.Count : 0)}");
         EditorGUILayout.LabelField($"Loaded Colors: {pixelColors.Count}");
+        EditorGUILayout.LabelField($"Coins Count: {coinPositions.Count}");
     }
 }

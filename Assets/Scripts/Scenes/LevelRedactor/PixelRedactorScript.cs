@@ -16,9 +16,12 @@ public class PixelRedactorScript : MonoBehaviour, IPointerDownHandler
 
     public Action action;
 
+    public bool isCoin = false;
+
     void Start()
     {
         Deselect();
+        // SwitchCoinState();
     }
     public void SetColor(Color color)
     {
@@ -26,7 +29,6 @@ public class PixelRedactorScript : MonoBehaviour, IPointerDownHandler
     }
     public void UpdateByValue(int value)
     {
-        coinState.SetActive(false);
         removedState.SetActive(false);
         baseState.SetActive(false);
 
@@ -39,15 +41,17 @@ public class PixelRedactorScript : MonoBehaviour, IPointerDownHandler
                 }
             case 1:
                 {
-                    coinState.SetActive(true);
-                    break;
-                }
-            case 2:
-                {
                     removedState.SetActive(true);
                     break;
                 }
         }
+    }
+
+    public bool SwitchCoinState()
+    {
+        isCoin = !isCoin;
+        coinState.SetActive(isCoin);
+        return isCoin;
     }
 
     public void OnPointerDown(PointerEventData eventData)

@@ -1,0 +1,424 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e818069973ae0ff41b17224a15a6eb1d, type: 3}
+  m_Name: GameLevelConfig_63893568149654
+  m_EditorClassIdentifier: Assembly-CSharp::GameLevelConfig
+  _height: 22
+  _width: 17
+  _pixels:
+  - <_pos>k__BackingField: {x: 13, y: 0}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 12, y: 1}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 13, y: 1}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 14, y: 1}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 12, y: 2}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 13, y: 2}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 14, y: 2}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 15, y: 2}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 12, y: 3}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 13, y: 3}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 14, y: 3}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 15, y: 3}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 16, y: 3}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 1, y: 4}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 2, y: 4}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 3, y: 4}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 4, y: 4}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 5, y: 4}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 6, y: 4}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 7, y: 4}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 8, y: 4}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 9, y: 4}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 10, y: 4}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 11, y: 4}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 12, y: 4}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 13, y: 4}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 14, y: 4}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 15, y: 4}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 16, y: 4}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 17, y: 4}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 0, y: 5}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 1, y: 5}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 2, y: 5}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 3, y: 5}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 4, y: 5}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 5, y: 5}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 6, y: 5}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 7, y: 5}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 8, y: 5}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 9, y: 5}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 10, y: 5}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 11, y: 5}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 12, y: 5}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 13, y: 5}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 14, y: 5}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 15, y: 5}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 16, y: 5}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 17, y: 5}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 18, y: 5}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 0, y: 6}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 1, y: 6}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 2, y: 6}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 3, y: 6}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 4, y: 6}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 5, y: 6}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 6, y: 6}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 7, y: 6}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 8, y: 6}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 9, y: 6}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 10, y: 6}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 11, y: 6}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 12, y: 6}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 13, y: 6}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 14, y: 6}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 15, y: 6}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 16, y: 6}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 17, y: 6}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 18, y: 6}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 19, y: 6}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 0, y: 7}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 1, y: 7}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 2, y: 7}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 3, y: 7}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 4, y: 7}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 5, y: 7}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 6, y: 7}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 7, y: 7}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 8, y: 7}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 9, y: 7}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 10, y: 7}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 11, y: 7}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 12, y: 7}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 13, y: 7}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 14, y: 7}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 15, y: 7}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 16, y: 7}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 17, y: 7}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 18, y: 7}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 19, y: 7}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 20, y: 7}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 0, y: 8}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 1, y: 8}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 2, y: 8}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 3, y: 8}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 4, y: 8}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 5, y: 8}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 6, y: 8}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 7, y: 8}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 8, y: 8}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 9, y: 8}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 10, y: 8}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 11, y: 8}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 12, y: 8}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 13, y: 8}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 14, y: 8}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 15, y: 8}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 16, y: 8}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 17, y: 8}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 18, y: 8}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 19, y: 8}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 20, y: 8}
+    <_colorHex>k__BackingField: '#911FE8FF'
+  - <_pos>k__BackingField: {x: 21, y: 8}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 0, y: 9}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 1, y: 9}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 2, y: 9}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 3, y: 9}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 4, y: 9}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 5, y: 9}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 6, y: 9}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 7, y: 9}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 8, y: 9}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 9, y: 9}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 10, y: 9}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 11, y: 9}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 12, y: 9}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 13, y: 9}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 14, y: 9}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 15, y: 9}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 16, y: 9}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 17, y: 9}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 18, y: 9}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 19, y: 9}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 20, y: 9}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 0, y: 10}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 1, y: 10}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 2, y: 10}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 3, y: 10}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 4, y: 10}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 5, y: 10}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 6, y: 10}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 7, y: 10}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 8, y: 10}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 9, y: 10}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 10, y: 10}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 11, y: 10}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 12, y: 10}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 13, y: 10}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 14, y: 10}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 15, y: 10}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 16, y: 10}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 17, y: 10}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 18, y: 10}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 19, y: 10}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 0, y: 11}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 1, y: 11}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 2, y: 11}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 3, y: 11}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 4, y: 11}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 5, y: 11}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 6, y: 11}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 7, y: 11}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 8, y: 11}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 9, y: 11}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 10, y: 11}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 11, y: 11}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 12, y: 11}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 13, y: 11}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 14, y: 11}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 15, y: 11}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 16, y: 11}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 17, y: 11}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 18, y: 11}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 1, y: 12}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 2, y: 12}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 3, y: 12}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 4, y: 12}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 5, y: 12}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 6, y: 12}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 7, y: 12}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 8, y: 12}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 9, y: 12}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 10, y: 12}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 11, y: 12}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 12, y: 12}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 13, y: 12}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 14, y: 12}
+    <_colorHex>k__BackingField: '#B93EFFFF'
+  - <_pos>k__BackingField: {x: 15, y: 12}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 16, y: 12}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 17, y: 12}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 12, y: 13}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 13, y: 13}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 14, y: 13}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 15, y: 13}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 16, y: 13}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 12, y: 14}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 13, y: 14}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 14, y: 14}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 15, y: 14}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 12, y: 15}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 13, y: 15}
+    <_colorHex>k__BackingField: '#CD80FEFF'
+  - <_pos>k__BackingField: {x: 14, y: 15}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  - <_pos>k__BackingField: {x: 13, y: 16}
+    <_colorHex>k__BackingField: '#1B1918FF'
+  _coins: []
+  _brusherSpeed: 1
+  _brusherStartPosition: {x: 5, y: 0}
