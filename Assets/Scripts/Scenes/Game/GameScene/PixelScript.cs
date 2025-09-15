@@ -9,38 +9,38 @@ using YG;
 
 public class PixelScript : MonoBehaviour
 {
-    [SerializeField] MeshRenderer[] bottoms;
+    [SerializeField] private MeshRenderer[] bottoms;
 
-    [SerializeField] public GameObject TopObj;
-    [SerializeField] public MeshRenderer topRend;
-    [SerializeField] public MeshRenderer reverseBottomRend;
-    [SerializeField] public GameObject reverseBottomObj;
-    [SerializeField] public GameObject bottomRotatorParent;
-
-    public Action paintCallback;
-
-    public Material rgbScaleMaterial;
-
-    private Sequence sequence = null;
-    GameObject ParticleSystemKey;
-    Action<Vector3> CoinCallback;
-    Action<Vector3> CrossesCallback;
+    [SerializeField] private GameObject TopObj;
+    [SerializeField] private MeshRenderer topRend;
+    [SerializeField] private MeshRenderer reverseBottomRend;
+    [SerializeField] private GameObject reverseBottomObj;
+    [SerializeField] private GameObject bottomRotatorParent;
     private bool isPainted = false;
 
     private bool hasCoin = false;
     private bool hasCrosses = false;
+    private Sequence sequence = null;
+
+    private  Action paintCallback;
+
+    private GameObject ParticleSystemKey;
+    private Action<Vector3> CoinCallback;
+    private Action<Vector3> CrossesCallback;
+
+    public Material rgbScaleMaterial;
 
     public bool HasCoin { get { return hasCoin; } }
     public bool HasCrosses { get { return hasCrosses; } }
     public void SetCoin(Action<Vector3> callback)
     {
-        topRend.material.color = new Color(0,0,0);
+        topRend.material.color = new Color(0, 0, 0);
         hasCoin = true;
         CoinCallback = callback;
     }
     public void SetCrosses(Action<Vector3> callback)
     {
-        topRend.material.color = new Color(1,1,1);
+        topRend.material.color = new Color(1, 1, 1);
         hasCrosses = true;
         CrossesCallback = callback;
     }
@@ -54,7 +54,7 @@ public class PixelScript : MonoBehaviour
         sequence = DOTween.Sequence();
         var myCallback = new TweenCallback(() => DisableSphere());
         sequence.Append(TopObj.transform.DOScale(new Vector3(0, 0, 0), 0.1f).SetEase(Ease.InOutCirc)).OnComplete(myCallback);
-        
+
         CoinCall();
         CrossesCall();
 
@@ -94,30 +94,36 @@ public class PixelScript : MonoBehaviour
         TopObj.transform.localScale = new Vector3(1, 1, 1);
 
     }
-    public void EndAnim(){
+    public void EndAnim()
+    {
         float animationDuration = 3;
         reverseBottomObj.SetActive(false);
         sequence = DOTween.Sequence();
-        Vector3 targetRotation = new Vector3(180,90,0);
-        sequence.Append(bottomRotatorParent.transform.DOScale(new Vector3(0.8f,0.8f,0.8f), animationDuration/3));
-        sequence.AppendCallback(()=>{bottoms[0].material = rgbScaleMaterial;});
-        sequence.Append(bottomRotatorParent.transform.DOScale(1, animationDuration/3));
+        Vector3 targetRotation = new Vector3(180, 90, 0);
+        sequence.Append(bottomRotatorParent.transform.DOScale(new Vector3(0.8f, 0.8f, 0.8f), animationDuration / 3));
+        sequence.AppendCallback(() => { bottoms[0].material = rgbScaleMaterial; });
+        sequence.Append(bottomRotatorParent.transform.DOScale(1, animationDuration / 3));
     }
-    private void ResetEndAnim(){
+    private void ResetEndAnim()
+    {
         reverseBottomObj.SetActive(false);
-         Quaternion quat = new Quaternion();
-        quat.eulerAngles = new Vector3(0,-180,0);
+        Quaternion quat = new Quaternion();
+        quat.eulerAngles = new Vector3(0, -180, 0);
         bottomRotatorParent.transform.rotation = quat;
-        bottomRotatorParent.transform.localScale = new Vector3(1,1,1);
+        bottomRotatorParent.transform.localScale = new Vector3(1, 1, 1);
     }
-    private void CoinCall(){
-        if(!hasCoin){
+    private void CoinCall()
+    {
+        if (!hasCoin)
+        {
             return;
         }
         CoinCallback?.Invoke(transform.position);
     }
-     private void CrossesCall(){
-        if(!hasCrosses){
+    private void CrossesCall()
+    {
+        if (!hasCrosses)
+        {
             return;
         }
         CrossesCallback?.Invoke(transform.position);
