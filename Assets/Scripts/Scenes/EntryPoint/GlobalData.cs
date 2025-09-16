@@ -83,6 +83,16 @@ public class GlobalData : MonoBehaviour
         Texture2D texture2D = await textureHandle;
         return texture2D;
     }
+     public async UniTask<GameLevelConfig> GetLevelConfig(int LevelNum)
+    {
+        Debug.Log("Load level:" + LevelNum.ToString());
+        Resources.LoadAsync<GameLevelConfig>($"Level_{LevelNum}");
+        // UniTask<GameLevelConfig> textureHandle = Addressables.LoadAssetAsync<GameLevelConfig>($"Level_{LevelNum}").Task.AsUniTask();
+        GameLevelConfig config = (await Resources.LoadAsync<GameLevelConfig>($"Level_{LevelNum}")) as GameLevelConfig;
+        // Addressables.load
+        // Texture2D texture2D = await textureHandle;
+        return config;
+    }
     public void UnloadLevelTexture(int LevelNum)
     {
         Debug.Log("UnLoad level:" + LevelNum.ToString());

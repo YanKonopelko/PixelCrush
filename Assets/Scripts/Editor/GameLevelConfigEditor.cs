@@ -83,6 +83,8 @@ public class GameLevelConfigEditor : Editor
         
         // Вычисляем адаптивный размер ячейки
         float cellSize = CalculateCellSize(width, height);
+        int cellPixelSize = Mathf.RoundToInt(cellSize);
+        int cellStep = Mathf.RoundToInt(cellSize + CELL_SPACING);
         
         // Создаем словарь для быстрого поиска пикселей по позиции
         Dictionary<Vector2, Color> pixelColors = new Dictionary<Vector2, Color>();
@@ -111,9 +113,9 @@ public class GameLevelConfigEditor : Editor
             }
         }
         
-        // Создаем текстуру для всей сетки
-        int textureWidth = width * (int)(cellSize + CELL_SPACING) - (int)CELL_SPACING;
-        int textureHeight = height * (int)(cellSize + CELL_SPACING) - (int)CELL_SPACING;
+        // Создаем текстуру для всей сетки (используем целочисленный шаг, чтобы избежать накопления ошибки)
+        int textureWidth = width * cellStep - Mathf.RoundToInt(CELL_SPACING);
+        int textureHeight = height * cellStep - Mathf.RoundToInt(CELL_SPACING);
         Texture2D gridTexture = new Texture2D(textureWidth, textureHeight);
         
         // Заполняем фон
@@ -139,13 +141,13 @@ public class GameLevelConfigEditor : Editor
                 }
                 
                 // Вычисляем позицию ячейки в текстуре
-                int startX = x * (int)(cellSize + CELL_SPACING);
-                int startY = (height - 1 - y) * (int)(cellSize + CELL_SPACING); // Инвертируем Y для отображения
+                int startX = x * cellStep;
+                int startY = (height - 1 - y) * cellStep; // Инвертируем Y для отображения
                 
                 // Заполняем ячейку цветом
-                for (int py = 0; py < (int)cellSize; py++)
+                for (int py = 0; py < cellPixelSize; py++)
                 {
-                    for (int px = 0; px < (int)cellSize; px++)
+                    for (int px = 0; px < cellPixelSize; px++)
                     {
                         int pixelX = startX + px;
                         int pixelY = startY + py;
@@ -174,7 +176,7 @@ public class GameLevelConfigEditor : Editor
         if (coinPositions.Count > 0)
         {
             GUIStyle coinStyle = new GUIStyle(EditorStyles.boldLabel);
-            coinStyle.fontSize = Mathf.Max(8, (int)(cellSize * 0.6f)); // Адаптивный размер шрифта
+            coinStyle.fontSize = Mathf.Max(8, Mathf.RoundToInt(cellPixelSize * 0.6f)); // Адаптивный размер шрифта
             coinStyle.normal.textColor = Color.yellow;
             coinStyle.alignment = TextAnchor.MiddleCenter;
             
@@ -185,12 +187,12 @@ public class GameLevelConfigEditor : Editor
                 
                 if (x >= 0 && x < width && y >= 0 && y < height)
                 {
-                    // Вычисляем точную позицию центра ячейки (инвертируем Y для отображения)
-                    float cellX = gridRect.x + x * (cellSize + CELL_SPACING) + cellSize / 2;
-                    float cellY = gridRect.y + (height - 1 - y) * (cellSize + CELL_SPACING) + cellSize / 2;
+                    // Вычисляем точную позицию центра ячейки (используем тот же целочисленный шаг и инверсию Y, что и для пикселей)
+                    float cellCenterX = gridRect.x + x * cellStep + cellPixelSize / 2f;
+                    float cellCenterY = gridRect.y + (   y) * cellStep + cellPixelSize / 2f;
                     
                     // Создаем Rect точно по центру ячейки
-                    Rect coinRect = new Rect(cellX - cellSize/4, cellY - cellSize/4, cellSize/2, cellSize/2);
+                    Rect coinRect = new Rect(cellCenterX - cellPixelSize / 4f, cellCenterY - cellPixelSize / 4f, cellPixelSize / 2f, cellPixelSize / 2f);
                     GUI.Label(coinRect, "$", coinStyle);
                 }
             }
