@@ -1059,7 +1059,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 552666396}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 719562179}
+        m_TargetAssemblyTypeName: LevelRedactor, Assembly-CSharp
+        m_MethodName: ToGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &552666396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1416,10 +1428,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 621065905}
-  - {fileID: 1451384436}
-  - {fileID: 903977205}
+  m_Children: []
   m_Father: {fileID: 973771514}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &597817117
@@ -1617,7 +1626,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1699932122}
-  m_Father: {fileID: 591751014}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1733,6 +1742,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelRedactor
   texture2D: {fileID: 2800000, guid: 178372a0ca057df46b8c28bb576ba5e8, type: 3}
+  initConfig: {fileID: 11400000, guid: c602a89bd65669542aac5052b61f3b2b, type: 2}
   pixelPrefab: {fileID: 8211318522999025342, guid: 77c7d324e391b8345a4440eabf31d1f4, type: 3}
   brusherSpeed: 1
   brusherStartPos: {x: -1, y: -1}
@@ -1813,11 +1823,11 @@ Transform:
   m_GameObject: {fileID: 903977202}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -502.32455, y: 27.011583, z: -1131.0587}
+  m_LocalPosition: {x: 22.398895, y: 27.011583, z: -24.647827}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 591751014}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &973771513
 GameObject:
@@ -2284,11 +2294,11 @@ Transform:
   m_GameObject: {fileID: 1451384433}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -543.2796, y: 102.746796, z: -1129.1708}
+  m_LocalPosition: {x: -18.556152, y: 102.746796, z: -22.759888}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 591751014}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1478597171
 GameObject:
@@ -2727,3 +2737,6 @@ SceneRoots:
   - {fileID: 973771514}
   - {fileID: 1213042805}
   - {fileID: 719562180}
+  - {fileID: 621065905}
+  - {fileID: 1451384436}
+  - {fileID: 903977205}

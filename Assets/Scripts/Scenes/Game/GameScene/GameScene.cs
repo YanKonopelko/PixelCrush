@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using InventoryNamespace;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameScene : MonoBehaviour
@@ -18,6 +19,7 @@ public class GameScene : MonoBehaviour
     [SerializeField] public LevelCreator levelCreator;
     [SerializeField] private BrusherRotation brusherRotation;
     [SerializeField] private CameraController cameraController;
+    [SerializeField] private GameObject toRedactorButton;
 
     public static GameScene Instance;
 
@@ -30,6 +32,7 @@ public class GameScene : MonoBehaviour
     private async void Awake()
     {
         Instance = this;
+        toRedactorButton.SetActive(SessionData.isFromLevelCreator);
         GlobalData.Instance.MusicManager.Swap(EMusicType.BaseBackMusic); 
         BaseWindow window = GlobalData.Instance.UIManager.ShowWindow(EWindowType.LoadingWindow);
         await levelCreator.AsyncCreateLevel();
@@ -106,5 +109,9 @@ public class GameScene : MonoBehaviour
     {
         GlobalData.Instance.UIManager.ShowWindow(EWindowType.Settings);
     }
-
+ public void ReturnToRedactor()
+    {
+        SceneManager.LoadScene("LevelRedactor");
+        // GlobalData.Instance.UIManager.ShowWindow(EWindowType.Settings);
+    }
 }

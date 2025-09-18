@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class LevelRedactor : MonoBehaviour
 {
     [SerializeField] private Texture2D texture2D;
+    [SerializeField] private GameLevelConfig initConfig;
     [SerializeField] private GameObject pixelPrefab;
     [SerializeField] private float brusherSpeed = 1;
     [SerializeField] private Vector2 brusherStartPos = new Vector2(-1, -1);
@@ -18,6 +19,10 @@ public class LevelRedactor : MonoBehaviour
     private PixelRedactorScript currentPixel;
     void Start()
     {
+        if (initConfig && !SessionData.isFromLevelCreator)
+        {
+            SessionData.CurrentConfig = initConfig;
+        }
         SessionData.isFromLevelCreator = true;
         CreateImageFromTexture();
     }
@@ -59,6 +64,10 @@ public class LevelRedactor : MonoBehaviour
                 var pixel = Instantiate(pixelPrefab);
                 pixel.transform.SetParent(pixelsParent);
                 var component = pixel.GetComponent<PixelRedactorScript>();
+                if (coins.Contains(new Vector2(x, y)))
+                {
+                    component.SwitchCoinState();
+                }
                 component.SetColor(color);
                 component.UpdateByValue(0);
                 component.index = new Vector2(x, y);
@@ -67,7 +76,7 @@ public class LevelRedactor : MonoBehaviour
             }
         }
         float scale = 10.5f / (float)Math.Max(config.Width, config.Height);
-        pixelsParent.localScale = new Vector3(scale,scale,scale);
+        pixelsParent.localScale = new Vector3(scale, scale, scale);
         pixelsParentLayout.constraintCount = config.Width;
     }
 
@@ -100,7 +109,7 @@ public class LevelRedactor : MonoBehaviour
                 coins.Remove(currentPixel.index);
             }
         }
-        
+
     }
 
     public void UpdateImage()
@@ -129,28 +138,54 @@ public class LevelRedactor : MonoBehaviour
 
     private GameLevelConfig GetConfigFromImage()
     {
+        // if (SessionData.CurrentConfig)
+        // {
+        //     return 
+        // }
         List<PixelData> pixels = new List<PixelData>();
         int height = texture2D.height;
         int width = texture2D.width;
-        var pixelData = texture2D.GetPixels32();
-        Color newCol;
-        UnityEngine.ColorUtility.TryParseHtmlString("htmlValue", out newCol);
-        for (int y = 0; y < height; y++)
+        if (SessionData.CurrentConfig)
         {
-            for (int x = 0; x < width; x++)
+            // c
+            // for (int y = 0; y < height; y++)
+            // {
+            //     for (int x = 0; x < width; x++)
+            //     {
+            //         Vector2 pos = new Vector2(x, y);
+            //         Color color = pixelData[x + y * width];
+            //         if (color.a < 0.8) continue;
+            //         color.a = 1;
+            //         var pixel = new PixelData(pos, "#" + color.ToHexString());
+            //         pixels.Add(pixel);
+            //     }
+            // }
+            pixels = SessionData.CurrentConfig.Pixels;
+            width = SessionData.CurrentConfig.Width;
+            height = SessionData.CurrentConfig.Height;
+        }
+        else
+        {
+        var pixelData = texture2D.GetPixels32();
+
+            for (int y = 0; y < height; y++)
             {
-                Vector2 pos = new Vector2(x, y);
-                Color color = pixelData[x + y * width];
-                if (color.a < 0.8) continue;
-                color.a = 1;
-                var pixel = new PixelData(pos, "#" + color.ToHexString());
-                pixels.Add(pixel);
+                for (int x = 0; x < width; x++)
+                {
+                    Vector2 pos = new Vector2(x, y);
+                    Color color = pixelData[x + y * width];
+                    if (color.a < 0.8) continue;
+                    color.a = 1;
+                    var pixel = new PixelData(pos, "#" + color.ToHexString());
+                    pixels.Add(pixel);
+                }
             }
         }
 
+
         if (brusherStartPos == new Vector2(-1, -1))
             brusherStartPos = pixels[0]._pos;
-        GameLevelConfig newAsset = new GameLevelConfig(texture2D.width, texture2D.height, pixels, coins, 1, brusherStartPos);
+        GameLevelConfig newAsset = new GameLevelConfig(width, height, pixels, coins, 1, brusherStartPos);
         return newAsset;
     }
 }

@@ -95,6 +95,7 @@ public class GlobalData : MonoBehaviour
     }
     public void UnloadLevelTexture(int LevelNum)
     {
+        return;
         Debug.Log("UnLoad level:" + LevelNum.ToString());
         var textureHandle = Addressables.LoadAssetAsync<Texture2D>($"Level_{LevelNum}");
         textureHandle.Release();

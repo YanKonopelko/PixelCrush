@@ -13,10 +13,10 @@
         false,
         false
     ],
-    "idSave": 2558,
-    "currentLevel": 7,
+    "idSave": 2576,
+    "currentLevel": 9,
     "additionalIndex": -1,
-    "LastLevel": 7,
+    "LastLevel": -1,
     "LevelScheduleList": [],
     "soundsEnabled": true,
     "musicEnabled": true,
@@ -24,7 +24,7 @@
     "vibrationEnable": true,
     "tutorialComplete": true,
     "loseTutorialComplete": true,
-    "coins": 64,
+    "coins": 71,
     "collectedItems": [],
     "equipedItems": [],
     "equipedCircleSkin": {

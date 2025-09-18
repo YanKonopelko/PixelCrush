@@ -20,14 +20,15 @@ public class LevelCreator : MonoBehaviour
     [SerializeField] private Vector2 pixelSize;
 
     [SerializeField] private PixelScript[] pixelScripts;
-    [SerializeField] private Texture2D testTexture;
+    [SerializeField] private GameLevelConfig testLevelConfig;
 
 
     [SerializeField] private List<MeshRenderer> fogMeshes = new List<MeshRenderer>();
     [SerializeField] private List<TutorialStage> tutorialStages = new List<TutorialStage>();
     [SerializeField] private GameObject CoinPrefab = null;
 
-    private Texture2D texture2D;
+    // private Texture2D texture2D;
+    private GameLevelConfig levelConfig;
     private Dictionary<Color, Material> InUseColors = new Dictionary<Color, Material>();
     private List<GameObject> pixels = new List<GameObject>();
     private List<List<Vector3>> pixelsGrid = new List<List<Vector3>>();
@@ -38,7 +39,6 @@ public class LevelCreator : MonoBehaviour
 
     private NativeArray<bool> pixelsPainted;
     private JobHandle handle;
-    private const int MaxCoins = 5;
     private int lastTutorialStep = 0;
 
     // Кешированные данные для оптимизации
@@ -58,9 +58,15 @@ public class LevelCreator : MonoBehaviour
     private const float ANGLE_THRESHOLD = 0.01f;
     public async UniTask AsyncCreateLevel()
     {
-        if (testTexture != null)
+        if (SessionData.isFromLevelCreator)
         {
-            texture2D = testTexture;
+            levelConfig = SessionData.CurrentConfig;
+              CreateLevel();
+            return;
+        }
+        if (testLevelConfig != null)
+        {
+            levelConfig = testLevelConfig;
             CreateLevel();
             return;
         }
@@ -78,8 +84,9 @@ public class LevelCreator : MonoBehaviour
             targetLevel = PlayerData.Instance.CurrentLevel;
         }
         PlayerData.Instance.LastLevel = targetLevel;
-        UniTask<Texture2D> textureTask = GlobalData.Instance.GetLevelTexture(targetLevel);
-        texture2D = await textureTask;
+        // UniTask<Texture2D> textureTask = GlobalData.Instance.GetLevelTexture(targetLevel);
+        // texture2D = await textureTask;
+        levelConfig = await GlobalData.Instance.GetLevelConfig(targetLevel);
         CreateLevel();
         PlayerData.Instance.Save();
     }
@@ -102,7 +109,7 @@ public class LevelCreator : MonoBehaviour
             fogMeshes[i].material.color = config.FogColor;
         }
         ClearChildren();
-        CreateLevelWithImage(texture2D);
+        CreateLevelWithConfig();
         brusherRotation.gameObject.SetActive(true);
         
         // Сброс кеша при создании нового уровня
@@ -125,33 +132,43 @@ public class LevelCreator : MonoBehaviour
         if (pixelsPainted.IsCreated)
             pixelsPainted.Dispose();
     }
-    private void CreateLevelWithImage(Texture2D texture)
+    private void CreateLevelWithConfig()
     {
-        int height = texture.height;
-        int width = texture.width;
-        var pixelData = texture.GetPixels32();
+        int height = levelConfig.Height;
+        int width = levelConfig.Width;
+        var pixelData = levelConfig.Pixels;
 
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
                 Vector2 pos = new Vector2(x, y);
-                Color color = pixelData[x + y * width];
-                if (color.a < 0.8) continue;
+                var idx = pixelData.FindIndex(a => a._pos == pos);
+                if (idx == -1)
+                {
+                    continue;
+                }
+                Debug.Log($"Pos:{x},{y}");
+                Debug.Log($"Pos:{x + y * width}");
+                ColorUtility.TryParseHtmlString(pixelData[idx]._colorHex, out Color color);
+                // Color color = pixelData[x + y * width]._colorHex;
+                // if (color.a < 0.8) continue;
                 bool firstInRow = true;
                 bool firstInColumn = true;
 
-                if (x > 0)
-                {
-                    Color previousColor = pixelData[x - 1 + y * width];
-                    firstInRow = previousColor.a < 0.8;
-                }
+                // if (x > 0)
+                // {
+                //     ColorUtility.TryParseHtmlString(pixelData[x - 1 + y * width]._colorHex, out Color previousColor);
 
-                if (y > 0)
-                {
-                    Color previousColor = pixelData[x + (y - 1) * width];
-                    firstInColumn = previousColor.a < 0.8;
-                }
+                //     firstInRow = previousColor.a < 0.8;
+                // }
+
+                // if (y > 0)
+                // {
+                //     ColorUtility.TryParseHtmlString(pixelData[x + (y - 1) * width]._colorHex, out Color previousColor);
+
+                //     firstInColumn = previousColor.a < 0.8;
+                // }
 
                 this.CreatPixel(new Vector3(pos.x, 0, pos.y), color, firstInColumn, firstInRow);
             }
@@ -166,19 +183,19 @@ public class LevelCreator : MonoBehaviour
             pixelsPainted[i] = false;
             pixelScripts[i] = pixels[i].GetComponent<PixelScript>();
         }
-        InitCoins();
+        // InitCoins();
         // InitCrosses();
     }
 
-    private void InitCoins()
-    {
-        System.Random random = new System.Random();
-        int coinsCount = random.Next(0, MaxCoins);
-        for (int i = 0; i < coinsCount; i++)
-        {
-            pixelScripts[random.Next(0, pixelScripts.Length)].SetCoin(SpawnCoin);
-        }
-    }
+    // private void InitCoins()
+    // {
+    //     System.Random random = new System.Random();
+    //     int coinsCount = random.Next(0, MaxCoins);
+    //     for (int i = 0; i < coinsCount; i++)
+    //     {
+    //         pixelScripts[random.Next(0, pixelScripts.Length)].SetCoin(SpawnCoin);
+    //     }
+    // }
     private void InitCrosses()
     {
         System.Random random = new System.Random();
@@ -206,8 +223,8 @@ public class LevelCreator : MonoBehaviour
         if (!InUseColors.ContainsKey(color))
         {
             Material newMaterial = new Material(topMaterial);
-            Color hColor = new Color(color.r*0.98f,color.g*0.98f,color.b*0.92f);
-            Color sColor = new Color(color.r*0.6f,color.g*0.35f,color.b*0.1f);
+            Color hColor = new Color(color.r * 0.98f, color.g * 0.98f, color.b * 0.92f);
+            Color sColor = new Color(color.r * 0.6f, color.g * 0.35f, color.b * 0.1f);
             newMaterial.color = color;
             newMaterial.SetColor("Color", color);
             newMaterial.SetColor("_HColor", hColor);
@@ -223,6 +240,12 @@ public class LevelCreator : MonoBehaviour
 
         pixel.GetComponent<PixelScript>().rgbScaleMaterial = targetMaterial;
         pixel.GetComponent<PixelScript>().InitPixel(particlePrefab, OnPaint, bottomMaterial, topMaterial, new bool[3] { true, isFront, isRight });
+
+        if (levelConfig.Coins.Contains(new Vector2(pos.x, pos.z)))
+        {
+           pixel.GetComponent<PixelScript>().SetCoin(SpawnCoin);
+        }
+
         pixels.Add(pixel);
         while (pixelsGrid.Count <= pos.z)
         {
@@ -375,8 +398,8 @@ public class LevelCreator : MonoBehaviour
     }
     public Vector3 GetLevelCenter()
     {
-        int height = texture2D.height;
-        int width = texture2D.width;
+        int height = levelConfig.Height;
+        int width = levelConfig.Width;
         float x = width / 2.4f * pixelSize.x;
         float z = height / 5 * pixelSize.y;
         return new Vector3(x, 0.5f, z);
