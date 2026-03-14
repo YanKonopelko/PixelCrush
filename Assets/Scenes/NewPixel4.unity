@@ -246,7 +246,6 @@ MonoBehaviour:
   brusher: {fileID: 198226177}
   pixelSize: {x: 1.2, y: 1.2}
   pixelScripts: []
-  testTexture: {fileID: 0}
   fogMeshes:
   - {fileID: 1766550286}
   tutorialStages:
@@ -259,6 +258,7 @@ MonoBehaviour:
   - targetPixelsCount: 201
     targetAngle: 300
   CoinPrefab: {fileID: 3852570344440247769, guid: e7d8951ff47e95d468fbb952d1b05ffe, type: 3}
+  testLevelConfig: {fileID: 11400000, guid: 5ca43fc75afe8694d88e6568bb8d749d, type: 2}
 --- !u!4 &20125317
 Transform:
   m_ObjectHideFlags: 0

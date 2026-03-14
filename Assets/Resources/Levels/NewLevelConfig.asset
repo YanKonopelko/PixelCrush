@@ -1,0 +1,838 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e818069973ae0ff41b17224a15a6eb1d, type: 3}
+  m_Name: NewLevelConfig
+  m_EditorClassIdentifier: Assembly-CSharp::GameLevelConfig
+  _height: 25
+  _width: 21
+  _pixels:
+  - _pos: {x: 5, y: 0}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 6, y: 0}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 7, y: 0}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 8, y: 0}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 9, y: 0}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 10, y: 0}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 11, y: 0}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 12, y: 0}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 13, y: 0}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 14, y: 0}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 15, y: 0}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 4, y: 1}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 5, y: 1}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 6, y: 1}
+    _colorHex: '#EB679C'
+  - _pos: {x: 7, y: 1}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 8, y: 1}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 9, y: 1}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 10, y: 1}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 11, y: 1}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 12, y: 1}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 13, y: 1}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 14, y: 1}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 15, y: 1}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 16, y: 1}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 3, y: 2}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 4, y: 2}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 5, y: 2}
+    _colorHex: '#EB679C'
+  - _pos: {x: 6, y: 2}
+    _colorHex: '#EB679C'
+  - _pos: {x: 7, y: 2}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 8, y: 2}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 9, y: 2}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 10, y: 2}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 11, y: 2}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 2, y: 3}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 3, y: 3}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 4, y: 3}
+    _colorHex: '#EB679C'
+  - _pos: {x: 5, y: 3}
+    _colorHex: '#EB679C'
+  - _pos: {x: 6, y: 3}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 7, y: 3}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 8, y: 3}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 9, y: 3}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 10, y: 3}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 11, y: 3}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 12, y: 3}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 13, y: 3}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 14, y: 3}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 15, y: 3}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 16, y: 3}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 17, y: 3}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 18, y: 3}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 1, y: 4}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 2, y: 4}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 3, y: 4}
+    _colorHex: '#EB679C'
+  - _pos: {x: 4, y: 4}
+    _colorHex: '#EB679C'
+  - _pos: {x: 5, y: 4}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 6, y: 4}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 7, y: 4}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 8, y: 4}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 9, y: 4}
+    _colorHex: '#D91208'
+  - _pos: {x: 10, y: 4}
+    _colorHex: '#D91208'
+  - _pos: {x: 11, y: 4}
+    _colorHex: '#D91208'
+  - _pos: {x: 12, y: 4}
+    _colorHex: '#D91208'
+  - _pos: {x: 13, y: 4}
+    _colorHex: '#D91208'
+  - _pos: {x: 14, y: 4}
+    _colorHex: '#D91208'
+  - _pos: {x: 15, y: 4}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 16, y: 4}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 17, y: 4}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 18, y: 4}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 19, y: 4}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 1, y: 5}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 2, y: 5}
+    _colorHex: '#EB679C'
+  - _pos: {x: 3, y: 5}
+    _colorHex: '#EB679C'
+  - _pos: {x: 4, y: 5}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 5, y: 5}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 6, y: 5}
+    _colorHex: '#D91208'
+  - _pos: {x: 7, y: 5}
+    _colorHex: '#D91208'
+  - _pos: {x: 8, y: 5}
+    _colorHex: '#D91208'
+  - _pos: {x: 9, y: 5}
+    _colorHex: '#D91208'
+  - _pos: {x: 10, y: 5}
+    _colorHex: '#D91208'
+  - _pos: {x: 11, y: 5}
+    _colorHex: '#D91208'
+  - _pos: {x: 12, y: 5}
+    _colorHex: '#D91208'
+  - _pos: {x: 13, y: 5}
+    _colorHex: '#D91208'
+  - _pos: {x: 14, y: 5}
+    _colorHex: '#D91208'
+  - _pos: {x: 15, y: 5}
+    _colorHex: '#D91208'
+  - _pos: {x: 16, y: 5}
+    _colorHex: '#D91208'
+  - _pos: {x: 17, y: 5}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 18, y: 5}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 19, y: 5}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 0, y: 6}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 1, y: 6}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 2, y: 6}
+    _colorHex: '#EB679C'
+  - _pos: {x: 3, y: 6}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 4, y: 6}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 5, y: 6}
+    _colorHex: '#D91208'
+  - _pos: {x: 6, y: 6}
+    _colorHex: '#D91208'
+  - _pos: {x: 7, y: 6}
+    _colorHex: '#D91208'
+  - _pos: {x: 8, y: 6}
+    _colorHex: '#D91208'
+  - _pos: {x: 9, y: 6}
+    _colorHex: '#D91208'
+  - _pos: {x: 10, y: 6}
+    _colorHex: '#D91208'
+  - _pos: {x: 11, y: 6}
+    _colorHex: '#D91208'
+  - _pos: {x: 12, y: 6}
+    _colorHex: '#D91208'
+  - _pos: {x: 13, y: 6}
+    _colorHex: '#D91208'
+  - _pos: {x: 14, y: 6}
+    _colorHex: '#D91208'
+  - _pos: {x: 15, y: 6}
+    _colorHex: '#D91208'
+  - _pos: {x: 16, y: 6}
+    _colorHex: '#D91208'
+  - _pos: {x: 17, y: 6}
+    _colorHex: '#D91208'
+  - _pos: {x: 18, y: 6}
+    _colorHex: '#D91208'
+  - _pos: {x: 19, y: 6}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 20, y: 6}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 0, y: 7}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 1, y: 7}
+    _colorHex: '#EB679C'
+  - _pos: {x: 2, y: 7}
+    _colorHex: '#EB679C'
+  - _pos: {x: 3, y: 7}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 4, y: 7}
+    _colorHex: '#D91208'
+  - _pos: {x: 5, y: 7}
+    _colorHex: '#D91208'
+  - _pos: {x: 6, y: 7}
+    _colorHex: '#D91208'
+  - _pos: {x: 7, y: 7}
+    _colorHex: '#D91208'
+  - _pos: {x: 8, y: 7}
+    _colorHex: '#D91208'
+  - _pos: {x: 9, y: 7}
+    _colorHex: '#D91208'
+  - _pos: {x: 10, y: 7}
+    _colorHex: '#D91208'
+  - _pos: {x: 11, y: 7}
+    _colorHex: '#D91208'
+  - _pos: {x: 12, y: 7}
+    _colorHex: '#D91208'
+  - _pos: {x: 13, y: 7}
+    _colorHex: '#D91208'
+  - _pos: {x: 14, y: 7}
+    _colorHex: '#D91208'
+  - _pos: {x: 15, y: 7}
+    _colorHex: '#D91208'
+  - _pos: {x: 16, y: 7}
+    _colorHex: '#D91208'
+  - _pos: {x: 17, y: 7}
+    _colorHex: '#D91208'
+  - _pos: {x: 18, y: 7}
+    _colorHex: '#D91208'
+  - _pos: {x: 19, y: 7}
+    _colorHex: '#D91208'
+  - _pos: {x: 20, y: 7}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 0, y: 8}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 1, y: 8}
+    _colorHex: '#EB679C'
+  - _pos: {x: 2, y: 8}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 3, y: 8}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 4, y: 8}
+    _colorHex: '#D91208'
+  - _pos: {x: 5, y: 8}
+    _colorHex: '#D91208'
+  - _pos: {x: 6, y: 8}
+    _colorHex: '#D91208'
+  - _pos: {x: 7, y: 8}
+    _colorHex: '#D91208'
+  - _pos: {x: 8, y: 8}
+    _colorHex: '#D91208'
+  - _pos: {x: 9, y: 8}
+    _colorHex: '#D91208'
+  - _pos: {x: 10, y: 8}
+    _colorHex: '#D91208'
+  - _pos: {x: 11, y: 8}
+    _colorHex: '#D91208'
+  - _pos: {x: 12, y: 8}
+    _colorHex: '#D91208'
+  - _pos: {x: 13, y: 8}
+    _colorHex: '#D91208'
+  - _pos: {x: 14, y: 8}
+    _colorHex: '#D91208'
+  - _pos: {x: 15, y: 8}
+    _colorHex: '#D91208'
+  - _pos: {x: 16, y: 8}
+    _colorHex: '#D91208'
+  - _pos: {x: 17, y: 8}
+    _colorHex: '#D81208'
+  - _pos: {x: 18, y: 8}
+    _colorHex: '#D81208'
+  - _pos: {x: 19, y: 8}
+    _colorHex: '#D91208'
+  - _pos: {x: 20, y: 8}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 0, y: 9}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 1, y: 9}
+    _colorHex: '#EB679C'
+  - _pos: {x: 2, y: 9}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 3, y: 9}
+    _colorHex: '#D91208'
+  - _pos: {x: 4, y: 9}
+    _colorHex: '#D91208'
+  - _pos: {x: 5, y: 9}
+    _colorHex: '#D91208'
+  - _pos: {x: 6, y: 9}
+    _colorHex: '#D91208'
+  - _pos: {x: 7, y: 9}
+    _colorHex: '#D91208'
+  - _pos: {x: 8, y: 9}
+    _colorHex: '#D91208'
+  - _pos: {x: 9, y: 9}
+    _colorHex: '#F14940'
+  - _pos: {x: 10, y: 9}
+    _colorHex: '#F14940'
+  - _pos: {x: 11, y: 9}
+    _colorHex: '#F14940'
+  - _pos: {x: 12, y: 9}
+    _colorHex: '#F14940'
+  - _pos: {x: 13, y: 9}
+    _colorHex: '#F14940'
+  - _pos: {x: 14, y: 9}
+    _colorHex: '#F14940'
+  - _pos: {x: 15, y: 9}
+    _colorHex: '#F14940'
+  - _pos: {x: 16, y: 9}
+    _colorHex: '#D91208'
+  - _pos: {x: 17, y: 9}
+    _colorHex: '#D91208'
+  - _pos: {x: 18, y: 9}
+    _colorHex: '#D91208'
+  - _pos: {x: 19, y: 9}
+    _colorHex: '#D61308'
+  - _pos: {x: 20, y: 9}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 0, y: 10}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 1, y: 10}
+    _colorHex: '#EB679C'
+  - _pos: {x: 2, y: 10}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 3, y: 10}
+    _colorHex: '#D91208'
+  - _pos: {x: 4, y: 10}
+    _colorHex: '#D91208'
+  - _pos: {x: 5, y: 10}
+    _colorHex: '#D91208'
+  - _pos: {x: 6, y: 10}
+    _colorHex: '#D91208'
+  - _pos: {x: 7, y: 10}
+    _colorHex: '#F14940'
+  - _pos: {x: 8, y: 10}
+    _colorHex: '#F14940'
+  - _pos: {x: 9, y: 10}
+    _colorHex: '#F14940'
+  - _pos: {x: 10, y: 10}
+    _colorHex: '#F14940'
+  - _pos: {x: 11, y: 10}
+    _colorHex: '#F14940'
+  - _pos: {x: 12, y: 10}
+    _colorHex: '#F14940'
+  - _pos: {x: 13, y: 10}
+    _colorHex: '#F14940'
+  - _pos: {x: 14, y: 10}
+    _colorHex: '#F14940'
+  - _pos: {x: 15, y: 10}
+    _colorHex: '#F14940'
+  - _pos: {x: 16, y: 10}
+    _colorHex: '#F14940'
+  - _pos: {x: 17, y: 10}
+    _colorHex: '#F14940'
+  - _pos: {x: 18, y: 10}
+    _colorHex: '#D91208'
+  - _pos: {x: 19, y: 10}
+    _colorHex: '#D61308'
+  - _pos: {x: 20, y: 10}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 0, y: 11}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 1, y: 11}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 2, y: 11}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 3, y: 11}
+    _colorHex: '#D91208'
+  - _pos: {x: 4, y: 11}
+    _colorHex: '#D91208'
+  - _pos: {x: 5, y: 11}
+    _colorHex: '#D91208'
+  - _pos: {x: 6, y: 11}
+    _colorHex: '#F14940'
+  - _pos: {x: 7, y: 11}
+    _colorHex: '#F14940'
+  - _pos: {x: 8, y: 11}
+    _colorHex: '#F14940'
+  - _pos: {x: 9, y: 11}
+    _colorHex: '#F14940'
+  - _pos: {x: 10, y: 11}
+    _colorHex: '#F14940'
+  - _pos: {x: 11, y: 11}
+    _colorHex: '#F14940'
+  - _pos: {x: 12, y: 11}
+    _colorHex: '#F14940'
+  - _pos: {x: 13, y: 11}
+    _colorHex: '#F14940'
+  - _pos: {x: 14, y: 11}
+    _colorHex: '#F14940'
+  - _pos: {x: 15, y: 11}
+    _colorHex: '#F14940'
+  - _pos: {x: 16, y: 11}
+    _colorHex: '#F14940'
+  - _pos: {x: 17, y: 11}
+    _colorHex: '#F14940'
+  - _pos: {x: 18, y: 11}
+    _colorHex: '#D91208'
+  - _pos: {x: 19, y: 11}
+    _colorHex: '#D61308'
+  - _pos: {x: 20, y: 11}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 0, y: 12}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 1, y: 12}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 2, y: 12}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 3, y: 12}
+    _colorHex: '#D91208'
+  - _pos: {x: 4, y: 12}
+    _colorHex: '#D91208'
+  - _pos: {x: 5, y: 12}
+    _colorHex: '#F14940'
+  - _pos: {x: 6, y: 12}
+    _colorHex: '#F14940'
+  - _pos: {x: 7, y: 12}
+    _colorHex: '#F14940'
+  - _pos: {x: 8, y: 12}
+    _colorHex: '#F14940'
+  - _pos: {x: 9, y: 12}
+    _colorHex: '#F14940'
+  - _pos: {x: 10, y: 12}
+    _colorHex: '#F14940'
+  - _pos: {x: 11, y: 12}
+    _colorHex: '#F14940'
+  - _pos: {x: 12, y: 12}
+    _colorHex: '#F14940'
+  - _pos: {x: 13, y: 12}
+    _colorHex: '#F14940'
+  - _pos: {x: 14, y: 12}
+    _colorHex: '#FFD0C7'
+  - _pos: {x: 15, y: 12}
+    _colorHex: '#FFD0C7'
+  - _pos: {x: 16, y: 12}
+    _colorHex: '#FFD0C7'
+  - _pos: {x: 17, y: 12}
+    _colorHex: '#FF5D54'
+  - _pos: {x: 18, y: 12}
+    _colorHex: '#F14940'
+  - _pos: {x: 19, y: 12}
+    _colorHex: '#D61308'
+  - _pos: {x: 20, y: 12}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 0, y: 13}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 1, y: 13}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 2, y: 13}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 3, y: 13}
+    _colorHex: '#D91208'
+  - _pos: {x: 4, y: 13}
+    _colorHex: '#D91208'
+  - _pos: {x: 5, y: 13}
+    _colorHex: '#F14940'
+  - _pos: {x: 6, y: 13}
+    _colorHex: '#F14940'
+  - _pos: {x: 7, y: 13}
+    _colorHex: '#F14940'
+  - _pos: {x: 8, y: 13}
+    _colorHex: '#F14940'
+  - _pos: {x: 9, y: 13}
+    _colorHex: '#F14940'
+  - _pos: {x: 10, y: 13}
+    _colorHex: '#F14940'
+  - _pos: {x: 11, y: 13}
+    _colorHex: '#F14940'
+  - _pos: {x: 12, y: 13}
+    _colorHex: '#F14940'
+  - _pos: {x: 13, y: 13}
+    _colorHex: '#FFD0C7'
+  - _pos: {x: 14, y: 13}
+    _colorHex: '#FFD0C7'
+  - _pos: {x: 15, y: 13}
+    _colorHex: '#FFD0C7'
+  - _pos: {x: 16, y: 13}
+    _colorHex: '#FFD0C7'
+  - _pos: {x: 17, y: 13}
+    _colorHex: '#FF5D54'
+  - _pos: {x: 18, y: 13}
+    _colorHex: '#F14940'
+  - _pos: {x: 19, y: 13}
+    _colorHex: '#D61308'
+  - _pos: {x: 20, y: 13}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 0, y: 14}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 1, y: 14}
+    _colorHex: '#D91208'
+  - _pos: {x: 2, y: 14}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 3, y: 14}
+    _colorHex: '#D91208'
+  - _pos: {x: 4, y: 14}
+    _colorHex: '#D91208'
+  - _pos: {x: 5, y: 14}
+    _colorHex: '#F14940'
+  - _pos: {x: 6, y: 14}
+    _colorHex: '#F14940'
+  - _pos: {x: 7, y: 14}
+    _colorHex: '#F14940'
+  - _pos: {x: 8, y: 14}
+    _colorHex: '#F14940'
+  - _pos: {x: 9, y: 14}
+    _colorHex: '#F14940'
+  - _pos: {x: 10, y: 14}
+    _colorHex: '#F14940'
+  - _pos: {x: 11, y: 14}
+    _colorHex: '#F14940'
+  - _pos: {x: 12, y: 14}
+    _colorHex: '#F14940'
+  - _pos: {x: 13, y: 14}
+    _colorHex: '#F14940'
+  - _pos: {x: 14, y: 14}
+    _colorHex: '#FFD0C7'
+  - _pos: {x: 15, y: 14}
+    _colorHex: '#FFD0C7'
+  - _pos: {x: 16, y: 14}
+    _colorHex: '#FFD0C7'
+  - _pos: {x: 17, y: 14}
+    _colorHex: '#F14940'
+  - _pos: {x: 18, y: 14}
+    _colorHex: '#F14940'
+  - _pos: {x: 19, y: 14}
+    _colorHex: '#D61308'
+  - _pos: {x: 20, y: 14}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 0, y: 15}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 1, y: 15}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 2, y: 15}
+    _colorHex: '#BD0B02'
+  - _pos: {x: 3, y: 15}
+    _colorHex: '#D91208'
+  - _pos: {x: 4, y: 15}
+    _colorHex: '#D91208'
+  - _pos: {x: 5, y: 15}
+    _colorHex: '#F14940'
+  - _pos: {x: 6, y: 15}
+    _colorHex: '#F14940'
+  - _pos: {x: 7, y: 15}
+    _colorHex: '#F14940'
+  - _pos: {x: 8, y: 15}
+    _colorHex: '#F14940'
+  - _pos: {x: 9, y: 15}
+    _colorHex: '#F14940'
+  - _pos: {x: 10, y: 15}
+    _colorHex: '#F14940'
+  - _pos: {x: 11, y: 15}
+    _colorHex: '#F14940'
+  - _pos: {x: 12, y: 15}
+    _colorHex: '#F14940'
+  - _pos: {x: 13, y: 15}
+    _colorHex: '#F14940'
+  - _pos: {x: 14, y: 15}
+    _colorHex: '#FFD0C7'
+  - _pos: {x: 15, y: 15}
+    _colorHex: '#FFD0C7'
+  - _pos: {x: 16, y: 15}
+    _colorHex: '#F14940'
+  - _pos: {x: 17, y: 15}
+    _colorHex: '#F14940'
+  - _pos: {x: 18, y: 15}
+    _colorHex: '#D61308'
+  - _pos: {x: 19, y: 15}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 20, y: 15}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 1, y: 16}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 2, y: 16}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 3, y: 16}
+    _colorHex: '#D91208'
+  - _pos: {x: 4, y: 16}
+    _colorHex: '#D91208'
+  - _pos: {x: 5, y: 16}
+    _colorHex: '#D91208'
+  - _pos: {x: 6, y: 16}
+    _colorHex: '#F14940'
+  - _pos: {x: 7, y: 16}
+    _colorHex: '#F14940'
+  - _pos: {x: 8, y: 16}
+    _colorHex: '#F14940'
+  - _pos: {x: 9, y: 16}
+    _colorHex: '#F14940'
+  - _pos: {x: 10, y: 16}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 11, y: 16}
+    _colorHex: '#F14940'
+  - _pos: {x: 12, y: 16}
+    _colorHex: '#F14940'
+  - _pos: {x: 13, y: 16}
+    _colorHex: '#F14940'
+  - _pos: {x: 14, y: 16}
+    _colorHex: '#F14940'
+  - _pos: {x: 15, y: 16}
+    _colorHex: '#F14940'
+  - _pos: {x: 16, y: 16}
+    _colorHex: '#F14940'
+  - _pos: {x: 17, y: 16}
+    _colorHex: '#F14940'
+  - _pos: {x: 18, y: 16}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 19, y: 16}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 2, y: 17}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 3, y: 17}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 4, y: 17}
+    _colorHex: '#D91208'
+  - _pos: {x: 5, y: 17}
+    _colorHex: '#D91208'
+  - _pos: {x: 6, y: 17}
+    _colorHex: '#F14940'
+  - _pos: {x: 7, y: 17}
+    _colorHex: '#F14940'
+  - _pos: {x: 8, y: 17}
+    _colorHex: '#D61308'
+  - _pos: {x: 9, y: 17}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 10, y: 17}
+    _colorHex: '#855D55'
+  - _pos: {x: 11, y: 17}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 12, y: 17}
+    _colorHex: '#F14940'
+  - _pos: {x: 13, y: 17}
+    _colorHex: '#F14940'
+  - _pos: {x: 14, y: 17}
+    _colorHex: '#F14940'
+  - _pos: {x: 15, y: 17}
+    _colorHex: '#F14940'
+  - _pos: {x: 16, y: 17}
+    _colorHex: '#F14940'
+  - _pos: {x: 17, y: 17}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 18, y: 17}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 3, y: 18}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 4, y: 18}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 5, y: 18}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 6, y: 18}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 7, y: 18}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 8, y: 18}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 9, y: 18}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 10, y: 18}
+    _colorHex: '#855D55'
+  - _pos: {x: 11, y: 18}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 12, y: 18}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 13, y: 18}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 14, y: 18}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 15, y: 18}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 16, y: 18}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 17, y: 18}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 3, y: 19}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 4, y: 19}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 5, y: 19}
+    _colorHex: '#688C2E'
+  - _pos: {x: 6, y: 19}
+    _colorHex: '#688C2E'
+  - _pos: {x: 7, y: 19}
+    _colorHex: '#688C2E'
+  - _pos: {x: 8, y: 19}
+    _colorHex: '#688C2E'
+  - _pos: {x: 9, y: 19}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 10, y: 19}
+    _colorHex: '#855D55'
+  - _pos: {x: 11, y: 19}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 2, y: 20}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 3, y: 20}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 4, y: 20}
+    _colorHex: '#688C2E'
+  - _pos: {x: 5, y: 20}
+    _colorHex: '#688C2E'
+  - _pos: {x: 6, y: 20}
+    _colorHex: '#688C2E'
+  - _pos: {x: 7, y: 20}
+    _colorHex: '#688C2E'
+  - _pos: {x: 8, y: 20}
+    _colorHex: '#688C2E'
+  - _pos: {x: 9, y: 20}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 10, y: 20}
+    _colorHex: '#855D55'
+  - _pos: {x: 11, y: 20}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 1, y: 21}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 2, y: 21}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 3, y: 21}
+    _colorHex: '#688C2E'
+  - _pos: {x: 4, y: 21}
+    _colorHex: '#688C2E'
+  - _pos: {x: 5, y: 21}
+    _colorHex: '#688C2E'
+  - _pos: {x: 6, y: 21}
+    _colorHex: '#688C2E'
+  - _pos: {x: 7, y: 21}
+    _colorHex: '#688C2E'
+  - _pos: {x: 8, y: 21}
+    _colorHex: '#688C2E'
+  - _pos: {x: 9, y: 21}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 10, y: 21}
+    _colorHex: '#855D55'
+  - _pos: {x: 11, y: 21}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 12, y: 21}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 1, y: 22}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 2, y: 22}
+    _colorHex: '#688C2E'
+  - _pos: {x: 3, y: 22}
+    _colorHex: '#688C2E'
+  - _pos: {x: 4, y: 22}
+    _colorHex: '#688C2E'
+  - _pos: {x: 5, y: 22}
+    _colorHex: '#688C2E'
+  - _pos: {x: 6, y: 22}
+    _colorHex: '#688C2E'
+  - _pos: {x: 7, y: 22}
+    _colorHex: '#688C2E'
+  - _pos: {x: 8, y: 22}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 9, y: 22}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 10, y: 22}
+    _colorHex: '#855D55'
+  - _pos: {x: 11, y: 22}
+    _colorHex: '#855D55'
+  - _pos: {x: 12, y: 22}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 1, y: 23}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 2, y: 23}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 3, y: 23}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 4, y: 23}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 5, y: 23}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 6, y: 23}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 7, y: 23}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 8, y: 23}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 9, y: 23}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 10, y: 23}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 11, y: 23}
+    _colorHex: '#855D55'
+  - _pos: {x: 12, y: 23}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 10, y: 24}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 11, y: 24}
+    _colorHex: '#1F1F1F'
+  - _pos: {x: 12, y: 24}
+    _colorHex: '#1F1F1F'
+  _coins:
+  - {x: 5, y: 10}
+  _brusherSpeed: 0
+  _brusherStartPosition: {x: 9, y: 7}
+  _spikes: []
+  _electricBarriers: []
+  _movingObstacles: []

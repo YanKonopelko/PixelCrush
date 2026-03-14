@@ -20,12 +20,15 @@ public class LevelCreator : MonoBehaviour
     [SerializeField] private Vector2 pixelSize;
 
     [SerializeField] private PixelScript[] pixelScripts;
-    [SerializeField] private Texture2D testTexture;
 
 
     [SerializeField] private List<MeshRenderer> fogMeshes = new List<MeshRenderer>();
     [SerializeField] private List<TutorialStage> tutorialStages = new List<TutorialStage>();
     [SerializeField] private GameObject CoinPrefab = null;
+
+    [Header("Testing")]
+    [Tooltip("Если задано — при запуске игры будет загружен этот конфиг вместо текущего уровня игрока")]
+    [SerializeField] private GameLevelConfig testLevelConfig = null;
 
     private Texture2D texture2D;
     private Dictionary<Color, Material> InUseColors = new Dictionary<Color, Material>();
@@ -40,6 +43,8 @@ public class LevelCreator : MonoBehaviour
     private JobHandle handle;
     private const int MaxCoins = 5;
     private int lastTutorialStep = 0;
+    private List<GameObject> mechanicsInstances = new List<GameObject>();
+    private GameLevelConfig currentGameLevelConfig;
 
     // Кешированные данные для оптимизации
     private readonly double radToAngle = Math.PI / 180;
@@ -58,12 +63,15 @@ public class LevelCreator : MonoBehaviour
     private const float ANGLE_THRESHOLD = 0.01f;
     public async UniTask AsyncCreateLevel()
     {
-        if (testTexture != null)
+        // Тестовый режим: если задан testLevelConfig — используем его, не трогая прогресс игрока
+        if (testLevelConfig != null)
         {
-            texture2D = testTexture;
+            currentGameLevelConfig = testLevelConfig;
             CreateLevel();
+            Debug.Log($"[LevelCreator] Loaded TEST config: {testLevelConfig.name}");
             return;
         }
+
         int targetLevel;
         if (PlayerData.Instance.IsMaxLevelNow())
         {
@@ -78,8 +86,12 @@ public class LevelCreator : MonoBehaviour
             targetLevel = PlayerData.Instance.CurrentLevel;
         }
         PlayerData.Instance.LastLevel = targetLevel;
+        
+        // Load both texture (for legacy references) and GameLevelConfig (for actual generation).
         UniTask<Texture2D> textureTask = GlobalData.Instance.GetLevelTexture(targetLevel);
+        UniTask<GameLevelConfig> configTask = GlobalData.Instance.GetLevelConfig(targetLevel);
         texture2D = await textureTask;
+        currentGameLevelConfig = await configTask;
         CreateLevel();
         PlayerData.Instance.Save();
     }
@@ -88,9 +100,9 @@ public class LevelCreator : MonoBehaviour
     {
         // YG2.InterstitialAdvShow();
         brusher.UpdateFromCongif();
-        var config = PlayerData.Instance.CurentLevelConfig;
-        ShaderColorPack topPack = config.StartTopMaterialColor;
-        ShaderColorPack bottomPack = config.StartBottomMaterialColor;
+        LevelConfig visualConfig = PlayerData.Instance.CurentLevelConfig;
+        ShaderColorPack topPack = visualConfig.StartTopMaterialColor;
+        ShaderColorPack bottomPack = visualConfig.StartBottomMaterialColor;
         topMaterial.SetColor("Color", topPack.MainColor);
         topMaterial.SetColor("_HColor", topPack.HighlightColor);
         topMaterial.SetColor("_SColor", topPack.ShadowColor);
@@ -99,10 +111,16 @@ public class LevelCreator : MonoBehaviour
         bottomMaterial.SetColor("_SColor", bottomPack.ShadowColor);
         for (int i = 0; i < fogMeshes.Count; i++)
         {
-            fogMeshes[i].material.color = config.FogColor;
+            fogMeshes[i].material.color = visualConfig.FogColor;
         }
         ClearChildren();
-        CreateLevelWithImage(texture2D);
+        GameLevelConfig gameConfig = currentGameLevelConfig;
+        CreateLevelFromConfig(gameConfig);
+        
+        brusherRotation.ReloadRot();
+        // Calculate correctly brusher initial position
+        brusherRotation.transform.position = new Vector3(gameConfig.BrusherStartPosition.x * pixelSize.x, 0, gameConfig.BrusherStartPosition.y * pixelSize.x);
+        
         brusherRotation.gameObject.SetActive(true);
         
         // Сброс кеша при создании нового уровня
@@ -119,64 +137,139 @@ public class LevelCreator : MonoBehaviour
         pixelsGrid.Clear();
         CurrentCount = 0;
         
+        foreach (var m in mechanicsInstances)
+        {
+            if (Application.isPlaying) Destroy(m);
+            else DestroyImmediate(m);
+        }
+        mechanicsInstances.Clear();
+
         // Освобождаем нативные массивы
         if (pixelPositions.IsCreated)
             pixelPositions.Dispose();
         if (pixelsPainted.IsCreated)
             pixelsPainted.Dispose();
     }
-    private void CreateLevelWithImage(Texture2D texture)
+    private void CreateLevelFromConfig(GameLevelConfig config)
     {
-        int height = texture.height;
-        int width = texture.width;
-        var pixelData = texture.GetPixels32();
-
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                Vector2 pos = new Vector2(x, y);
-                Color color = pixelData[x + y * width];
-                if (color.a < 0.8) continue;
-                bool firstInRow = true;
-                bool firstInColumn = true;
-
-                if (x > 0)
-                {
-                    Color previousColor = pixelData[x - 1 + y * width];
-                    firstInRow = previousColor.a < 0.8;
-                }
-
-                if (y > 0)
-                {
-                    Color previousColor = pixelData[x + (y - 1) * width];
-                    firstInColumn = previousColor.a < 0.8;
-                }
-
-                this.CreatPixel(new Vector3(pos.x, 0, pos.y), color, firstInColumn, firstInRow);
-            }
-        }
-        TargetCount = pixels.Count;
+        TargetCount = config.Pixels.Count;
         pixelPositions = new NativeArray<Vector2>(TargetCount, Allocator.Persistent);
         pixelsPainted = new NativeArray<bool>(TargetCount, Allocator.Persistent);
         pixelScripts = new PixelScript[TargetCount];
+
         for (int i = 0; i < TargetCount; i++)
         {
-            pixelPositions[i] = new Vector2(pixels[i].transform.position.x, pixels[i].transform.position.z);
+            PixelData pData = config.Pixels[i];
+            Vector2 pos = pData._pos;
+            Color color;
+            if (!UnityEngine.ColorUtility.TryParseHtmlString(pData._colorHex, out color))
+                color = Color.white;
+            
+            bool firstInRow = !config.Pixels.Exists(p => p._pos == new Vector2(pos.x - 1, pos.y));
+            bool firstInColumn = !config.Pixels.Exists(p => p._pos == new Vector2(pos.x, pos.y - 1));
+
+            CreatPixel(new Vector3(pos.x, 0, pos.y), color, firstInColumn, firstInRow);
+            
+            pixelPositions[i] = new Vector2(pos.x, pos.y);
             pixelsPainted[i] = false;
+        }
+
+        // Must happen after CreatPixel loops, because CreatPixel populates 'pixels' list used to get pixelScripts
+        for (int i = 0; i < TargetCount; i++)
+        {
             pixelScripts[i] = pixels[i].GetComponent<PixelScript>();
         }
-        InitCoins();
-        // InitCrosses();
+
+        InitCoins(config);
+        SpawnMechanics(config);
     }
 
-    private void InitCoins()
+    private void SpawnMechanics(GameLevelConfig config)
     {
-        System.Random random = new System.Random();
-        int coinsCount = random.Next(0, MaxCoins);
-        for (int i = 0; i < coinsCount; i++)
+        if (config.Spikes != null)
         {
-            pixelScripts[random.Next(0, pixelScripts.Length)].SetCoin(SpawnCoin);
+            foreach (var s in config.Spikes)
+            {
+                GameObject spikeObj = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                spikeObj.name = "Spike";
+                spikeObj.transform.SetParent(this.transform);
+                
+                spikeObj.transform.position = new Vector3(s.position.x * pixelSize.x, 0, s.position.y * pixelSize.x);
+                spikeObj.transform.localScale = new Vector3(pixelSize.x * 0.4f, 0.5f, pixelSize.x * 0.4f);
+                
+                SpikeMechanic sm = spikeObj.AddComponent<SpikeMechanic>();
+                sm.maxHeight = s.maxHeight;
+                sm.timeToGrow = s.timeToGrow;
+                sm.timeToLower = s.timeToLower;
+                
+                spikeObj.AddComponent<ObstacleHit>();
+                spikeObj.GetComponent<MeshRenderer>().material.color = Color.red;
+                mechanicsInstances.Add(spikeObj);
+            }
+        }
+
+        if (config.ElectricBarriers != null)
+        {
+            foreach (var b in config.ElectricBarriers)
+            {
+                GameObject barrierObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                barrierObj.name = "Barrier";
+                barrierObj.transform.SetParent(this.transform);
+                
+                Vector3 startWorld = new Vector3(b.startPosition.x * pixelSize.x, 0.5f, b.startPosition.y * pixelSize.x);
+                Vector3 endWorld = new Vector3(b.endPosition.x * pixelSize.x, 0.5f, b.endPosition.y * pixelSize.x);
+                
+                barrierObj.transform.position = Vector3.Lerp(startWorld, endWorld, 0.5f);
+                float length = Vector3.Distance(startWorld, endWorld);
+                if (length < 0.1f) length = 1f;
+
+                barrierObj.transform.localScale = new Vector3(pixelSize.x * 0.2f, 1f, length + pixelSize.x);
+                barrierObj.transform.LookAt(endWorld);
+                
+                ElectricBarrierMechanic bm = barrierObj.AddComponent<ElectricBarrierMechanic>();
+                bm.activeTime = b.activeTime;
+                bm.inactiveTime = b.inactiveTime;
+                
+                barrierObj.AddComponent<ObstacleHit>();
+                barrierObj.GetComponent<MeshRenderer>().material.color = Color.cyan;
+                mechanicsInstances.Add(barrierObj);
+            }
+        }
+
+        if (config.MovingObstacles != null)
+        {
+            foreach (var m in config.MovingObstacles)
+            {
+                GameObject movObj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                movObj.name = "MovingObstacle";
+                movObj.transform.SetParent(this.transform);
+                
+                movObj.transform.position = new Vector3(m.startPosition.x * pixelSize.x, 0.5f, m.startPosition.y * pixelSize.x);
+                float scale = m.length > 0 ? m.length * pixelSize.x : pixelSize.x;
+                movObj.transform.localScale = new Vector3(scale, scale, scale);
+                
+                MovingObstacleMechanic mm = movObj.AddComponent<MovingObstacleMechanic>();
+                mm.speed = m.speed;
+                mm.axis = m.axis;
+                mm.movementRange = m.movementRange * pixelSize.x;
+                
+                movObj.AddComponent<ObstacleHit>();
+                movObj.GetComponent<MeshRenderer>().material.color = Color.magenta;
+                mechanicsInstances.Add(movObj);
+            }
+        }
+    }
+
+    private void InitCoins(GameLevelConfig config)
+    {
+        if (config.Coins == null || config.Coins.Count == 0) return;
+        foreach (var c in config.Coins)
+        {
+            int idx = config.Pixels.FindIndex(p => p._pos == c);
+            if (idx != -1 && idx < pixelScripts.Length)
+            {
+                pixelScripts[idx].SetCoin(SpawnCoin);
+            }
         }
     }
     private void InitCrosses()
